@@ -1,0 +1,12 @@
+{
+    "Employee": true,
+    "Payroll": true,
+    "Accounting": true,
+    "Chat": true,
+    "Human": true,
+    "Resource": true,
+    "HumanResource": true,
+    "Policy": true,
+    "Notice": true,
+    "CompanySettings": true
+}

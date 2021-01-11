@@ -1,0 +1,13 @@
+{
+    "name": "CompanySettings",
+    "alias": "companysettings",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\CompanySettings\\Providers\\CompanySettingsServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

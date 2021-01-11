@@ -1,0 +1,13 @@
+{
+    "name": "Policy",
+    "alias": "policy",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Policy\\Providers\\PolicyServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
