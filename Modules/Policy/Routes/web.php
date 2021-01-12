@@ -28,6 +28,11 @@ Route::prefix('policy')->group(function() {
     Route::get('/debit-note/new/{slug}', 'DebitNoteController@create');
     Route::post('/debit-note/new', 'DebitNoteController@storeNewDebitNote');
     Route::get('/debit-note/view/{slug}', 'DebitNoteController@view');
+    #Credit Note
+    Route::get('/credit-notes', 'CreditNoteController@index');
+    Route::get('/credit-note/new/{slug}', 'CreditNoteController@create');
+    Route::post('/credit-note/new', 'CreditNoteController@storeNewDebitNote');
+    Route::get('/credit-note/view/{slug}', 'CreditNoteController@view');
     #Constants
     Route::get('/policy-settings', 'PolicyController@policySettings');
     Route::post('/get/sub-classes', 'PolicyController@getSubClasses');

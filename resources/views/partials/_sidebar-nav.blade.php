@@ -56,9 +56,9 @@
                 </a>
             </li>
             <li class="">
-                <a href="navbar-light.htm">
+                <a href="/policy/credit-notes">
                     <span class="pcoded-micon"><i class="icofont icofont-notepad"></i></span>
-                    <span class="pcoded-mtext">Credit Note</span>
+                    <span class="pcoded-mtext">Credit Notes</span>
                 </a>
             </li>
             <li class="">
@@ -197,7 +197,7 @@
                     <ul class="pcoded-submenu">
                         <li class="">
                             <a href="widget-statistic.htm">
-                                <span class="pcoded-mtext">Statistic</span>
+                                <span class="pcoded-mtext">NAICOM Report</span>
                             </a>
                         </li>
                         <li class=" ">
