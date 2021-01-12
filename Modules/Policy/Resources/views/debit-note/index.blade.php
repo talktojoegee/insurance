@@ -188,7 +188,7 @@
                                 @endif
 								<td>
 									<div class="btn-group">
-										<a class="text-primary" href="" > Learn more
+										<a class="text-primary" href="/policy/debit-note/view/{{$lst->slug}}" > Learn more
 
 									    </a>
 									</div>

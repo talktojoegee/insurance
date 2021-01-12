@@ -42,6 +42,7 @@ class DebitNoteController extends Controller
         }
     }
 
+
     /**
      * Store a newly created resource in storage.
      * @param Request $request
@@ -88,6 +89,7 @@ class DebitNoteController extends Controller
     	$debit->currency = $request->currency;
         $debit->payment_mode = $request->payment_mode;
         $debit->client_id = 1;
+        $debit->slug = substr(sha1(time()),30,40);
     	//$debit->reference_no = $request->reference_no;
     	//$debit->cheque_no = $request->cheque_no;
     	//$debit->leave_note = $request->leave_note;
@@ -111,9 +113,14 @@ class DebitNoteController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function show($id)
+    public function view($slug)
     {
-        return view('policy::show');
+        $debit = DebitNote::where('slug', $slug)->first();
+        if(!empty($debit)){
+            return view('policy::debit-note.view',['debit'=>$debit]);
+        }else{
+            return back();
+        }
     }
 
     /**

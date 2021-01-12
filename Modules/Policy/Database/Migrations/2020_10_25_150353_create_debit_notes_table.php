@@ -36,6 +36,7 @@ class CreateDebitNotesTable extends Migration
             $table->string('reference_no')->nullable();
             $table->string('cheque_no')->nullable();
             $table->string('leave_note')->nullable();
+            $table->string('slug')->nullable();
             $table->timestamps();
         });
     }

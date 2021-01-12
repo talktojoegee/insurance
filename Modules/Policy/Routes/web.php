@@ -27,6 +27,7 @@ Route::prefix('policy')->group(function() {
     Route::get('/debit-notes', 'DebitNoteController@index');
     Route::get('/debit-note/new/{slug}', 'DebitNoteController@create');
     Route::post('/debit-note/new', 'DebitNoteController@storeNewDebitNote');
+    Route::get('/debit-note/view/{slug}', 'DebitNoteController@view');
     #Constants
     Route::get('/policy-settings', 'PolicyController@policySettings');
     Route::post('/get/sub-classes', 'PolicyController@getSubClasses');
