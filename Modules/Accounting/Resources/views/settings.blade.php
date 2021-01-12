@@ -49,12 +49,12 @@
                                                         </td>
                                                         <td>
                                                             <div class="form-group">
-                                                                <select name="debit[]"  class="form-control">
+                                                                <select name="debit[]"  class="form-control js-example-basic-single">
                                                                     <option disabled selected>Select account</option>
                                                                     @foreach ($accounts as $account)
                                                                         <option value="{{$account->glcode}}">{{$account->account_name ?? ''}} - ({{$account->glcode}})</option>
                                                                     @endforeach
-                                                                </select>
+                                                                </select> <br>
                                                                 <small class="text-muted"><label for="" class="label label-info">Previous selection: </label>
                                                                         <i>{{ $setting->getDebit->account_name.' - '.$setting->getDebit->glcode ?? 'No account assigned yet'}}</i>
                                                                 </small>
@@ -66,12 +66,12 @@
                                                         </td>
                                                         <td>
                                                             <div class="form-group">
-                                                                <select name="credit[]"  class="form-control">
+                                                                <select name="credit[]"  class="form-control js-example-basic-single">
                                                                     <option disabled selected>Select account</option>
                                                                     @foreach ($accounts as $account)
                                                                         <option value="{{$account->glcode}}">{{$account->account_name ?? ''}} - ({{$account->glcode}})</option>
                                                                     @endforeach
-                                                                </select>
+                                                                </select> <br>
                                                                 <small class="text-muted"><label for="" class="label label-info">Previous selection: </label>
                                                                     <i>{{ $setting->getCredit->account_name.' - '.$setting->getCredit->glcode ?? 'No account assigned yet'}}</i>
                                                                 </small>

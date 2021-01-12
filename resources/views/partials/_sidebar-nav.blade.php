@@ -189,10 +189,11 @@
 
                     </ul>
                 </li>
+                <div class="pcoded-navigatio-lavel">Reports</div>
                 <li class="pcoded-hasmenu">
                     <a href="javascript:void(0)">
                         <span class="pcoded-micon"><i class="icofont icofont-chart-bar-graph"></i></span>
-                        <span class="pcoded-mtext">Report</span>
+                        <span class="pcoded-mtext">Reports</span>
                     </a>
                     <ul class="pcoded-submenu">
                         <li class="">
@@ -213,6 +214,7 @@
 
                     </ul>
                 </li>
+                <div class="pcoded-navigatio-lavel">Settings</div>
                 <li class="pcoded-hasmenu">
                     <a href="javascript:void(0)">
                         <span class="pcoded-micon"><i class="icofont icofont-settings-alt"></i></span>
