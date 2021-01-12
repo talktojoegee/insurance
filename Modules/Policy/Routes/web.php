@@ -37,5 +37,6 @@ Route::prefix('policy')->group(function() {
     Route::post('/sub-business-class/create', 'PolicyController@createSubBusinessClass');
     Route::post('/sub-business-class/edit', 'PolicyController@editSubBusinessClass');
     #Client
+    Route::get('/clients', 'PolicyController@clients');
     Route::get('/client/view/{slug}', 'PolicyController@getClient');
 });

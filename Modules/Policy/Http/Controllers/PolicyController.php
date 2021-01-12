@@ -200,8 +200,18 @@ class PolicyController extends Controller
         session()->flash("success", "<strong>Success!</strong> Policy documented.");
         return redirect('/policy');
     }
-    public function getClient($slug){
 
+    public function clients(){
+        $clients = Client::orderBy('id', 'DESC')->get();
+        return view('policy::clients.index', ['clients'=>$clients]);
+    }
+    public function getClient($slug){
+        $client = Client::where('slug', $slug)->first();
+        if(!empty($client)){
+            return view('policy::clients.view', ['client'=>$client]);
+        }else{
+            return back();
+        }
     }
 
     public function viewPolicy($slug){

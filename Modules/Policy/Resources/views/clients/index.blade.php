@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    Non-motor Policies
+    Clients
 @endsection
 
 @section('extra-styles')
@@ -17,12 +17,12 @@
    <div class="col-md-6 col-xl-3">
         <div class="card widget-card-1">
             <div class="card-block-small">
-                <i class="feather icon-pie-chart bg-c-blue card1-icon"></i>
-                <span class="text-c-blue f-w-600">Use Space</span>
-                <h4>49/50GB</h4>
+                <i class="icofont icofont-notepad bg-c-blue card1-icon"></i>
+                <span class="text-c-blue f-w-600">Total</span>
+                <h4>{{number_format($clients->count())}}</h4>
                 <div>
                     <span class="f-left m-t-10 text-muted">
-                        <i class="text-c-blue f-16 feather icon-alert-triangle m-r-10"></i>Get more space
+                        <i class="text-c-blue f-16 feather icon-alert-triangle m-r-10"></i>All Time
                     </span>
                 </div>
             </div>
@@ -31,12 +31,12 @@
     <div class="col-md-6 col-xl-3">
         <div class="card widget-card-1">
             <div class="card-block-small">
-                <i class="feather icon-home bg-c-pink card1-icon"></i>
-                <span class="text-c-pink f-w-600">Revenue</span>
+                <i class="icofont icofont-calendar bg-c-pink card1-icon"></i>
+                <span class="text-c-pink f-w-600">Total</span>
                 <h4>$23,589</h4>
                 <div>
                     <span class="f-left m-t-10 text-muted">
-                        <i class="text-c-pink f-16 feather icon-calendar m-r-10"></i>Last 24 hours
+                        <i class="text-c-pink f-16 feather icon-calendar m-r-10"></i>Last Month
                     </span>
                 </div>
             </div>
@@ -45,12 +45,12 @@
     <div class="col-md-6 col-xl-3">
         <div class="card widget-card-1">
             <div class="card-block-small">
-                <i class="feather icon-alert-triangle bg-c-green card1-icon"></i>
-                <span class="text-c-green f-w-600">Fixed Issue</span>
+                <i class="icofont icofont-calendar bg-c-green card1-icon"></i>
+                <span class="text-c-green f-w-600">Total</span>
                 <h4>45</h4>
                 <div>
                     <span class="f-left m-t-10 text-muted">
-                        <i class="text-c-green f-16 feather icon-tag m-r-10"></i>Tracked at microsoft
+                        <i class="text-c-green f-16 feather icon-tag m-r-10"></i>This Month
                     </span>
                 </div>
             </div>
@@ -59,12 +59,12 @@
     <div class="col-md-6 col-xl-3">
         <div class="card widget-card-1">
             <div class="card-block-small">
-                <i class="feather icon-twitter bg-c-yellow card1-icon"></i>
-                <span class="text-c-yellow f-w-600">Followers</span>
+                <i class="icofont icofont-calendar bg-c-yellow card1-icon"></i>
+                <span class="text-c-yellow f-w-600">Total</span>
                 <h4>+562</h4>
                 <div>
                     <span class="f-left m-t-10 text-muted">
-                        <i class="text-c-yellow f-16 feather icon-watch m-r-10"></i>Just update
+                        <i class="text-c-yellow f-16 feather icon-watch m-r-10"></i>This Week
                     </span>
                 </div>
             </div>
@@ -76,7 +76,7 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-block">
-                <h5 class="sub-title">Non-motor Policies</h5>
+                <h5 class="sub-title">Clients</h5>
                 @if(session()->has('success'))
                     <div class="alert alert-success background-success">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -98,20 +98,10 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Client No.</th>
-                                <th>Insured</th>
-                                <th>Insurance Policy No.</th>
+                                <th>Insured Name</th>
                                 <th>Email</th>
                                 <th>Mobile No.</th>
-                                <th>Birth Date</th>
-                                <th>Sum Insured</th>
-                                <th>Premium Rate</th>
-                                <th>Exchange Rate</th>
-                                <th>Gross Premium</th>
-                                <th>Start Date</th>
-                                <th>End Date</th>
-                                <th>Business Class</th>
-                                <th>Sub Class</th>
+                                <th>Address</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -119,46 +109,26 @@
                             @php
                                 $serial = 1;
                             @endphp
-                           @foreach($policies as $policy)
+                            @foreach ($clients as $client)
                                 <tr>
-                                    <td>{{ $serial++ }}</td>
-                                    <td>{{$policy->getBusinessClass->abbr}}/{{date('m',strtotime($policy->created_at))}}/{{date('y', strtotime($policy->created_at))}}/{{$policy->policy_number}}</td>
-                                    <td> <a href="{{ url('/client/view/'.$policy->getClient->slug) }}"> {{ $policy->getClient->insured_name ?? '' }}</a></td>
-                                    <td>{{ $policy->insurance_policy_number ?? '' }}</td>
-                                    <td>{{ $policy->getClient->email ?? '' }}</td>
-                                    <td>{{ $policy->getClient->mobile_no ?? '' }}</td>
-                                    <td>{{ !is_null($policy->getClient->birth_date) ? date('d F, Y', strtotime($policy->getClient->birth_date)) : '' }}</td>
-                                    <td>{{$policy->getCurrency->symbol ?? ''}}{{ number_format($policy->sum_insured/$policy->exchange_rate,2) }}</td>
-                                    <td>{{ $policy->premium_rate ?? '' }}%</td>
-                                    <td>{{ $policy->exchange_rate  ?? '' }}</td>
-                                    <td>{{$policy->getCurrency->symbol ?? ''}}{{ number_format($policy->gross_premium/$policy->exchange_rate,2) ?? '' }}</td>
-                                    <td>{{ !is_null($policy->start_date) ? date('d F, Y', strtotime($policy->start_date)) : '' }}</td>
-                                    <td>{{ !is_null($policy->end_date) ? date('d F, Y', strtotime($policy->end_date)) : '' }}</td>
-                                    <td>{{ $policy->getBusinessClass->class_name ?? '' }}</td>
-                                    <td>{{ $policy->getSubBusinessClass->class_name ?? '' }}</td>
+                                    <td>{{$serial++}}</td>
+                                    <td>{{$client->insured_name ?? ''}}</td>
+                                    <td>{{$client->email ?? ''}}</td>
+                                    <td>{{$client->mobile_no ?? ''}}</td>
+                                    <td>{{$client->address ?? ''}}</td>
                                     <td>
-                                        <a href="{{ url('/policy/view/policy/'.$policy->slug) }}">Learn more</a>
+                                        <a class="btn btn-primary btn-mini" href="/policy/client/view/{{$client->slug}}">Learn more</a>
                                     </td>
                                 </tr>
-                           @endforeach
+                            @endforeach
                         </tbody>
                         <tfoot>
                             <tr>
                                 <th>#</th>
-                                <th>Client No.</th>
-                                <th>Insured</th>
-                                <th>Insurance Policy No.</th>
+                                <th>Insured Name</th>
                                 <th>Email</th>
                                 <th>Mobile No.</th>
-                                <th>Birth Date</th>
-                                <th>Sum Insured</th>
-                                <th>Premium Rate</th>
-                                <th>Exchange Rate</th>
-                                <th>Gross Premium</th>
-                                <th>Start Date</th>
-                                <th>End Date</th>
-                                <th>Business Class</th>
-                                <th>Sub Class</th>
+                                <th>Address</th>
                                 <th>Action</th>
                             </tr>
                         </tfoot>
@@ -180,4 +150,5 @@
 <script src="\bower_components\datatables.net-responsive-bs4\js\responsive.bootstrap4.min.js"></script>
 
 <script src="\assets\pages\data-table\js\data-table-custom.js"></script>
+
 @endsection
