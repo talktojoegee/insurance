@@ -21,5 +21,9 @@ Route::prefix('human-resource')->group(function() {
     Route::post('/add-new-employment-type', 'GeneralSettingsController@addNewEmploymentType');
     Route::post('/add-new-academic-qualification', 'GeneralSettingsController@addNewAcademicQualification');
     Route::post('/application/role', 'GeneralSettingsController@applicationRole');
+    Route::post('/application/edit-role', 'GeneralSettingsController@editApplicationRole');
+    Route::post('/application/permission', 'GeneralSettingsController@applicationPermission');
+    Route::post('/application/edit-permission', 'GeneralSettingsController@editApplicationPermission');
     Route::get('/employee/profile/{url}', 'EmployeeController@profile');
+    Route::get('/manage-roles-and-permissions', 'ManageRolesAndPermissionsController@index');
 });

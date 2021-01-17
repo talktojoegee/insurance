@@ -134,7 +134,7 @@
                                 <td>{{$lst->debit_code}}</td>
                                 <td> {{$lst->getPolicy->getBusinessClass->abbr}}/{{date('m',strtotime($lst->getPolicy->getBusinessClass->created_at))}}/{{date('y',strtotime($lst->getPolicy->getBusinessClass->created_at))}}/{{$lst->getPolicy->policy_number}}
                                 </td>
-                                <td>{{$lst->getClient->insured_name}}</td>
+                                <td>{{$lst->getClient->insured_name ?? ''}}</td>
                                 <td>{{$lst->cover_days}}</td>
                                 <td>{{date('d M, Y', strtotime($lst->start_date))}}</td>
                                 <td>{{date('d M, Y', strtotime($lst->end_date))}}</td>

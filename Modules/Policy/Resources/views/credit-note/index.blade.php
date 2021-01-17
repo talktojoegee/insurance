@@ -105,7 +105,7 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Debit Code</th>
+                                <th>Credit Code</th>
                                 <th>Client No.</th>
                                 <th>Insured</th>
                                 <th>Cover Days</th>
@@ -135,15 +135,81 @@
 							$index = 1;
 							@endphp
 							@if(count($list) > 0)
+                            @foreach($list as $lst)
+							<tr>
+								<td>{{$index++}}</td>
+                                <td>{{$lst->credit_code}}</td>
+                                <td> {{$lst->getPolicy->getBusinessClass->abbr}}/{{date('m',strtotime($lst->getPolicy->getBusinessClass->created_at))}}/{{date('y',strtotime($lst->getPolicy->getBusinessClass->created_at))}}/{{$lst->getPolicy->policy_number}}
+                                </td>
+                                <td>{{$lst->getClient->insured_name ?? ''}}</td>
+                                <td>{{$lst->cover_days}}</td>
+                                <td>{{date('d M, Y', strtotime($lst->start_date))}}</td>
+                                <td>{{date('d M, Y', strtotime($lst->end_date))}}</td>
+                                <td>{{$lst->getClient->insured_name ?? ''}}</td>
+                                @if($lst->option == 1)
+                                    <td>Direct</td>
+                                @elseif($lst->option == 2)
+                                    <td>Co-broking</td>
+                                @elseif($lst->option == 3)
+                                    <td>Lead-broking</td>
+                                @elseif($lst->option == 4)
+                                    <td>Outward Reinsurance</td>
+                                @elseif($lst->option == 5)
+                                    <td>Inward Reinsurance</td>
+                                @endif
+                               <!--/ Option -->
 
+                                @if($lst->business_type == 1)
+                                    <td>New</td>
+                                @elseif($lst->business_type == 2)
+                                    <td>Additional</td>
+                                @elseif($lst->business_type == 3)
+                                    <td>Renewal</td>
+                                @elseif($lst->business_type == 4)
+                                    <td>Return</td>
+                                @elseif($lst->business_type == 5)
+                                    <td>Reversal</td>
+                                @endif
+
+                                <td>{{$lst->getPolicy->getBusinessClass->class_name ?? ''}}</td>
+                                <td>{{$lst->getPolicy->getSubBusinessClass->class_name ?? ''}}</td>
+                                <td>{{$lst->getCurrency->name ?? ''}}({{$lst->getCurrency->symbol ?? ''}})</td>
+                                <td>{{$lst->getCurrency->symbol ?? ''}}{{ number_format($lst->sum_insured,2)}}
+                                </td>
+                                <td>{{$lst->premium_rate}}%</td>
+                                <td>{{$lst->getCurrency->symbol ?? ''}}{{number_format($lst->gross_premium,2)}}
+                                </td>
+                                <td>{{$lst->commission_rate}}%</td>
+                                <td>{{$lst->getCurrency->symbol ?? ''}}{{number_format($lst->commission,2)}}
+                                </td>
+                                <td>{{$lst->vat_rate}}%</td>
+                                <td>{{$lst->getCurrency->symbol ?? ''}}{{number_format(($lst->vat_rate/100)*$lst->commission,2)}}</td>
+                                <td>{{$lst->currency ?? ''}}</td>
+                                <td>{{$lst->getCurrency->symbol ?? ''}}{{number_format($lst->net_amount,2)}}
+                                </td>
+                                @if($lst->status == 0)
+                                    <td><label for="" class="badge badge-warning text-white">Pending</label></td>
+                                @else
+                                    <td><label for="" class="badge badge-success text-white">Approved</label>
+                                    </td>
+                                @endif
+								<td>
+									<div class="btn-group">
+										<a class="text-primary" href="/policy/debit-note/view/{{$lst->slug}}" > Learn more
+
+									    </a>
+									</div>
+								</td>
+							</tr>
+							@endforeach
 							@else
-							    <h2>No record found</h2>
+							<h2>No record found</h2>
 							@endif
                         </tbody>
                         <tfoot>
                             <tr>
                                 <th>#</th>
-                                <th>Debit Code</th>
+                                <th>Credit Code</th>
                                 <th>Client No.</th>
                                 <th>Insured</th>
                                 <th>Cover Days</th>

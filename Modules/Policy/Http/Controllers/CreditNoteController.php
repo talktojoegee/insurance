@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Policy\Entities\Policy;
 use Modules\Policy\Entities\CreditNote;
+use Modules\Policy\Entities\DebitNote;
 use Modules\Accounting\Entities\Currency;
 use Modules\Policy\Entities\SettingsAccount;
 use Carbon\Carbon;
@@ -25,17 +26,17 @@ class CreditNoteController extends Controller
     }
 
     public function create($slug){
-        $policy = Policy::where('slug', $slug)->first();
-        if(!empty($policy)){
-            $debitCode = null;
-            $debit = CreditNote::orderBy('id', 'DESC')->first();
+        $debit = DebitNote::where('slug', $slug)->first();
+        if(!empty($debit)){
+            $creditCode = null;
+            $credit = CreditNote::orderBy('id', 'DESC')->first();
             $currencies = Currency::orderBy('name', 'ASC')->get();
-            if(!empty($debit)){
-                $debitCode =$debit->debit_code + 1;
+            if(!empty($credit)){
+                $creditCode =$credit->Credit_code + 1;
             }else{
-                $debitCode = 100000;
+                $creditCode = 100000;
             }
-            return view('policy::debit-note.create', ['policy'=>$policy, 'debitCode'=>$debitCode,'currencies'=>$currencies]);
+            return view('policy::credit-note.create', ['debit'=>$debit, 'creditCode'=>$creditCode,'currencies'=>$currencies]);
         }else{
             session()->flash("error", "<strong>Ooops!</strong> Record not found.");
             return back();
@@ -48,10 +49,10 @@ class CreditNoteController extends Controller
      * @param Request $request
      * @return Renderable
      */
-    public function storeNewDebitNote(Request $request)
+    public function storeNewCreditNote(Request $request)
     {
         $request->validate([
-    		'debit_code_number'=>'required|unique:debit_notes,debit_code',
+    		'credit_code'=>'required|unique:credit_notes,credit_code',
     		'sum_insured'=>'required',
     		'premium_rate'=>'required',
     		'commission_rate'=>'required',
@@ -68,28 +69,31 @@ class CreditNoteController extends Controller
     	$current_date = Carbon::createFromDate($request->start_date);
         $trans_id = strtoupper(substr(md5(time()), 0,10));
 
-    	$debit = new CreditNote;
-    	$debit->policy_no = $request->policy_number;
-    	$debit->debit_code = $request->debit_code_number;
+    	$credit = new CreditNote;
+    	$credit->policy_no = $request->policy;
+    	$credit->debit_code = $request->debit_code_number;
+    	$credit->credit_code = $request->credit_code;
     	//$debit->insured_name = $request->insured_name;
-    	//$debit->address = $request->address;
-    	//$debit->narration = $request->narration;
-    	$debit->business_type = $request->business_type;
-    	$debit->option = $request->option;
+    	$credit->sub_class_id = $request->sub_business_class;
+    	$credit->class_id = $request->business_class;
+    	$credit->agency_id = $request->agent;
+    	$credit->narration = $request->narration ?? '';
+    	$credit->business_type = $request->business_type;
+    	$credit->option = $request->option;
     	//$debit->business_class = $request->class;
     	//$debit->sub_class = $request->sub_class;
-    	$debit->sum_insured = $request->sum_insured;
-    	$debit->premium_rate = $request->premium_rate;
-    	$debit->commission_rate = $request->commission_rate;
+    	$credit->sum_insured = $request->sum_insured;
+    	$credit->premium_rate = $request->premium_rate;
+    	$credit->commission_rate = $request->commission_rate;
     	//$debit->vat = $request->vat;
-    	$debit->net_amount = $request->net_amount;
-    	$debit->commission = $request->commission;
-    	$debit->gross_premium = $request->gross_premium;
-    	$debit->exchange_rate = $request->exchange_rate;
-    	$debit->currency = $request->currency;
-        $debit->payment_mode = $request->payment_mode;
-        $debit->client_id = 1;
-        $debit->slug = substr(sha1(time()),30,40);
+    	$credit->net_amount = $request->net_amount;
+    	$credit->commission = $request->commission;
+    	$credit->gross_premium = $request->gross_premium;
+    	$credit->exchange_rate = $request->exchange_rate;
+    	$credit->currency = $request->currency;
+        $credit->payment_mode = $request->payment_mode;
+        $credit->client_id = $request->client;
+        $credit->slug = substr(sha1(time()),30,40);
     	//$debit->reference_no = $request->reference_no;
     	//$debit->cheque_no = $request->cheque_no;
     	//$debit->leave_note = $request->leave_note;
@@ -100,12 +104,12 @@ class CreditNoteController extends Controller
     	//$debit->end_date = $current_date->addDays($request->cover_days);
         //$debit->transaction_id = $trans_id;
         //$debit->insurance_company = $request->insurance_company;
-        $debit->save();
+        $credit->save();
         #Register debit note
-        $debitAccount = SettingsAccount::where('transaction', 'debit-note')->first();
-        $creditAccount = SettingsAccount::where('transaction', 'credit-note')->first();
-        session()->flash("success", "<strong>Success!</strong> Debit note registered. Pending approval.");
-        return redirect('policy/debite-notes');
+        /* $debitAccount = SettingsAccount::where('transaction', 'debit-note')->first();
+        $creditAccount = SettingsAccount::where('transaction', 'credit-note')->first(); */
+        session()->flash("success", "<strong>Success!</strong> Credit note registered. Pending approval.");
+        return redirect('policy/credit-notes');
     }
 
     /**

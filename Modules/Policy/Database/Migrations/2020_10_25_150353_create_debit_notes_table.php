@@ -18,6 +18,7 @@ class CreateDebitNotesTable extends Migration
             $table->unsignedBigInteger('debit_code');
             $table->unsignedBigInteger('policy_no');
             $table->unsignedBigInteger('client_id');
+            $table->unsignedBigInteger('agency_id')->nullable();
             $table->integer('business_type')->default(1)->comment('1=New, 2=additional, 3=Renewal, 4=return, 5=reversal');
             $table->dateTime('start_date')->nullable();
             $table->dateTime('end_date')->nullable();

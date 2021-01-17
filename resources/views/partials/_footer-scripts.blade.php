@@ -66,6 +66,7 @@
 <script src="/assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
 <!-- Custom js -->
     <script type="text/javascript" src="/assets/js/script.js"></script>
+
     @yield('extra-scripts')
 
 </body>

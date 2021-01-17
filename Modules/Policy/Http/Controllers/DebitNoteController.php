@@ -50,6 +50,7 @@ class DebitNoteController extends Controller
      */
     public function storeNewDebitNote(Request $request)
     {
+
         $request->validate([
     		'debit_code_number'=>'required|unique:debit_notes,debit_code',
     		'sum_insured'=>'required',
@@ -65,7 +66,8 @@ class DebitNoteController extends Controller
             'currency'=>'required'
     	]);
 
-    	$current_date = Carbon::createFromDate($request->start_date);
+        $current_date = Carbon::createFromDate($request->start_date);
+        $cover_days = $current_date->diffInDays($request->end_date);
         $trans_id = strtoupper(substr(md5(time()), 0,10));
 
     	$debit = new DebitNote;
@@ -88,6 +90,8 @@ class DebitNoteController extends Controller
     	$debit->exchange_rate = $request->exchange_rate;
     	$debit->currency = $request->currency;
         $debit->payment_mode = $request->payment_mode;
+        $debit->start_date = $current_date;
+        $debit->end_date = $current_date->addDays($cover_days);
         $debit->client_id = 1;
         $debit->slug = substr(sha1(time()),30,40);
     	//$debit->reference_no = $request->reference_no;
@@ -102,10 +106,10 @@ class DebitNoteController extends Controller
         //$debit->insurance_company = $request->insurance_company;
         $debit->save();
         #Register debit note
-        $debitAccount = SettingsAccount::where('transaction', 'debit-note')->first();
-        $creditAccount = SettingsAccount::where('transaction', 'credit-note')->first();
+        /* $debitAccount = SettingsAccount::where('transaction', 'debit-note')->first();
+        $creditAccount = SettingsAccount::where('transaction', 'credit-note')->first(); */
         session()->flash("success", "<strong>Success!</strong> Debit note registered. Pending approval.");
-        return redirect('policy/debite-notes');
+        return redirect('/policy/debite-notes');
     }
 
     /**

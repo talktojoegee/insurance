@@ -3,7 +3,7 @@
 
                 <div class="navbar-logo">
                     <a class="mobile-menu" id="mobile-collapse" href="#!">
-                        <i class="feather icon-menu"></i>
+                        <i class="icofont icofont-navigation-menu"></i>
                     </a>
                     <a href="index-1.htm">
                         <img class="img-fluid" src="..\files\assets\images\logo.png" alt="{{ config('app.name') }}">

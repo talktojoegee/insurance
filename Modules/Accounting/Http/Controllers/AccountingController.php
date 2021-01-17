@@ -6,6 +6,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Accounting\Entities\Coa;
+use Modules\Policy\Entities\DebitNote;
 use Modules\CompanySettings\Entities\SettingsAccount;
 use Auth;
 use DB;
@@ -83,5 +84,22 @@ class AccountingController extends Controller
         }
         session()->flash("success", "<strong>Success!</strong> Default accounts registered.");
         return back();
+    }
+
+
+    public function showGenerateReceipt(){
+        return view('accounting::receipt.generate-receipt');
+    }
+
+    public function getDebitNoteDetails(Request $request){
+        $request->validate([
+            'debit_code'=>'required'
+        ]);
+        $debit_note = DebitNote::where('debit_code', $request->debit_code)->first();
+        if(!empty($debit_note)){
+            return view('accounting::receipt.common._debit-note-details',['debit_note'=>$debit_note]);
+        }else{
+            return "<p class='text-center text-danger p-2' style='font-weight:700;'>No record found.</p>";
+        }
     }
 }

@@ -28,7 +28,7 @@
                         {!!  session()->get('success') !!}
                     </div>
                 @endif
-                <form action="{{url('/policy/debit-note/new')}}" method="post">
+                <form action="{{url('/policy/debit-note/new')}}" method="post" autocomplete="off">
                     @csrf
                     <div class="row">
                         <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12">

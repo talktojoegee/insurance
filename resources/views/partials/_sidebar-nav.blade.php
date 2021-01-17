@@ -98,7 +98,7 @@
                         </a>
                     </li>
                     <li class=" ">
-                        <a href="accordion.htm">
+                        <a href="{{url('/human-resource/manage-roles-and-permissions')}}">
                             <span class="pcoded-mtext">Manage Permissions</span>
                         </a>
                     </li>
@@ -158,8 +158,13 @@
                             </a>
                         </li>
                         <li class="">
+                            <a href="{{url('/accounting/generate-receipt')}}">
+                                <span class="pcoded-mtext">Generate Receipt</span>
+                            </a>
+                        </li>
+                        <li class="">
                             <a href="widget-chart.htm">
-                                <span class="pcoded-mtext">Receipts</span>
+                                <span class="pcoded-mtext">All Receipts</span>
                             </a>
                         </li>
 
@@ -222,7 +227,7 @@
                     </a>
                     <ul class="pcoded-submenu">
                         <li class="">
-                            <a href="{{url('company-settings/general-settings')}}">
+                            <a href="{{url('/company-settings')}}">
                                 <span class="pcoded-mtext">General Settings</span>
                             </a>
                         </li>

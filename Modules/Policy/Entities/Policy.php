@@ -28,4 +28,7 @@ class Policy extends Model
     public function getCurrency(){
     	return $this->belongsTo(Currency::class, 'currency');
     }
+    public function getVehicles(){
+    	return $this->hasMany(VehicleInfo::class, 'policy_no', 'policy_number');
+    }
 }

@@ -17,7 +17,7 @@ class GeneralSettingsController extends Controller
 {
 
     public function __construct(){
-        //$this->middleware('auth');
+        $this->middleware('auth');
     }
 
         public function settings()
@@ -48,7 +48,7 @@ class GeneralSettingsController extends Controller
         }else{
             return response()->json(['error'=>'Ooops! Could not register new department. Try again.'], 400);
         }
-    }   
+    }
      public function addNewJobRole(Request $request){
         $request->validate([
             'department'=>'required',
@@ -66,7 +66,7 @@ class GeneralSettingsController extends Controller
         }else{
             return response()->json(['error'=>'Ooops! Could not register new role. Try again.'], 400);
         }
-    }     
+    }
     public function addNewEmploymentType(Request $request){
         $request->validate([
             'name'=>'required'
@@ -80,7 +80,7 @@ class GeneralSettingsController extends Controller
         }else{
             return response()->json(['error'=>'Ooops! Could not register new role. Try again.'], 400);
         }
-    }    
+    }
     public function addNewAcademicQualification(Request $request){
         $request->validate([
             'name'=>'required'
@@ -102,7 +102,41 @@ class GeneralSettingsController extends Controller
             'role_name'=>'required|unique:roles,name'
         ]);
         Role::create(['name'=>$request->role_name]);
-        return response()->json(['message'=>'Success! New role registered.'], 200);
+        session()->flash("success", "<strong>Success!</strong> New role registered.");
+        return back();
+    }
+    public function editApplicationRole(Request $request)
+    {
+        $request->validate([
+            'role_name'=>'required',
+            'role_id'=>'required'
+        ]);
+        $role = Role::find($request->role_id);
+        $role->name = $request->role_name;
+        $role->save();
+        session()->flash("success", "<strong>Success!</strong> Role updated.");
+        return back();
+    }
+    public function applicationPermission(Request $request)
+    {
+        $request->validate([
+            'permission_name'=>'required|unique:permissions,name'
+        ]);
+        Permission::create(['name'=>$request->permission_name]);
+        session()->flash("success", "<strong>Success!</strong> New permission registered.");
+        return back();
+    }
+    public function editApplicationPermission(Request $request)
+    {
+        $request->validate([
+            'permission_name'=>'required',
+            'permission_id'=>'required'
+        ]);
+        $permission = Permission::find($request->permission_id);
+        $permission->name = $request->permission_name;
+        $permission->save();
+        session()->flash("success", "<strong>Success!</strong> Permission updated.");
+        return back();
     }
 
     /**

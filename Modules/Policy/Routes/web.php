@@ -31,7 +31,7 @@ Route::prefix('policy')->group(function() {
     #Credit Note
     Route::get('/credit-notes', 'CreditNoteController@index');
     Route::get('/credit-note/new/{slug}', 'CreditNoteController@create');
-    Route::post('/credit-note/new', 'CreditNoteController@storeNewDebitNote');
+    Route::post('/credit-note/new', 'CreditNoteController@storeNewCreditNote');
     Route::get('/credit-note/view/{slug}', 'CreditNoteController@view');
     #Constants
     Route::get('/policy-settings', 'PolicyController@policySettings');

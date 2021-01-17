@@ -19,4 +19,7 @@ Route::prefix('accounting')->group(function() {
     Route::get('/new-journal-voucher', 'AccountingController@newJournalVoucher');
     Route::get('/account-settings', 'AccountingController@accountSettings');
     Route::post('/account-settings', 'AccountingController@setDefaultAccounts');
+    #Receipt routes
+    Route::get('/generate-receipt', 'AccountingController@showGenerateReceipt');
+    Route::post('/get-debit-note-details', 'AccountingController@getDebitNoteDetails');
 });
