@@ -119,9 +119,9 @@ class CreditNoteController extends Controller
      */
     public function view($slug)
     {
-        $debit = CreditNote::where('slug', $slug)->first();
-        if(!empty($debit)){
-            return view('policy::debit-note.view',['debit'=>$debit]);
+        $credit = CreditNote::where('slug', $slug)->first();
+        if(!empty($credit)){
+            return view('policy::credit-note.view',['credit'=>$credit]);
         }else{
             return back();
         }

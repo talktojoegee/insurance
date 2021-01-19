@@ -131,12 +131,12 @@
                     </li>
                     <li class=" ">
                         <a href="form-elements-advance.htm">
-                            <span class="pcoded-mtext">Postings</span>
+                            <span class="pcoded-mtext">Trial Balance</span>
                         </a>
                     </li>
                     <li class=" ">
                         <a href="form-elements-advance.htm">
-                            <span class="pcoded-mtext">Invoice</span>
+                            <span class="pcoded-mtext">Income Statement</span>
                         </a>
                     </li>
                 </ul>
