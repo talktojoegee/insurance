@@ -25,6 +25,23 @@ class ManageRolesAndPermissionsController extends Controller
         return view('humanresource::manage-roles-and-permissions',['roles'=>$roles, 'permissions'=>$permissions]);
     }
 
+    public function showAssignPermissionToRole($id){
+        $role = Role::find($id);
+        if(!empty($role)){
+            $permissions = Permission::orderBy('name', 'ASC')->get();
+            return view('humanresource::assign-permission', ['role'=>$role, 'permissions'=>$permissions]);
+        }else{
+            return back();
+        }
+    }
+
+    public function assignPermissionToRole(Request $request){
+        $role = Role::find($request->role);
+        $role->syncPermissions($request->permission);
+        session()->flash("success", "<strong>Success!</strong> Permissions assigned to role.");
+        return back();
+    }
+
     /**
      * Show the form for creating a new resource.
      * @return Renderable

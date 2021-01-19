@@ -1,9 +1,14 @@
 @extends('layouts.master')
 
 @section('title')
-    Chart of Accounts
+    Journal Vouchers
 @endsection
-
+@section('current-page')
+    Journal Vouchers
+@endsection
+@section('current-page-brief')
+    Journal Vouchers
+@endsection
 @section('main-content')
 <div class="row">
     <div class="col-xl-12 col-lg-12  filter-bar">

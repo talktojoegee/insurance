@@ -4,6 +4,12 @@
     Human Resource
 @endsection
 
+@section('current-page')
+    All Employees
+@endsection
+@section('current-page-brief')
+Company's workforce.
+@endsection
 @section('main-content')
 <div class="row">
     <div class="col-xl-12 col-lg-12  filter-bar">

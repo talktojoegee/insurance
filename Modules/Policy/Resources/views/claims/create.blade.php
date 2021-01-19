@@ -106,6 +106,18 @@
                                 @enderror
                             </div>
                             <div class="form-group">
+                                <label for="">Currency</label>
+                                <select name="currency" id="currency" class="form-control js-example-basic-single">
+                                    <option disabled selected>--Select currency--</option>
+                                    @foreach ($currencies as $currency)
+                                        <option value="{{$currency->id}}">{{$currency->name ?? ''}} ({{$currency->symbol ?? ''}})</option>
+                                    @endforeach
+                                </select>
+                                @error('currency')
+                                    <i class="text-danger mt-2">{{$message}}</i>
+                                @enderror
+                            </div>
+                            <div class="form-group">
                                 <label for="">Claim Attachment Documents</label>
                                 <input type="file"  id="claim_attachment_documents" name="claim_attachment_documents[]" multiple class="form-control-file">
                                 @error('claim_attachment_documents')

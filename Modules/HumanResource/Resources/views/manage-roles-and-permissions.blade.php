@@ -4,6 +4,12 @@
     Manage Roles & Permissions
 @endsection
 
+@section('current-page')
+    Manage Permissions
+@endsection
+@section('current-page-brief')
+    Manage Permissions
+@endsection
 @section('main-content')
 <div class="row">
     <div class="col-xl-12 col-lg-12  filter-bar">
@@ -85,8 +91,8 @@
                                                             <td>{{$role->name ?? ''}}</td>
                                                             <td>{{date('d M, Y', strtotime($role->created_at))}}</td>
                                                             <td class="text-center">
-                                                                <a href="" class="role mr-4" data-toggle="modal" title="Edit Role"  data-placement="top" title="" data-original-title="Edit Role" data-target="#editRoleModal" data-role-name="{{$role->name ?? ''}}" data-role-id="{{$role->id}}"><i class="ti-pencil text-warning"></i></a>
-                                                                <a href="" class=" mr-4"  data-toggle="tooltip" data-placement="top" title="" data-original-title="Assign Permission(s)"><i class="ti-lock text-danger"></i></a>
+                                                                <a href="javascript:void(0);" class="role mr-4" data-toggle="modal" title="Edit Role"  data-placement="top" title="" data-original-title="Edit Role" data-target="#editRoleModal" data-role-name="{{$role->name ?? ''}}" data-role-id="{{$role->id}}"><i class="ti-pencil text-warning"></i></a>
+                                                                <a href="/human-resource/assign-permission/{{$role->id}}" class=" mr-4"  data-toggle="tooltip" data-placement="top" title="" data-original-title="Assign Permission(s)"><i class="ti-lock text-danger"></i></a>
                                                             </td>
                                                         </tr>
                                                     @endforeach

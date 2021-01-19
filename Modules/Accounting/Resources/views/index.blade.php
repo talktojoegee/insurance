@@ -3,7 +3,12 @@
 @section('title')
     Chart of Accounts
 @endsection
-
+@section('current-page')
+    Chart of Accounts
+@endsection
+@section('current-page-brief')
+    Chart of Accounts
+@endsection
 @section('main-content')
 <div class="row">
     <div class="col-xl-12 col-lg-12  filter-bar">

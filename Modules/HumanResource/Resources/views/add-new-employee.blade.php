@@ -4,6 +4,12 @@
     Add New Employee
 @endsection
 
+@section('current-page')
+    Add New Employee
+@endsection
+@section('current-page-brief')
+Add New Employee
+@endsection
 @section('main-content')
 <div class="row">
     <div class="col-xl-12 col-lg-12  filter-bar">

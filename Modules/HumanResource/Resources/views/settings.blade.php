@@ -3,10 +3,13 @@
 @section('title')
     HR Settings
 @endsection
-@section('activePage')
-    HR Settings
-@endsection
 
+@section('current-page')
+    Human Resource Settings
+@endsection
+@section('current-page-brief')
+Human Resource Settings
+@endsection
 @section('extra-styles')
 <link rel="stylesheet" href="/assets/css/datatables.min.css">
 @endsection

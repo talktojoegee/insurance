@@ -52,4 +52,6 @@ Route::prefix('policy')->group(function() {
     Route::post('/claim/get-policies', 'ClaimController@getClientPolicies');
     Route::post('/claim/get-client-policy', 'ClaimController@getClientPolicy');
     Route::post('/claim/register-claim', 'ClaimController@storeClaim');
+    Route::get('/claim/view/{slug}', 'ClaimController@viewClaim');
+    Route::post('/claim/update-claim', 'ClaimController@updateClaimStatus');
 });

@@ -122,10 +122,10 @@
                                 <tr>
                                     <td>{{$index++}}</td>
                                     <td>{{$item->claim_no ?? ''}}</td>
-                                    <td>in</td>
+                                    <td>{{$item->getClient->insured_name ?? ''}}</td>
                                     <td>{{!is_null($item->notification_date) ? date('d M, Y', strtotime($item->notification_date)) : '-'}}</td>
                                     <td>{{!is_null($item->loss_date) ? date('d M, Y', strtotime($item->loss_date)) : '-'}}</td>
-                                    <td>{{number_format($item->estimated_claim_amount, 2)}}</td>
+                                    <td>{{$item->getCurrency->symbol ?? 'N'}}{{number_format($item->estimated_claim_amount, 2)}}</td>
                                     <td>
                                         @if ($item->status == 0)
                                             <label for="" class="label label-warning">Pending</label>
@@ -135,10 +135,10 @@
                                             <label for="" class="label label-danger">Declined</label>
                                         @endif
                                     </td>
-                                    <td>class</td>
-                                    <td>sub class</td>
+                                    <td>{{$item->getBusinessClass->class_name ?? ''}}</td>
+                                    <td>{{$item->getSubBusinessClass->class_name ?? ''}}</td>
                                     <td>
-                                        <a href="" class="btn btn-primary btn-mini">Learn more</a>
+                                        <a href="/policy/claim/view/{{$item->slug}}" class="btn btn-primary btn-mini">Learn more</a>
                                     </td>
                                 </tr>
                             @endforeach

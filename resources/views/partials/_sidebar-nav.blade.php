@@ -144,7 +144,7 @@
                         </a>
                     </li>
                     <li class=" ">
-                        <a href="form-elements-advance.htm">
+                        <a href="{{url('/accounting/trial-balance')}}">
                             <span class="pcoded-mtext">Trial Balance</span>
                         </a>
                     </li>

@@ -23,6 +23,7 @@ class CreateClaimsTable extends Migration
             $table->string('insurance_claim_no')->nullable();
             $table->dateTime('notification_date')->nullable();
             $table->dateTime('loss_date')->nullable();
+            $table->integer('currency_id')->nullable()->default(1);
             $table->double('estimated_claim_amount')->default(0);
             $table->unsignedBigInteger('insurance_company')->nullable();
             $table->text('claim_description')->nullable();

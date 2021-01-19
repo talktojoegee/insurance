@@ -3,7 +3,12 @@
 @section('title')
     Account Settings
 @endsection
-
+@section('current-page')
+    Account Settings
+@endsection
+@section('current-page-brief')
+    Account Settings
+@endsection
 @section('extra-styles')
 <link href="/assets/css/select2.min.css" rel="stylesheet" />
 @endsection

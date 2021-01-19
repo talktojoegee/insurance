@@ -1,10 +1,16 @@
 @extends('layouts.master')
 
 @section('title')
-    Chart of Accounts
+    New Journal Voucher
 @endsection
 @section('extra-styles')
     <link rel="stylesheet" href="/assets/css/select2.min.css">
+@endsection
+@section('current-page')
+    New Journal Voucher
+@endsection
+@section('current-page-brief')
+    New  Journal Voucher
 @endsection
 @section('main-content')
 <div class="row">

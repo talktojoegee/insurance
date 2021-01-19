@@ -22,4 +22,7 @@ Route::prefix('accounting')->group(function() {
     #Receipt routes
     Route::get('/generate-receipt', 'AccountingController@showGenerateReceipt');
     Route::post('/get-debit-note-details', 'AccountingController@getDebitNoteDetails');
+    #Report routes
+    Route::get('/trial-balance', 'AccountingController@trialBalanceView');
+    Route::post('/trial-balance', 'AccountingController@trialBalance');
 });

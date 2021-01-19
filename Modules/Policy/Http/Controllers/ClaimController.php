@@ -95,6 +95,8 @@ class ClaimController extends Controller
             $claim->loss_date = $request->date_of_loss;
             $claim->claim_description = $request->claim_description;
             $claim->submitted_by = \Auth::user()->id;
+            $claim->slug = substr(sha1(time()),30,40);
+            $claim->currency_id = $request->currency;
             $claim->save();
             $claimId = $claim->id;
             #Attachment
@@ -118,14 +120,24 @@ class ClaimController extends Controller
         }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
-     */
-    public function store(Request $request)
+    public function viewClaim($slug)
     {
-        //
+        $claim = Claim::where('slug', $slug)->first();
+        if(!empty($claim)){
+            return view('policy::claims.view', ['claim'=>$claim]);
+        }
+    }
+
+    public function updateClaimStatus(Request $request){
+        $request->validate([
+            'claim'=>'required',
+            'status'=>'required'
+        ]);
+        $claim = Claim::find($request->claim);
+        $claim->status = $request->status;
+        $claim->updated_by = \Auth::user()->id;
+        $claim->save();
+        return response()->json(['message'=>'Success! Claim updated.'],201);
     }
 
     /**
