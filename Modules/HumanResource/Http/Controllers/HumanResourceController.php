@@ -9,6 +9,9 @@ use Auth;
 
 class HumanResourceController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      * @return Renderable
@@ -16,7 +19,7 @@ class HumanResourceController extends Controller
     public function index()
     {
         return view('humanresource::index');
-    }    
+    }
 
 
     /**

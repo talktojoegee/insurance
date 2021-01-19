@@ -31,18 +31,18 @@ Human Resource Settings
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#messages1" role="tab">Emp. Types</a>
                             </li>
-                            <li class="nav-item">
+                            <!--<li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#settings1" role="tab">Leave Type</a>
-                            </li>
+                            </li> -->
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#settings2" role="tab">Acad. Qualification</a>
                             </li>
-                            <li class="nav-item">
+                            <!--<li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#settings3" role="tab">Grade</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#settings3" role="tab">Access Level</a>
-                            </li>
+                            </li> -->
                         </ul>
                         <!-- Tab panes -->
                         <div class="tab-content tabs card-block">

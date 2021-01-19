@@ -149,8 +149,13 @@
                         </a>
                     </li>
                     <li class=" ">
-                        <a href="form-elements-advance.htm">
-                            <span class="pcoded-mtext">Income Statement</span>
+                        <a href="{{url('/accounting/balance-sheet')}}">
+                            <span class="pcoded-mtext">Balance Sheet</span>
+                        </a>
+                    </li>
+                    <li class=" ">
+                        <a href="{{url('/accounting/profit-or-loss')}}">
+                            <span class="pcoded-mtext">Profit/Loss</span>
                         </a>
                     </li>
                 </ul>

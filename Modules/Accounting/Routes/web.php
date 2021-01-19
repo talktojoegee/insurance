@@ -25,4 +25,7 @@ Route::prefix('accounting')->group(function() {
     #Report routes
     Route::get('/trial-balance', 'AccountingController@trialBalanceView');
     Route::post('/trial-balance', 'AccountingController@trialBalance');
+    Route::get('/balance-sheet', 'AccountingController@balanceSheetView');
+    Route::post('/balance-sheet', 'AccountingController@balanceSheet');
+    Route::get('/profit-or-loss', 'AccountingController@profitOrLossView');
 });

@@ -14,6 +14,10 @@ use DB;
 
 class AccountingController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      * @return Renderable
@@ -149,40 +153,39 @@ class AccountingController extends Controller
     }
 
     public function balanceSheetView(){
-        return view('accounting::reports.balance-sheet-setup');
+        return view('accounting::report.balance-sheet-setup');
     }
     public function balanceSheet(Request $request){
-        $this->validate($request,[
+        $request->validate([
             'date'=>'required|date'
         ]);
         $current = Carbon::now();
-        $inception = DB::table(Auth::user()->tenant_id.'_gl')->orderBy('id', 'ASC')->first();
+        $inception = DB::table('general_ledgers')->orderBy('id', 'ASC')->first();
         if(!empty($inception)){
-            $bfDr = DB::table(Auth::user()->tenant_id.'_gl')->whereBetween('created_at', [$inception->created_at,$request->date])->sum('dr_amount');
-            $bfCr = DB::table(Auth::user()->tenant_id.'_gl')->whereBetween('created_at',[$inception->created_at,$request->date])->sum('cr_amount');
-            $reports = DB::table(Auth::user()->tenant_id.'_gl as g')
-                ->join(Auth::user()->tenant_id.'_coa as c', 'c.glcode', '=', 'g.glcode')
+            $bfDr = DB::table('general_ledgers')->whereBetween('created_at', [$inception->created_at,$request->date])->sum('dr_amount');
+            $bfCr = DB::table('general_ledgers')->whereBetween('created_at',[$inception->created_at,$request->date])->sum('cr_amount');
+            $reports = DB::table('general_ledgers as g')
+                ->join('coas as c', 'c.glcode', '=', 'g.glcode')
                 ->select(DB::raw('sum(g.dr_amount) AS sumDebit'),DB::raw('sum(g.cr_amount) AS sumCredit'),
                     'c.account_name', 'g.glcode', 'c.glcode', 'c.account_type', 'c.type')
-                //->where('c.account_type', 1)
-                ->where('c.type', 'Detail')
+                ->where('c.type', 1)
                 ->whereBetween('g.created_at', [$inception->created_at,$request->date])
                 ->orderBy('c.account_type', 'ASC')
                 ->groupBy('c.account_name')
                 ->get();
-            $revenue = DB::table(Auth::user()->tenant_id.'_gl as g')
-                            ->join(Auth::user()->tenant_id.'_coa as c', 'c.glcode', '=', 'g.glcode')
-                            ->where('c.type', 'Detail')
+            $revenue = DB::table('general_ledgers as g')
+                            ->join('coas as c', 'c.glcode', '=', 'g.glcode')
+                            ->where('c.type', 1)
                             ->whereIn('c.account_type', [4])
                             ->whereBetween('g.created_at', [$inception->created_at,$request->date])
                             ->get();
-            $expense = DB::table(Auth::user()->tenant_id.'_gl as g')
-                            ->join(Auth::user()->tenant_id.'_coa as c', 'c.glcode', '=', 'g.glcode')
-                            ->where('c.type', 'Detail')
+            $expense = DB::table('general_ledgers as g')
+                            ->join('coas as c', 'c.glcode', '=', 'g.glcode')
+                            ->where('c.type', 1)
                             ->whereIn('c.account_type', [5])
                             ->whereBetween('g.created_at', [$inception->created_at,$request->date])
                             ->get();
-            return view('backend.accounting.reports.balance-sheet', [
+            return view('accounting::report.balance-sheet', [
                 'reports'=>$reports,
                 'bfDr'=>$bfDr,
                 'bfCr'=>$bfCr,
@@ -196,7 +199,7 @@ class AccountingController extends Controller
         }
     }
     public function profitOrLossView(){
-        return view('backend.accounting.reports.profit-o-loss-setup');
+        return view('accounting::report.profit-or-loss-setup');
     }
 
     public function profitOrLoss(Request $request){
