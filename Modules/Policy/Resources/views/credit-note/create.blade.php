@@ -11,6 +11,12 @@
         }
     </style>
 @endsection
+@section('current-page')
+    Raise New Credit Note
+@endsection
+@section('current-page-brief')
+    Create a new credit note
+@endsection
 @section('main-content')
 
 @include('policy::partials._policy-shortcut')

@@ -1,15 +1,19 @@
 @extends('layouts.master')
 
 @section('title')
-    Non-motor Policies
+    Policy Documentation Details
 @endsection
 
 @section('extra-styles')
 
 @endsection
+@section('current-page')
+    Policy Documentation Details
+@endsection
+@section('current-page-brief')
+    Details of {{$policy->policy_number}} policy documentation.
+@endsection
 @section('main-content')
-
-<div class="container">
     <div class="row">
         <div class="col-xl-12 col-lg-12  filter-bar">
             <nav class="navbar navbar-light bg-faded m-b-30 p-10">
@@ -20,7 +24,6 @@
             </nav>
         </div>
     </div>
-</div>
 <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12" id="policyWrapper">
         <div class="card">

@@ -21,29 +21,44 @@
 
 
 <div class="row">
-   <div class="col-md-6 col-xl-3">
-        <div class="card widget-card-1">
-            <div class="card-block-small">
-                <i class="feather icon-pie-chart bg-c-blue card1-icon"></i>
-                <span class="text-c-blue f-w-600">Use Space</span>
-                <h4>49/50GB</h4>
-                <div>
-                    <span class="f-left m-t-10 text-muted">
-                        <i class="text-c-blue f-16 feather icon-alert-triangle m-r-10"></i>Get more space
-                    </span>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="col-md-6 col-xl-3">
         <div class="card widget-card-1">
             <div class="card-block-small">
                 <i class="feather icon-home bg-c-pink card1-icon"></i>
-                <span class="text-c-pink f-w-600">Revenue</span>
-                <h4>$23,589</h4>
+                <span class="text-c-pink f-w-600">Total</span>
+                <h4>{{number_format($list->sum('sum_insured'),2)}}</h4>
                 <div>
                     <span class="f-left m-t-10 text-muted">
-                        <i class="text-c-pink f-16 feather icon-calendar m-r-10"></i>Last 24 hours
+                        <i class="text-c-pink f-16 feather icon-calendar m-r-10"></i>Sum Insured
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+   <div class="col-md-6 col-xl-3">
+        <div class="card widget-card-1">
+            <div class="card-block-small">
+                <i class="feather icon-pie-chart bg-c-blue card1-icon"></i>
+                <span class="text-c-blue f-w-600">Total</span>
+                <h4>{{number_format($list->sum('gross_premium'),2)}}</h4>
+                <div>
+                    <span class="f-left m-t-10 text-muted">
+                        <i class="text-c-blue f-16 feather icon-alert-triangle m-r-10"></i>Gross Premium
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-xl-3">
+        <div class="card widget-card-1">
+            <div class="card-block-small">
+                <i class="ti-shopping-cart bg-c-green card1-icon"></i>
+                <span class="text-c-green f-w-600">Total</span>
+                <h4>{{number_format($list->sum('commission'),2)}}</h4>
+                <div>
+                    <span class="f-left m-t-10 text-muted">
+                        <i class="text-c-green f-16 feather icon-tag m-r-10"></i>Commission
                     </span>
                 </div>
             </div>
@@ -52,26 +67,12 @@
     <div class="col-md-6 col-xl-3">
         <div class="card widget-card-1">
             <div class="card-block-small">
-                <i class="feather icon-alert-triangle bg-c-green card1-icon"></i>
-                <span class="text-c-green f-w-600">Fixed Issue</span>
-                <h4>45</h4>
+                <i class="ti-receipt bg-c-yellow card1-icon"></i>
+                <span class="text-c-yellow f-w-600">Total</span>
+                <h4>{{number_format($list->sum('net_amount'),2)}}</h4>
                 <div>
                     <span class="f-left m-t-10 text-muted">
-                        <i class="text-c-green f-16 feather icon-tag m-r-10"></i>Tracked at microsoft
-                    </span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6 col-xl-3">
-        <div class="card widget-card-1">
-            <div class="card-block-small">
-                <i class="feather icon-twitter bg-c-yellow card1-icon"></i>
-                <span class="text-c-yellow f-w-600">Followers</span>
-                <h4>+562</h4>
-                <div>
-                    <span class="f-left m-t-10 text-muted">
-                        <i class="text-c-yellow f-16 feather icon-watch m-r-10"></i>Just update
+                        <i class="text-c-yellow f-16 feather icon-watch m-r-10"></i>Net Amount
                     </span>
                 </div>
             </div>
@@ -84,6 +85,7 @@
         <div class="card">
             <div class="card-block">
                 <h5 class="sub-title text-primary">All Credit Notes</h5>
+                <p>A total of <label for="" class="badge badge-danger">{{number_format($list->count())}}</label> credit note(s) have been raised since inception. </p>
                 @if(session()->has('success'))
                     <div class="alert alert-success background-success">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">

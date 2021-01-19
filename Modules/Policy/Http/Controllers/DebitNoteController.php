@@ -14,6 +14,9 @@ use Auth;
 
 class DebitNoteController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      * @return Renderable
@@ -92,7 +95,7 @@ class DebitNoteController extends Controller
         $debit->payment_mode = $request->payment_mode;
         $debit->start_date = $current_date;
         $debit->end_date = $current_date->addDays($cover_days);
-        $debit->client_id = 1;
+        $debit->client_id = $request->client;
         $debit->slug = substr(sha1(time()),30,40);
     	//$debit->reference_no = $request->reference_no;
     	//$debit->cheque_no = $request->cheque_no;

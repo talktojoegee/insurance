@@ -11,6 +11,13 @@
         }
     </style>
 @endsection
+
+@section('current-page')
+    Raise New Debit Note
+@endsection
+@section('current-page-brief')
+    Create a new debit note
+@endsection
 @section('main-content')
 
 @include('policy::partials._policy-shortcut')
@@ -38,6 +45,7 @@
                                 @error('client_number')
                                     <i class="text-danger mt-2">{{ $message }}</i>
                                 @enderror
+                                <input type="hidden" name="client" value="{{$policy->client_id}}">
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12">

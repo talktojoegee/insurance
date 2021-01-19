@@ -61,11 +61,25 @@
                     <span class="pcoded-mtext">Credit Notes</span>
                 </a>
             </li>
-            <li class="">
-                <a href="navbar-light.htm">
+            <li class="pcoded-hasmenu">
+                <a href="javascript:void(0)">
                     <span class="pcoded-micon"><i class="icofont icofont-certificate-alt-1"></i></span>
                     <span class="pcoded-mtext">Claims</span>
                 </a>
+                <ul class="pcoded-submenu">
+                    <li class="">
+                        <a href="{{ url('/policy/claim/new') }}">
+                            <span class="pcoded-micon"><i class="ti-users"></i></span>
+                            <span class="pcoded-mtext">Add New Claim</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="{{url('/policy/claims')}}">
+                            <span class="pcoded-micon"><i class="ti-users"></i></span>
+                            <span class="pcoded-mtext">All Claims</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
 
         </ul>
