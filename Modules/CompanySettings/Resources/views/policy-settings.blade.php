@@ -3,8 +3,11 @@
 @section('title')
     Policy Settings
 @endsection
-@section('activePage')
-Policy Settings
+@section('current-page')
+    Policy Settings
+@endsection
+@section('current-page-brief')
+    Policy Settings
 @endsection
 
 @section('extra-styles')

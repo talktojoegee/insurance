@@ -20,7 +20,9 @@ Route::prefix('accounting')->group(function() {
     Route::get('/account-settings', 'AccountingController@accountSettings');
     Route::post('/account-settings', 'AccountingController@setDefaultAccounts');
     #Receipt routes
+    Route::get('/receipts', 'AccountingController@receipts');
     Route::get('/generate-receipt', 'AccountingController@showGenerateReceipt');
+    Route::post('/generate-receipt', 'AccountingController@storeReceipt');
     Route::post('/get-debit-note-details', 'AccountingController@getDebitNoteDetails');
     #Report routes
     Route::get('/trial-balance', 'AccountingController@trialBalanceView');
@@ -28,4 +30,5 @@ Route::prefix('accounting')->group(function() {
     Route::get('/balance-sheet', 'AccountingController@balanceSheetView');
     Route::post('/balance-sheet', 'AccountingController@balanceSheet');
     Route::get('/profit-or-loss', 'AccountingController@profitOrLossView');
+    Route::post('/profit-or-loss', 'AccountingController@profitOrLoss');
 });

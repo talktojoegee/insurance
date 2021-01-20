@@ -3,7 +3,15 @@
 @section('title')
     Generate Receipt
 @endsection
-
+@section('extra-styles')
+<link rel="stylesheet" href="/assets/css/select2.min.css">
+@endsection
+@section('current-page')
+    Generate Receipt
+@endsection
+@section('current-page-brief')
+    Generate Receipt
+@endsection
 @section('main-content')
 <div class="row">
     <div class="col-xl-12 col-lg-12  filter-bar">
@@ -35,7 +43,8 @@
                 <div class="card">
                     <div class="card-block">
                         <h5 class="sub-title">Generate New Receipt</h5>
-                        <form action="" autocomplete="off">
+                        <form action="{{url('/accounting/generate-receipt')}}" method="post" autocomplete="off">
+                            @csrf
                             <div class="form-group">
                                 <label for="">Debit Code/Number</label>
                                 <input type="number" placeholder="Debit Code/Number" id="debit_code" name="debit_code" class="form-control">
@@ -45,15 +54,18 @@
                             </div>
                             <div class="form-group">
                                 <label for="">Receipt Number</label>
-                                <input type="number" readonly placeholder="Receipt Number" id="receipt_no" name="receipt_no" class="form-control">
+                                <input type="number" readonly placeholder="Receipt Number" id="receipt_no" value="{{$receiptNo}}" name="receipt_no" class="form-control">
                                 @error('receipt_no')
                                     <i class="text-danger mt-2">{{$message}}</i>
                                 @enderror
                             </div>
                             <div class="form-group">
                                 <label for="">Bank</label>
-                                <select name="bank" id="bank" class="form-control">
+                                <select name="bank" id="bank" class="form-control js-example-basic-single">
                                     <option disabled selected>--Select bank--</option>
+                                    @foreach ($accounts as $account)
+                                        <option value="{{$account->glcode}}">{{$account->account_name ?? ''}} - {{$account->glcode ?? ''}}</option>
+                                    @endforeach
                                 </select>
                                 @error('bank')
                                     <i class="text-danger mt-2">{{$message}}</i>
@@ -92,13 +104,19 @@
                                 @enderror
                             </div>
                             <div class="form-group">
+                                <label for="">Amount</label>
+                                <input type="number" step="0.01" placeholder="Amount" name="amount"  class="form-control">
+                                @error('amount')
+                                    <i class="text-danger mt-2">{{$message}}</i>
+                                @enderror
+                            </div>
+                            <div class="form-group">
                                 <label for="">Currency</label>
-                                <select name="currency" id="currency" class="form-control">
+                                <select name="currency" id="currency" class="form-control js-example-basic-single">
                                     <option disabled selected>--Select currency--</option>
-                                    <option value="1">Cash</option>
-                                    <option value="2">Bank Transfer</option>
-                                    <option value="3">Cheque</option>
-                                    <option value="4">To be adviced</option>
+                                    @foreach ($currencies as $currency)
+                                        <option value="{{$currency->id}}">{{$currency->name ?? ''}} ({{$currency->symbol ?? ''}})</option>
+                                    @endforeach
                                 </select>
                                 @error('currency')
                                     <i class="text-danger mt-2">{{$message}}</i>
@@ -134,9 +152,11 @@
 @endsection
 
 @section('extra-scripts')
+<script type="text/javascript" src="/assets/js/select2.min.js"></script>
 <script type="text/javascript" src="/assets/js/axios.min.js"></script>
 <script>
     $(document).ready(function(){
+        $('.js-example-basic-single').select2();
         $(document).on('blur', '#debit_code', function(e){
             e.preventDefault();
             axios.post('/accounting/get-debit-note-details',{debit_code:$(this).val()})

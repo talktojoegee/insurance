@@ -3,8 +3,11 @@
 @section('title')
     General Settings
 @endsection
-@section('activePage')
-General Settings
+@section('current-page')
+    General Settings
+@endsection
+@section('current-page-brief')
+    General Settings
 @endsection
 
 @section('extra-styles')

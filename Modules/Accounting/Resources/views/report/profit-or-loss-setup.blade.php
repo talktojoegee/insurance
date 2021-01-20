@@ -35,7 +35,7 @@ Profit/Loss
         <p>Selecting accounting period to generate trial balance</p>
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <form action="{{url('/policy/profit-o-loss')}}" method="post">
+                <form action="{{url('/accounting/profit-or-loss')}}" method="post">
                     @csrf
                     <div class="row">
                         <div class="col-sm-12 col-md-8 col-lg-8">

@@ -6,6 +6,10 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Accounting\Entities\Coa;
+use Modules\Accounting\Entities\Currency;
+use Modules\Accounting\Entities\Receipt;
+use Modules\Accounting\Entities\Invoice;
+use Modules\Accounting\Entities\GeneralLedger;
 use Modules\Policy\Entities\DebitNote;
 use Modules\CompanySettings\Entities\SettingsAccount;
 use Carbon\Carbon;
@@ -93,7 +97,72 @@ class AccountingController extends Controller
 
 
     public function showGenerateReceipt(){
-        return view('accounting::receipt.generate-receipt');
+        $accounts = Coa::all();
+        $currencies = Currency::all();
+        $receiptNo = null;
+        $receipt = Receipt::orderBy('id', 'DESC')->first();
+        if(!empty($receipt)){
+            $receiptNo = $receipt->receipt_no + 1;
+        }else{
+            $receiptNo = 10000;
+        }
+        return view('accounting::receipt.generate-receipt',['currencies'=>$currencies,'accounts'=>$accounts,'receiptNo'=>$receiptNo]);
+    }
+
+    public function storeReceipt(Request $request){
+        $request->validate([
+            'debit_code'=>'required',
+            'receipt_no'=>'required',
+            'bank'=>'required',
+            'transaction_date'=>'required|date',
+            'payment_type'=>'required',
+            'payment_mode'=>'required',
+            'currency'=>'required',
+            'amount'=>'required'
+        ]);
+        $transaction = substr(sha1(time()),30,40);
+        $receipt = new Receipt;
+        $receipt->receipt_no = $request->receipt_no;
+        $receipt->debit_code = $request->debit_code;
+        $receipt->glcode = $request->bank;
+        $receipt->created_at = $request->transaction_date;
+        $receipt->payment_type = $request->payment_type;
+        $receipt->payment_mode = $request->payment_mode;
+        $receipt->currency_id = $request->currency;
+        $receipt->amount = $request->amount;
+        $receipt->transaction_id = $transaction;
+        $receipt->save();
+        #post to ledger
+        $default_receipt_account = SettingsAccount::where('transaction', 'client')->first();
+        if(!empty($default_receipt_account)){
+            //debit bank
+            $ledger = new GeneralLedger;
+            $ledger->glcode = $request->bank;
+            $ledger->dr_amount = $request->amount ?? 0;
+            $ledger->cr_amount = 0;
+            $ledger->posted_by = \Auth::user()->id;
+            $ledger->narration = "Receipt generated with debit code <strong>".$request->debit_code."</strong>";
+            $ledger->ref_no = $transaction;
+            $ledger->save();
+            //credit client
+            $ledger = new GeneralLedger;
+            $ledger->glcode = $default_receipt_account->cr;
+            $ledger->dr_amount = 0;
+            $ledger->cr_amount = $request->amount ?? 0;
+            $ledger->posted_by = \Auth::user()->id;
+            $ledger->narration = "Receipt generated with debit code <strong>".$request->debit_code."</strong>";
+            $ledger->ref_no = $transaction;
+            $ledger->save();
+            session()->flash("success", "<strong>Success!</strong> Receipt generated.");
+            return redirect("/accounting/receipts");
+        }else{
+            return redirect("/accounting/receipts");
+        }
+    }
+
+    public function receipts(){
+        $receipts = Receipt::orderBy('id', 'DESC')->get();
+        return view('accounting::receipt.receipts', ['receipts'=>$receipts]);
     }
 
     public function getDebitNoteDetails(Request $request){
@@ -207,38 +276,37 @@ class AccountingController extends Controller
             'to'=>'Choose :attribute your account start period',
             'from'=>'Choose :attribute account closing period'
         ];
-        $this->validate($request,[
+        $request->validate([
             'from'=>'required|date',
             'to'=>'required|date|after_or_equal:from'
         ], $messages);
         $current = Carbon::now();
-        $inception = DB::table(Auth::user()->tenant_id.'_gl')->orderBy('id', 'ASC')->first();
+        $inception = DB::table('general_ledgers')->orderBy('id', 'ASC')->first();
         if(!empty($inception)){
-            $bfDr = DB::table(Auth::user()->tenant_id.'_gl')->whereBetween('created_at', [$inception->created_at, $current->parse($request->from)->subDays(1)])->sum('dr_amount');
-            $bfCr = DB::table(Auth::user()->tenant_id.'_gl')->whereBetween('created_at', [$inception->created_at, $current->parse($request->from)->subDays(1)])->sum('cr_amount');
-            $reports = DB::table(Auth::user()->tenant_id.'_gl as g')
-                ->join(Auth::user()->tenant_id.'_coa as c', 'c.glcode', '=', 'g.glcode')
+            $bfDr = DB::table('general_ledgers')->whereBetween('created_at', [$inception->created_at, $current->parse($request->from)->subDays(1)])->sum('dr_amount');
+            $bfCr = DB::table('general_ledgers')->whereBetween('created_at', [$inception->created_at, $current->parse($request->from)->subDays(1)])->sum('cr_amount');
+            $reports = DB::table('general_ledgers as g')
+                ->join('coas as c', 'c.glcode', '=', 'g.glcode')
                 ->select(DB::raw('sum(g.dr_amount) AS sumDebit'),DB::raw('sum(g.cr_amount) AS sumCredit'),
                     'c.account_name', 'g.glcode', 'c.glcode', 'c.account_type', 'c.type')
-                //->where('c.account_type', 1)
-                ->where('c.type', 'Detail')
+                ->where('c.type', 1)
                 ->whereBetween('g.created_at', [$request->from, $request->to])
                 ->orderBy('c.account_type', 'ASC')
                 ->groupBy('c.account_name')
                 ->get();
-            $revenue = DB::table(Auth::user()->tenant_id.'_gl as g')
-                            ->join(Auth::user()->tenant_id.'_coa as c', 'c.glcode', '=', 'g.glcode')
-                            ->where('c.type', 'Detail')
+            $revenue = DB::table('general_ledgers as g')
+                            ->join('coas as c', 'c.glcode', '=', 'g.glcode')
+                            ->where('c.type', 1)
                             ->whereIn('c.account_type', [4])
                             ->whereBetween('g.created_at', [$request->from, $request->to])
                             ->get();
-            $expense = DB::table(Auth::user()->tenant_id.'_gl as g')
-                            ->join(Auth::user()->tenant_id.'_coa as c', 'c.glcode', '=', 'g.glcode')
-                            ->where('c.type', 'Detail')
+            $expense = DB::table('general_ledgers as g')
+                            ->join('coas as c', 'c.glcode', '=', 'g.glcode')
+                            ->where('c.type', 1)
                             ->whereIn('c.account_type', [5])
                             ->whereBetween('g.created_at', [$request->from, $request->to])
                             ->get();
-            return view('backend.accounting.reports.profit-o-loss',[
+            return view('accounting::report.profit-or-loss',[
                 'reports'=>$reports,
                 'bfDr'=>$bfDr,
                 'bfCr'=>$bfCr,

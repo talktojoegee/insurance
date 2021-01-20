@@ -10,6 +10,12 @@
     <link rel="stylesheet" type="text/css" href="\assets\css\toastify.min.css">
     <link rel="stylesheet" type="text/css" href="\bower_components\datatables.net-responsive-bs4\css\responsive.bootstrap4.min.css">
 @endsection
+@section('current-page')
+    All Debit Notes
+@endsection
+@section('current-page-brief')
+    All Debit Notes
+@endsection
 @section('main-content')
 
 

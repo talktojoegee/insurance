@@ -182,7 +182,7 @@
                             </a>
                         </li>
                         <li class="">
-                            <a href="widget-chart.htm">
+                            <a href="{{url('/accounting/receipts')}}">
                                 <span class="pcoded-mtext">All Receipts</span>
                             </a>
                         </li>
