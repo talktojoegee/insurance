@@ -2,5 +2,5 @@
 deployment:
   tasks:
     # - export DEPLOYPATH=/home4/rrwojnmy/public_html/
-    - export DEPLOYPATH=/home4/rrwojnmy/public_html/stage/
+    - export DEPLOYPATH=/home4/rrwojnmy/public_html/insurance/
     - /bin/cp -R * $DEPLOYPATH
