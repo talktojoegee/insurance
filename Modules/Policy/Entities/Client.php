@@ -3,6 +3,7 @@
 namespace Modules\Policy\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
 class Client extends Model
 {
@@ -13,5 +14,18 @@ class Client extends Model
     }
     public function getClientDebitNotes(){
         return $this->hasMany(DebitNote::class, 'client_id');
+    }
+
+
+    public function createClient(Request $request){
+        $client = new Client;
+        $client->insured_name = $request->insured_name;
+        $client->email = $request->email;
+        $client->mobile_no = $request->mobile_number;
+        $client->address = $request->address;
+        $client->password = bcrypt(substr(sha1(time()),32,40 ));
+        $client->slug = substr(sha1(time()),24,40 );
+        $client->save();
+        return $client;
     }
 }

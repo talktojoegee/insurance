@@ -22,6 +22,8 @@ class PolicyController extends Controller
 {
     public function __construct(){
         $this->middleware('auth');
+        $this->policy = new Policy();
+        $this->client = new Client();
     }
 
     /**
@@ -30,12 +32,13 @@ class PolicyController extends Controller
      */
     public function index()
     {
-        $policies = Policy::where('policy_type', 1)->orderBy('id', 'DESC')->get();
+        $policies = $this->policy->getPolicyDocumentationByType(1);
         return view('policy::non-motor', ['policies'=>$policies]);
     }
     public function nonMotor()
     {
-        $policies = Policy::where('policy_type', 1)->orderBy('id', 'DESC')->get();
+        $policies = $this->policy->getPolicyDocumentationByType(1);
+        //Policy::where('policy_type', 1)->orderBy('id', 'DESC')->get();
         return view('policy::non-motor',['policies'=>$policies]);
     }
 
@@ -95,7 +98,7 @@ class PolicyController extends Controller
 
     public function motor()
     {
-        $policies = Policy::where('policy_type', 2)->orderBy('id', 'DESC')->get();
+        $policies = $this->policy->getPolicyDocumentationByType(2);
         return view('policy::motor',['policies'=>$policies]);
     }
     public function store(Request $request)
@@ -112,38 +115,23 @@ class PolicyController extends Controller
             $request->validate([
                 'policy_number'=>'required|unique:policies,policy_number',
                 'insurance_policy_number'=>'required',
-                //'start_date'=>'required|date',
-                //'end_date'=>'required|date',
+                'start_date'=>'required|date',
+                'end_date'=>'required|date',
                 'policy_type'=>'required',
                 'client'=>'required',
                 'sum_insured'=>'required',
                 'premium_rate'=>'required',
                 'gross_premium'=>'required',
-                //'currency'=>'required'
+                'currency'=>'required'
             ]);
-            $policy = new Policy;
-            $policy->policy_number = $request->policy_number;
-            $policy->insurance_policy_number = $request->insurance_policy_number;
-            $policy->start_date = now();//$request->start_date;
-            $policy->end_date = now();//$request->end_date;
-            $policy->policy_type = $request->policy_type;
-            $policy->client_id = $request->client;
-            $policy->sum_insured = $request->sum_insured;
-            $policy->premium_rate = $request->premium_rate;
-            $policy->gross_premium = $request->gross_premium;
-            $policy->currency = $request->currency;
-            $policy->author = 1;
-            $policy->class_id = $request->business_class;
-            $policy->sub_class_id = $request->sub_business_class;
-            $policy->agency_id = $request->agent;
-            $policy->slug = substr(sha1(time()),29,40 );
-            $policy->save();
+            $this->policy->createPolicyDocumentation($request, $request->client);
+
         }else{ //new client
             $request->validate([
                 'policy_number'=>'required|unique:policies,policy_number',
                 'insurance_policy_number'=>'required',
-                //'start_date'=>'required|date',
-                //'end_date'=>'required|date',
+                'start_date'=>'required|date',
+                'end_date'=>'required|date',
                 'policy_type'=>'required',
                 'insured_name'=>'required',
                 'email'=>'required|email|unique:clients,email',
@@ -152,25 +140,27 @@ class PolicyController extends Controller
                 'sum_insured'=>'required',
                 'premium_rate'=>'required',
                 'gross_premium'=>'required',
-                //'currency'=>'required'
+                'currency'=>'required'
             ]);
-            $client = new Client;
+            $client = $this->client->createClient($request);
+            /*$client = new Client;
             $client->insured_name = $request->insured_name;
             $client->email = $request->email;
             $client->mobile_no = $request->mobile_number;
             $client->address = $request->address;
             $client->password = bcrypt(substr(sha1(time()),32,40 ));
             $client->slug = substr(sha1(time()),24,40 );
-            $client->save();
-            $id = $client->id;
-            $policy = new Policy;
+            $client->save();*/
+
+            $new_policy = $this->policy->createPolicyDocumentation($request, $client->id);
+
+            /*$policy = new Policy;
             $policy->policy_number = $request->policy_number;
-            $policy->author = 1;
             $policy->insurance_policy_number = $request->insurance_policy_number;
-            $policy->start_date = now();//$request->start_date;
-            $policy->end_date = now();//$request->end_date;
+            $policy->start_date = $request->start_date;
+            $policy->end_date = $request->end_date;
             $policy->policy_type = $request->policy_type;
-            $policy->client_id = $id;
+            $policy->client_id = $client->id;
             $policy->sum_insured = $request->sum_insured;
             $policy->premium_rate = $request->premium_rate;
             $policy->gross_premium = $request->gross_premium;
@@ -181,7 +171,7 @@ class PolicyController extends Controller
             $policy->sub_class_id = $request->sub_business_class;
             $policy->agency_id = $request->agent;
             $policy->slug = $policy->slug = substr(sha1(time()),29,40 );
-            $policy->save();
+            $policy->save();*/
         }
         if($request->policy_type == 2){ //motor
 	        //save vehicles
@@ -201,7 +191,7 @@ class PolicyController extends Controller
             }
             VehicleInfo::insert($data);
         }
-        session()->flash("success", "<strong>Success!</strong> Policy documented.");
+        session()->flash("success", "<strong>Success!</strong> Policy  documented.");
         return redirect('/policy');
     }
 

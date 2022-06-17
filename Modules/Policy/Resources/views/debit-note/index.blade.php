@@ -117,7 +117,7 @@
                                 <th>Business Type</th>
                                 <th>Business Class</th>
                                 <th>Sub Class</th>
-                                <th>Currency</th>
+
                                 <th>Sum Insured</th>
                                 <th>Premium Rate</th>
                                 <th>Gross Premium</th>
@@ -143,7 +143,7 @@
                                 <td> {{$lst->getPolicy->getBusinessClass->abbr}}/{{date('m',strtotime($lst->getPolicy->getBusinessClass->created_at))}}/{{date('y',strtotime($lst->getPolicy->getBusinessClass->created_at))}}/{{$lst->getPolicy->policy_number}}
                                 </td>
                                 <td>{{$lst->getClient->insured_name ?? ''}}</td>
-                                <td>{{$lst->cover_days}}</td>
+
                                 <td>{{date('d M, Y', strtotime($lst->start_date))}}</td>
                                 <td>{{date('d M, Y', strtotime($lst->end_date))}}</td>
                                 <td>{{$lst->getClient->insured_name ?? ''}}</td>
@@ -183,8 +183,8 @@
                                 <td>{{$lst->commission_rate}}%</td>
                                 <td>{{$lst->getCurrency->symbol ?? ''}}{{number_format($lst->commission,2)}}
                                 </td>
-                                <td>{{$lst->vat_rate}}%</td>
-                                <td>{{$lst->getCurrency->symbol ?? ''}}{{number_format(($lst->vat_rate/100)*$lst->commission,2)}}</td>
+                                <td>{{$lst->vat_rate ?? '-' }}%</td>
+                                <td>{{$lst->getCurrency->symbol ?? ''}}{{number_format(($lst->vat_rate/100)*$lst->commission ?? 0,2)}}</td>
                                 <td>{{$lst->currency ?? ''}}</td>
                                 <td>{{$lst->getCurrency->symbol ?? ''}}{{number_format($lst->net_amount,2)}}
                                 </td>
@@ -213,7 +213,7 @@
                                 <th>Debit Code</th>
                                 <th>Client No.</th>
                                 <th>Insured</th>
-                                <th>Cover Days</th>
+
                                 <th>Start Date</th>
                                 <th>End Date</th>
                                 <th>Insurance Company.</th>

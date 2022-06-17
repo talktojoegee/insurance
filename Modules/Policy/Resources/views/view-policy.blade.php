@@ -40,11 +40,11 @@
                             <td>123 6th St. Melbourne, FL 32904 West Chicago, IL 60185</td>
                         </tr>
                         <tr>
-                            <td><a href="..\..\..\cdn-cgi\l\email-protection.htm#99fdfcf4f6d9fef4f8f0f5b7faf6f4" target="_top"><span class="__cf_email__" data-cfemail="690d0c0406290e04080005470a0604">[email&nbsp;protected]</span></a>
+                            <td><a href="#" target="_top"><span class="__cf_email__" >email@mail.com</span></a>
                             </td>
                         </tr>
                         <tr>
-                            <td>+91 919-91-91-919</td>
+                            <td>+234 919-91-91-919</td>
                         </tr>
                     </tbody>
                 </table>
@@ -166,11 +166,11 @@
                                                         </tr>
                                                         <tr>
                                                             <th scope="row">Cover Type</th>
-                                                            <td>{{$item->cover_type ?? ''}}</td>
+                                                            <td>{{$item->cover_type == 1 ? 'Comprehensive' : 'Third-party' }}</td>
                                                         </tr>
                                                         <tr>
                                                             <th scope="row">Make</th>
-                                                            <td>{{ $item->vehicle_make ?? ''}}</td>
+                                                            <td>{{ $item->getVehicleMake->make_name ?? ''}}</td>
                                                         </tr>
                                                         <tr>
                                                             <th scope="row">Registration No.</th>
@@ -186,11 +186,11 @@
                                                         </tr>
                                                         <tr>
                                                             <th scope="row">State Issued</th>
-                                                            <td>{{ $item->state_issued ?? '-' }}</td>
+                                                            <td>{{ $item->getStateIssued->state_name ?? '-' }}</td>
                                                         </tr>
                                                         <tr>
                                                             <th scope="row">Vehicle Value</th>
-                                                            <td>#{{ number_format($item->vehicle_value,2) ?? '-' }}</td>
+                                                            <td>{{$policy->getCurrency->symbol ?? 'N'}}{{ number_format($item->vehicle_value,2) ?? '-' }}</td>
                                                         </tr>
                                                     @endforeach
                                                 </tbody>

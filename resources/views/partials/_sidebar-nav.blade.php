@@ -83,25 +83,25 @@
             </li>
 
         </ul>
-        <div class="pcoded-navigatio-lavel">Human Resource</div>
+        <div class="pcoded-navigatio-lavel">Administration</div>
         <ul class="pcoded-item pcoded-left-item">
             <li class="pcoded-hasmenu">
                 <a href="javascript:void(0)">
                     <span class="pcoded-micon"><i class="icofont icofont-brainstorming"></i></span>
-                    <span class="pcoded-mtext">Human Resource</span>
+                    <span class="pcoded-mtext">Operations</span>
                 </a>
                 <ul class="pcoded-submenu">
                     <li class=" ">
                         <a href="{{ url('/human-resource') }}">
-                            <span class="pcoded-mtext">Manage Employees</span>
+                            <span class="pcoded-mtext">All Employees</span>
                         </a>
                     </li>
                     <li class=" ">
                         <a href="{{ url('/human-resource/add-new-employee') }}">
-                            <span class="pcoded-mtext">Onboard Employee</span>
+                            <span class="pcoded-mtext">Add New Employee</span>
                         </a>
                     </li>
-                    <li class=" ">
+<!--                    <li class=" ">
                         <a href="button.htm">
                             <span class="pcoded-mtext">Notices</span>
                         </a>
@@ -110,7 +110,7 @@
                         <a href="box-shadow.htm">
                             <span class="pcoded-mtext">Query</span>
                         </a>
-                    </li>
+                    </li>-->
                     <li class=" ">
                         <a href="{{url('/human-resource/manage-roles-and-permissions')}}">
                             <span class="pcoded-mtext">Manage Permissions</span>
@@ -118,7 +118,7 @@
                     </li>
                     <li class=" ">
                         <a href="{{ url('/human-resource/settings') }}">
-                            <span class="pcoded-mtext">HR Settings</span>
+                            <span class="pcoded-mtext"> Settings</span>
                         </a>
                     </li>
                 </ul>

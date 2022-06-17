@@ -15,7 +15,7 @@ Profile
     <div class="col-xl-12 col-lg-12  filter-bar">
         <nav class="navbar navbar-light bg-faded m-b-30 p-10">
             <div class="nav-item nav-grid">
-                <a href="{{ url('/human-resource/employees') }}" class="btn btn-primary btn-mini waves-effect waves-light"><i class="icofont icofont-users-alt-3 mr-2"></i>Manage Employees</a>
+                <a href="{{ url('/human-resource') }}" class="btn btn-primary btn-mini waves-effect waves-light"><i class="icofont icofont-users-alt-3 mr-2"></i>Manage Employees</a>
             </div>
         </nav>
     </div>

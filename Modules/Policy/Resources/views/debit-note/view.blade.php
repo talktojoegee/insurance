@@ -29,11 +29,11 @@
                             <td>123 6th St. Melbourne, FL 32904 West Chicago, IL 60185</td>
                         </tr>
                         <tr>
-                            <td><a href="..\..\..\cdn-cgi\l\email-protection.htm#99fdfcf4f6d9fef4f8f0f5b7faf6f4" target="_top"><span class="__cf_email__" data-cfemail="690d0c0406290e04080005470a0604">[email&nbsp;protected]</span></a>
+                            <td><a href="#" target="_top"><span class="__cf_email__" >[email@mail.com]</span></a>
                             </td>
                         </tr>
                         <tr>
-                            <td>+91 919-91-91-919</td>
+                            <td>+234 919-91-91-919</td>
                         </tr>
                     </tbody>
                 </table>
@@ -83,7 +83,7 @@
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">Premium Rate</th>
-                                                    <td>{{$debit->premium_rate.' %' ?? '-'}}</td>
+                                                    <td>{{$debit->premium_rate.'%' ?? '-'}}</td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">Gross Premium</th>
@@ -95,7 +95,7 @@
                                                 </tr>
                                                 <tr class="commission">
                                                     <th scope="row">Commission Rate</th>
-                                                    <td>{{$debit->commission_rate.' %' ?? '-'}}</td>
+                                                    <td>{{$debit->commission_rate.'%' ?? '-'}}</td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">Exchange Rate</th>

@@ -16,6 +16,9 @@ class DebitNoteController extends Controller
 {
     public function __construct(){
         $this->middleware('auth');
+        $this->debitnote = new DebitNote();
+        $this->policy = new Policy();
+        $this->currency = new Currency();
     }
     /**
      * Display a listing of the resource.
@@ -23,16 +26,16 @@ class DebitNoteController extends Controller
      */
     public function index()
     {
-        $list = DebitNote::orderBy('id', 'DESC')->get();
+        $list = $this->debitnote->getDebitNotes();
         return view('policy::debit-note.index', ['list'=>$list]);
     }
 
     public function create($slug){
-        $policy = Policy::where('slug', $slug)->first();
+        $policy = $this->policy->getPolicyBySlug($slug);
         if(!empty($policy)){
             $debitCode = null;
-            $debit = DebitNote::orderBy('id', 'DESC')->first();
-            $currencies = Currency::orderBy('name', 'ASC')->get();
+            $debit = $this->debitnote->getLastDebitNote();
+            $currencies = $this->currency->getCurrencies();
             if(!empty($debit)){
                 $debitCode =$debit->debit_code + 1;
             }else{
@@ -66,53 +69,26 @@ class DebitNoteController extends Controller
             'policy_number'=>'required',
             'business_type'=>'required',
             'option'=>'required',
-            'currency'=>'required'
-    	]);
+            'currency'=>'required',
+            'class'=>'required',
+            'sub_class'=>'required'
+    	],[
+            'business_type.required'=>'Select business type',
+            'option.required'=>'Select option',
+            'currency.required'=>'Choose transaction currency',
+            'commission.required'=>'Enter your commission rate',
+        ]);
+        $policy = $this->policy->getPolicyByPolicyNo($request->policy_number);
+        if(!empty($policy)){
+            $this->debitnote->createDebitNote($request, $policy->getAgency->id);
 
-        $current_date = Carbon::createFromDate($request->start_date);
-        $cover_days = $current_date->diffInDays($request->end_date);
-        $trans_id = strtoupper(substr(md5(time()), 0,10));
+            session()->flash("success", "<strong>Success!</strong> Debit note registered. Pending approval.");
+            return redirect('/policy/debit-notes');
+        }else{
+            session()->flash("error", "Something went wrong. Try again.");
+            return back();
+        }
 
-    	$debit = new DebitNote;
-    	$debit->policy_no = $request->policy_number;
-    	$debit->debit_code = $request->debit_code_number;
-    	//$debit->insured_name = $request->insured_name;
-    	//$debit->address = $request->address;
-    	//$debit->narration = $request->narration;
-    	$debit->business_type = $request->business_type;
-    	$debit->option = $request->option;
-    	//$debit->business_class = $request->class;
-    	//$debit->sub_class = $request->sub_class;
-    	$debit->sum_insured = $request->sum_insured;
-    	$debit->premium_rate = $request->premium_rate;
-    	$debit->commission_rate = $request->commission_rate;
-    	//$debit->vat = $request->vat;
-    	$debit->net_amount = $request->net_amount;
-    	$debit->commission = $request->commission;
-    	$debit->gross_premium = $request->gross_premium;
-    	$debit->exchange_rate = $request->exchange_rate;
-    	$debit->currency = $request->currency;
-        $debit->payment_mode = $request->payment_mode;
-        $debit->start_date = $current_date;
-        $debit->end_date = $current_date->addDays($cover_days);
-        $debit->client_id = $request->client;
-        $debit->slug = substr(sha1(time()),30,40);
-    	//$debit->reference_no = $request->reference_no;
-    	//$debit->cheque_no = $request->cheque_no;
-    	//$debit->leave_note = $request->leave_note;
-    	//$debit->vat_rate = $request->vat_rate;
-    	//$debit->start_date = $request->start_date;
-    	//$debit->cover_days = $request->cover_days;
-        //$debit->created_at = $request->transaction_date;
-    	//$debit->end_date = $current_date->addDays($request->cover_days);
-        //$debit->transaction_id = $trans_id;
-        //$debit->insurance_company = $request->insurance_company;
-        $debit->save();
-        #Register debit note
-        /* $debitAccount = SettingsAccount::where('transaction', 'debit-note')->first();
-        $creditAccount = SettingsAccount::where('transaction', 'credit-note')->first(); */
-        session()->flash("success", "<strong>Success!</strong> Debit note registered. Pending approval.");
-        return redirect('/policy/debite-notes');
     }
 
     /**
@@ -122,10 +98,11 @@ class DebitNoteController extends Controller
      */
     public function view($slug)
     {
-        $debit = DebitNote::where('slug', $slug)->first();
+        $debit = $this->debitnote->getDebitNoteBySlug($slug);
         if(!empty($debit)){
             return view('policy::debit-note.view',['debit'=>$debit]);
         }else{
+            session()->flash("error", "Something went wrong. Check and try again.");
             return back();
         }
     }

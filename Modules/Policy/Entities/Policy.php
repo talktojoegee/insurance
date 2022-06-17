@@ -3,6 +3,8 @@
 namespace Modules\Policy\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Modules\Policy\Entities\Client;
 use Modules\Policy\Entities\BusinessClass;
 use Modules\Policy\Entities\SubBusinessClass;
@@ -30,5 +32,46 @@ class Policy extends Model
     }
     public function getVehicles(){
     	return $this->hasMany(VehicleInfo::class, 'policy_no', 'policy_number');
+    }
+
+
+
+
+
+    public function getPolicyDocumentationByType($type){
+        return Policy::where('policy_type', $type)->orderBy('id', 'DESC')->get();
+    }
+
+    public function createPolicyDocumentation(Request $request, $clientId){
+        $policy = new Policy;
+        $policy->policy_number = $request->policy_number;
+        $policy->insurance_policy_number = $request->insurance_policy_number;
+        $policy->start_date = $request->start_date;
+        $policy->end_date = $request->end_date;
+        $policy->policy_type = $request->policy_type;
+        $policy->client_id = $clientId;
+        $policy->sum_insured = $request->sum_insured;
+        $policy->premium_rate =   $request->premium_rate;
+        $policy->gross_premium = ceil(($request->premium_rate/100)*$request->sum_insured);
+        $policy->currency = $request->currency;
+        $policy->author = Auth::user()->id;
+        $policy->class_id = $request->business_class;
+        $policy->sub_class_id = $request->sub_business_class;
+        $policy->agency_id = $request->agent;
+        $policy->slug = substr(sha1(time()),29,40 );
+        $policy->save();
+        return $policy;
+    }
+
+    public function getPolicyBySlug($slug){
+        return Policy::where('slug', $slug)->first();
+    }
+
+    public function getPolicyById($id){
+        return Policy::find($id);
+    }
+
+    public function getPolicyByPolicyNo($number){
+        return Policy::where('policy_number', $number)->first();
     }
 }

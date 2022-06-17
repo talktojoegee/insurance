@@ -30,6 +30,7 @@ class CreditNoteController extends Controller
 
     public function create($slug){
         $debit = DebitNote::where('slug', $slug)->first();
+        //return dd($debit);
         if(!empty($debit)){
             $creditCode = null;
             $credit = CreditNote::orderBy('id', 'DESC')->first();

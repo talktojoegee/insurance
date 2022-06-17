@@ -27,6 +27,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "toastify-js": "^1.11.2",
         "vue": "^2.6.12"
     }
 }

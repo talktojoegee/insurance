@@ -6,6 +6,7 @@
 
 @section('extra-styles')
     <link rel="stylesheet" href="/assets/css/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 @endsection
 @section('main-content')
 

@@ -4,6 +4,7 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 var _ = require('lodash');
+let toastify = require('toastify-js');
 
 
 const app = new Vue({
@@ -108,12 +109,40 @@ const app = new Vue({
     			this.change_success = true;
                 this.success_note = true;
                 this.processing = false;
+                toastify.Toastify({
+                    text: "Policy documented!",
+                    duration: 3000,
+                    //destination: "https://github.com/apvarun/toastify-js",
+                    newWindow: true,
+                    close: true,
+                    gravity: "top", // `top` or `bottom`
+                    position: "right", // `left`, `center` or `right`
+                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                    style: {
+                        background: "linear-gradient(to right, #00b09b, #96c93d)",
+                    },
+                    onClick: function(){} // Callback after click
+                }).showToast();
     		})
     		.catch(error=>{
     			this.errs = error.response.data.errors;
                 this.change_error = true;
                 this.error_note = true;
                 this.processing = false;
+                toastify.Toastify({
+                    text: "This is a toast",
+                    duration: 3000,
+                    //destination: "https://github.com/apvarun/toastify-js",
+                    newWindow: true,
+                    close: true,
+                    gravity: "top", // `top` or `bottom`
+                    position: "right", // `left`, `center` or `right`
+                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                    style: {
+                        background: "linear-gradient(to right, #00b09b, #0000ff)",
+                    },
+                    onClick: function(){} // Callback after click
+                }).showToast();
     		});
     	},
 

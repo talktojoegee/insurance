@@ -82,6 +82,7 @@
                             <div class="form-group">
                                 <label>Business Class</label>
                                 <input type="text" class="form-control" name="business_class" readonly id="business_class" value="{{ $policy->getBusinessClass->class_name ?? '' }}">
+                                <input type="hidden" name="class" value="{{$policy->class_id}}">
                             </div>
                                 @error('business_class')
                                     <i class="text-danger mt-2">{{ $message }}</i>
@@ -91,6 +92,7 @@
                             <div class="form-group">
                                 <label>Sub-business Class</label>
                                 <input type="text" class="form-control" name="sub_business_class" readonly id="sub_business_class" value="{{ $policy->getSubBusinessClass->class_name ?? '' }}">
+                                <input type="hidden" name="sub_class" value="{{$policy->sub_class_id}}">
                             </div>
                                 @error('sub_business_class')
                                     <i class="text-danger mt-2">{{ $message }}</i>
@@ -192,7 +194,7 @@
                                 <select class="form-control" value="{{ old('currency') }}" name="currency" id="currency">
                                     <option selected disabled >Select currency</option>
                                     @foreach ($currencies as $item)
-                                        <option value="{{$item->id}}">{{$item->name ?? ''}} - ({{$item->symbol ?? ''}})</option>
+                                        <option value="{{$item->id}}" {{$item->id == $policy->currency ? 'selected' : ''}}>{{$item->name ?? ''}} - ({{$item->symbol ?? ''}})</option>
                                     @endforeach
                                 </select>
                                 @error('currency')
@@ -292,7 +294,7 @@
                         <div class="col-md-12 col-lg-12 col-sm-12 d-flex justify-content-center">
                             <div class="btn-group">
                                 <a class="btn btn-danger btn-mini" href=""><i class="ti-close mr-2"></i> Cancel</a>
-                                <button type="submit" class="btn btn-primary btn-mini"><i class="ti-check mr-2"></i> Submit</a>
+                                <button type="submit" class="btn btn-primary btn-mini"><i class="ti-check mr-2"></i> Submit</button>
                             </div>
                         </div>
                     </div>
@@ -313,15 +315,20 @@
             e.preventDefault();
             var commission = parseFloat($(this).val()/100) * parseFloat($('#gross_premium').val());
             $('#commission').val(commission);
-            $('#net_amount').val(parseFloat($('#gross_premium').val()) - commission);
+            $('#net_amount').val(parseFloat($('#gross_premium').val()) + commission);
         });
-        //(this.debit.gross_premium - (this.vat/100 * this.debit.commission) - this.debit.commission);
         $(document).on('change', '#vat', function(e){
             var commission = parseFloat($('#commission_rate').val()/100) * parseFloat($('#gross_premium').val());
             if($(this).is(':checked')){
-                $('#net_amount').val(parseFloat($('#gross_premium').val()) + (parseFloat($(this).val())/100 * parseFloat(commission) ) - commission);
+                let val = parseFloat($('#gross_premium').val());
+                let vat = parseFloat($(this).val())/100 * parseFloat(commission);
+                $('#net_amount').val( val + commission + vat  );
+
             }else{
-                 $('#net_amount').val(parseFloat($('#gross_premium').val()) - commission);
+                let val = parseFloat($('#gross_premium').val());
+                let vat = parseFloat($(this).val())/100 * parseFloat(commission);
+                let sum = (val + commission);
+                 $('#net_amount').val( sum - vat );
             }
         });
     });
