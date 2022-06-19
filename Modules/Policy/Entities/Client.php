@@ -16,6 +16,14 @@ class Client extends Model
         return $this->hasMany(DebitNote::class, 'client_id');
     }
 
+    public function getClientCreditNotes(){
+        return $this->hasMany(CreditNote::class, 'client_id');
+    }
+
+    public function getClientClaims(){
+        return $this->hasMany(Claim::class, 'client_id');
+    }
+
 
     public function createClient(Request $request){
         $client = new Client;

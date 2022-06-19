@@ -63,6 +63,26 @@
             </li>
             <li class="pcoded-hasmenu">
                 <a href="javascript:void(0)">
+                    <span class="pcoded-micon"><i class="icofont icofont-user"></i></span>
+                    <span class="pcoded-mtext">Clients</span>
+                </a>
+                <ul class="pcoded-submenu">
+                    <li class="">
+                        <a href="{{ url('/policy/claim/new') }}">
+                            <span class="pcoded-micon"><i class="ti-users"></i></span>
+                            <span class="pcoded-mtext">Add New Client</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="{{ url('/policy/clients') }}">
+                            <span class="pcoded-micon"><i class="ti-users"></i></span>
+                            <span class="pcoded-mtext">All Clients</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="pcoded-hasmenu">
+                <a href="javascript:void(0)">
                     <span class="pcoded-micon"><i class="icofont icofont-certificate-alt-1"></i></span>
                     <span class="pcoded-mtext">Claims</span>
                 </a>
@@ -101,16 +121,6 @@
                             <span class="pcoded-mtext">Add New Employee</span>
                         </a>
                     </li>
-<!--                    <li class=" ">
-                        <a href="button.htm">
-                            <span class="pcoded-mtext">Notices</span>
-                        </a>
-                    </li>
-                    <li class=" ">
-                        <a href="box-shadow.htm">
-                            <span class="pcoded-mtext">Query</span>
-                        </a>
-                    </li>-->
                     <li class=" ">
                         <a href="{{url('/human-resource/manage-roles-and-permissions')}}">
                             <span class="pcoded-mtext">Manage Permissions</span>

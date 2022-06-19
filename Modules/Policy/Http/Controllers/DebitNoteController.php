@@ -5,6 +5,7 @@ namespace Modules\Policy\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\CompanySettings\Entities\SettingsGeneral;
 use Modules\Policy\Entities\Policy;
 use Modules\Policy\Entities\DebitNote;
 use Modules\Accounting\Entities\Currency;
@@ -100,7 +101,8 @@ class DebitNoteController extends Controller
     {
         $debit = $this->debitnote->getDebitNoteBySlug($slug);
         if(!empty($debit)){
-            return view('policy::debit-note.view',['debit'=>$debit]);
+            $settings = SettingsGeneral::first();
+            return view('policy::debit-note.view',['debit'=>$debit, 'settings'=>$settings]);
         }else{
             session()->flash("error", "Something went wrong. Check and try again.");
             return back();

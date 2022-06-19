@@ -23,17 +23,17 @@
                 <table class="table table-responsive invoice-table table-borderless">
                     <tbody>
                         <tr>
-                            <td><img src="\assets\attachments\assets\logo\logo.jpg" height="75" width="105" class="m-b-10" alt="{{config('app.name')}}"></td>
+                            <td><img src="/assets/attachments/assets/logo/{{$settings->company_logo ?? 'logo.jpg'}}" height="75" width="105" class="m-b-10" alt="{{config('app.name')}}"></td>
                         </tr>
                         <tr>
-                            <td>123 6th St. Melbourne, FL 32904 West Chicago, IL 60185</td>
+                            <td>{{$settings->office_address ?? ''}}</td>
                         </tr>
                         <tr>
-                            <td><a href="..\..\..\cdn-cgi\l\email-protection.htm#99fdfcf4f6d9fef4f8f0f5b7faf6f4" target="_top"><span class="__cf_email__" data-cfemail="690d0c0406290e04080005470a0604">[email&nbsp;protected]</span></a>
+                            <td><a href="javascript:void(0);" target="_top"><span >{{$settings->official_email ?? '' }}</span></a>
                             </td>
                         </tr>
                         <tr>
-                            <td>+91 919-91-91-919</td>
+                            <td>{{$settings->office_phone_1 ?? ''}} {{!is_null($settings->office_phone_2) ? ', '.$settings->office_phone_2  : ''}}</td>
                         </tr>
                     </tbody>
                 </table>

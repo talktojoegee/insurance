@@ -5,6 +5,7 @@ namespace Modules\Policy\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\CompanySettings\Entities\SettingsGeneral;
 use Modules\Policy\Entities\Policy;
 use Modules\Policy\Entities\CreditNote;
 use Modules\Policy\Entities\DebitNote;
@@ -125,7 +126,8 @@ class CreditNoteController extends Controller
     {
         $credit = CreditNote::where('slug', $slug)->first();
         if(!empty($credit)){
-            return view('policy::credit-note.view',['credit'=>$credit]);
+            $settings = SettingsGeneral::first();
+            return view('policy::credit-note.view',['credit'=>$credit, 'settings'=>$settings]);
         }else{
             return back();
         }

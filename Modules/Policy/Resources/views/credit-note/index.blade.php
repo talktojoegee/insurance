@@ -144,9 +144,9 @@
                                 <td> {{$lst->getPolicy->getBusinessClass->abbr}}/{{date('m',strtotime($lst->getPolicy->getBusinessClass->created_at))}}/{{date('y',strtotime($lst->getPolicy->getBusinessClass->created_at))}}/{{$lst->getPolicy->policy_number}}
                                 </td>
                                 <td>{{$lst->getClient->insured_name ?? ''}}</td>
-                                <td>{{$lst->cover_days}}</td>
-                                <td>{{date('d M, Y', strtotime($lst->start_date))}}</td>
-                                <td>{{date('d M, Y', strtotime($lst->end_date))}}</td>
+                                <td>{{$lst->cover_days ?? '-'}}</td>
+                                <td>{{ !is_null($lst->start_date) ? date('d M, Y', strtotime($lst->start_date)) : 'Unknown'}}</td>
+                                <td>{{ !is_null($lst->end_date) ? date('d M, Y', strtotime($lst->end_date)) : 'Unknown'}}</td>
                                 <td>{{$lst->getClient->insured_name ?? ''}}</td>
                                 @if($lst->option == 1)
                                     <td>Direct</td>
@@ -178,13 +178,13 @@
                                 <td>{{$lst->getCurrency->name ?? ''}}({{$lst->getCurrency->symbol ?? ''}})</td>
                                 <td>{{$lst->getCurrency->symbol ?? ''}}{{ number_format($lst->sum_insured,2)}}
                                 </td>
-                                <td>{{$lst->premium_rate}}%</td>
+                                <td>{{$lst->premium_rate }}%</td>
                                 <td>{{$lst->getCurrency->symbol ?? ''}}{{number_format($lst->gross_premium,2)}}
                                 </td>
                                 <td>{{$lst->commission_rate}}%</td>
                                 <td>{{$lst->getCurrency->symbol ?? ''}}{{number_format($lst->commission,2)}}
                                 </td>
-                                <td>{{$lst->vat_rate}}%</td>
+                                <td>{{$lst->vat_rate }}%</td>
                                 <td>{{$lst->getCurrency->symbol ?? ''}}{{number_format(($lst->vat_rate/100)*$lst->commission,2)}}</td>
                                 <td>{{$lst->currency ?? ''}}</td>
                                 <td>{{$lst->getCurrency->symbol ?? ''}}{{number_format($lst->net_amount,2)}}

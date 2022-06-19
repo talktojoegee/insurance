@@ -109,15 +109,14 @@
                                 <th>Debit Code</th>
                                 <th>Client No.</th>
                                 <th>Insured</th>
-                                <th>Cover Days</th>
                                 <th>Start Date</th>
                                 <th>End Date</th>
-                                <th>Insurance Company.</th>
+                                <th>Agency</th>
                                 <th>Option</th>
                                 <th>Business Type</th>
                                 <th>Business Class</th>
                                 <th>Sub Class</th>
-
+                                <th>Currency</th>
                                 <th>Sum Insured</th>
                                 <th>Premium Rate</th>
                                 <th>Gross Premium</th>
@@ -146,7 +145,7 @@
 
                                 <td>{{date('d M, Y', strtotime($lst->start_date))}}</td>
                                 <td>{{date('d M, Y', strtotime($lst->end_date))}}</td>
-                                <td>{{$lst->getClient->insured_name ?? ''}}</td>
+                                <td>{{$lst->getAgency->agent_name ?? ''}}</td>
                                 @if($lst->option == 1)
                                     <td>Direct</td>
                                 @elseif($lst->option == 2)
@@ -216,7 +215,7 @@
 
                                 <th>Start Date</th>
                                 <th>End Date</th>
-                                <th>Insurance Company.</th>
+                                <th>Agency</th>
                                 <th>Option</th>
                                 <th>Business Type</th>
                                 <th>Business Class</th>

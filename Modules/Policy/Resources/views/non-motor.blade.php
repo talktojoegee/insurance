@@ -108,7 +108,7 @@
                                 <tr>
                                     <td>{{ $serial++ }}</td>
                                     <td>{{$policy->getBusinessClass->abbr}}/{{date('m',strtotime($policy->created_at))}}/{{date('y', strtotime($policy->created_at))}}/{{$policy->policy_number}}</td>
-                                    <td> <a href="{{ url('/client/view/'.$policy->getClient->slug) }}"> {{ $policy->getClient->insured_name ?? '' }}</a></td>
+                                    <td> <a href="{{ url('/policy/client/view/'.$policy->getClient->slug) }}"> {{ $policy->getClient->insured_name ?? '' }}</a></td>
                                     <td>{{ $policy->insurance_policy_number ?? '' }}</td>
                                     <td>{{ $policy->getClient->email ?? '' }}</td>
                                     <td>{{ $policy->getClient->mobile_no ?? '' }}</td>

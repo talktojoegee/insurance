@@ -196,7 +196,7 @@ class PolicyController extends Controller
     }
 
     public function clients(){
-        $clients = Client::orderBy('id', 'DESC')->get();
+        $clients = Client::orderBy('insured_name', 'ASC')->get();
         return view('policy::clients.index', ['clients'=>$clients]);
     }
     public function getClient($slug){

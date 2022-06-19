@@ -22,19 +22,19 @@
             <div class="card-block">
                 <table class="table table-responsive invoice-table table-borderless">
                     <tbody>
-                        <tr>
-                            <td><img src="\assets\images\logo-blue.png" class="m-b-10" alt=""></td>
-                        </tr>
-                        <tr>
-                            <td>123 6th St. Melbourne, FL 32904 West Chicago, IL 60185</td>
-                        </tr>
-                        <tr>
-                            <td><a href="#" target="_top"><span class="__cf_email__" >[email@mail.com]</span></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>+234 919-91-91-919</td>
-                        </tr>
+                    <tr>
+                        <td><img src="/assets/attachments/assets/logo/{{$settings->company_logo ?? 'logo.jpg'}}" height="75" width="105" class="m-b-10" alt="{{config('app.name')}}"></td>
+                    </tr>
+                    <tr>
+                        <td>{{$settings->office_address ?? ''}}</td>
+                    </tr>
+                    <tr>
+                        <td><a href="javascript:void(0);" target="_top"><span >{{$settings->official_email ?? '' }}</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{$settings->office_phone_1 ?? ''}} {{!is_null($settings->office_phone_2) ? ', '.$settings->office_phone_2  : ''}}</td>
+                    </tr>
                     </tbody>
                 </table>
                 <div class="view-info" id="debit_note_details"><div class="row">
@@ -106,7 +106,7 @@
                                                     <td>{{$debit->getCurrency->symbol ?? ''}}{{number_format($debit->net_amount,2)}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <th scope="row">Narration</th>
+                                                    <th scope="row">Agency</th>
                                                     <td>{{$debit->getAgency->agent_name ?? ''}}</td>
                                                 </tr>
                                             </tbody>
