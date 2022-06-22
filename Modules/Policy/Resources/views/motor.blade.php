@@ -113,10 +113,10 @@
                                     <td>{{ $policy->getClient->email ?? '' }}</td>
                                     <td>{{ $policy->getClient->mobile_no ?? '' }}</td>
 
-                                    <td>{{$policy->getCurrency->symbol ?? ''}}{{ number_format($policy->sum_insured/$policy->exchange_rate,2) }}</td>
+                                    <td class="text-right">{{$policy->getCurrency->symbol ?? ''}}{{ number_format($policy->sum_insured/$policy->exchange_rate,2) }}</td>
                                     <td>{{ $policy->premium_rate ?? '' }}%</td>
-                                    <td>{{ $policy->exchange_rate  ?? '' }}</td>
-                                    <td>{{$policy->getCurrency->symbol ?? ''}}{{ number_format($policy->gross_premium/$policy->exchange_rate,2) ?? '' }}</td>
+                                    <td class="text-right">{{ $policy->exchange_rate  ?? '' }}</td>
+                                    <td class="text-right">{{$policy->getCurrency->symbol ?? ''}}{{ number_format($policy->gross_premium/$policy->exchange_rate,2) ?? '' }}</td>
                                     <td>{{ !is_null($policy->start_date) ? date('d F, Y', strtotime($policy->start_date)) : '' }}</td>
                                     <td>{{ !is_null($policy->end_date) ? date('d F, Y', strtotime($policy->end_date)) : '' }}</td>
                                     <td>{{ $policy->getBusinessClass->class_name ?? '' }}</td>

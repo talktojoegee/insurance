@@ -176,18 +176,18 @@
                                 <td>{{$lst->getPolicy->getBusinessClass->class_name ?? ''}}</td>
                                 <td>{{$lst->getPolicy->getSubBusinessClass->class_name ?? ''}}</td>
                                 <td>{{$lst->getCurrency->name ?? ''}}({{$lst->getCurrency->symbol ?? ''}})</td>
-                                <td>{{$lst->getCurrency->symbol ?? ''}}{{ number_format($lst->sum_insured,2)}}
+                                <td class="text-right">{{$lst->getCurrency->symbol ?? ''}}{{ number_format($lst->sum_insured,2)}}
                                 </td>
                                 <td>{{$lst->premium_rate }}%</td>
-                                <td>{{$lst->getCurrency->symbol ?? ''}}{{number_format($lst->gross_premium,2)}}
+                                <td class="text-right">{{$lst->getCurrency->symbol ?? ''}}{{number_format($lst->gross_premium,2)}}
                                 </td>
                                 <td>{{$lst->commission_rate}}%</td>
-                                <td>{{$lst->getCurrency->symbol ?? ''}}{{number_format($lst->commission,2)}}
+                                <td class="text-right">{{$lst->getCurrency->symbol ?? ''}}{{number_format($lst->commission,2)}}
                                 </td>
                                 <td>{{$lst->vat_rate }}%</td>
-                                <td>{{$lst->getCurrency->symbol ?? ''}}{{number_format(($lst->vat_rate/100)*$lst->commission,2)}}</td>
+                                <td class="text-right">{{$lst->getCurrency->symbol ?? ''}}{{number_format(($lst->vat_rate/100)*$lst->commission,2)}}</td>
                                 <td>{{$lst->currency ?? ''}}</td>
-                                <td>{{$lst->getCurrency->symbol ?? ''}}{{number_format($lst->net_amount,2)}}
+                                <td class="text-right">{{$lst->getCurrency->symbol ?? ''}}{{number_format($lst->net_amount,2)}}
                                 </td>
                                 @if($lst->status == 0)
                                     <td><label for="" class="badge badge-warning text-white">Pending</label></td>

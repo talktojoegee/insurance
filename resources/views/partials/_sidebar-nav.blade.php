@@ -177,16 +177,6 @@
                     </a>
                     <ul class="pcoded-submenu">
                         <li class="">
-                            <a href="{{ url('/policy/clients') }}">
-                                <span class="pcoded-mtext">All Clients</span>
-                            </a>
-                        </li>
-                        <li class=" ">
-                            <a href="widget-data.htm">
-                                <span class="pcoded-mtext">Invoices</span>
-                            </a>
-                        </li>
-                        <li class="">
                             <a href="{{url('/accounting/generate-receipt')}}">
                                 <span class="pcoded-mtext">Generate Receipt</span>
                             </a>
@@ -206,17 +196,17 @@
                     </a>
                     <ul class="pcoded-submenu">
                         <li class="">
-                            <a href="widget-statistic.htm">
+                            <a href="#">
                                 <span class="pcoded-mtext">All Vendors</span>
                             </a>
                         </li>
                         <li class=" ">
-                            <a href="widget-data.htm">
+                            <a href="#">
                                 <span class="pcoded-mtext">Bills</span>
                             </a>
                         </li>
                         <li class="">
-                            <a href="widget-chart.htm">
+                            <a href="#">
                                 <span class="pcoded-mtext">Payment</span>
                             </a>
                         </li>
@@ -231,17 +221,17 @@
                     </a>
                     <ul class="pcoded-submenu">
                         <li class="">
-                            <a href="widget-statistic.htm">
+                            <a href="#">
                                 <span class="pcoded-mtext">NAICOM Report</span>
                             </a>
                         </li>
                         <li class=" ">
-                            <a href="widget-data.htm">
+                            <a href="#">
                                 <span class="pcoded-mtext">Data</span>
                             </a>
                         </li>
                         <li class="">
-                            <a href="widget-chart.htm">
+                            <a href="#">
                                 <span class="pcoded-mtext">Chart Widget</span>
                             </a>
                         </li>
@@ -279,7 +269,7 @@
                     </ul>
                 </li>
                 <li class=" ">
-                    <a href="form-select.htm">
+                    <a href="{{route('logout')}}">
                         <span class="pcoded-micon"><i class="icofont icofont-ui-power text-danger"></i></span>
                         <span class="pcoded-mtext">Logout</span>
                     </a>
