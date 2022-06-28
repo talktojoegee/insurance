@@ -42,6 +42,9 @@ class DebitNote extends Model
     public function getDebitNotes(){
         return dNote::orderBy('id', 'DESC')->get();
     }
+    public function getThisYearDebitNotes(){
+        return dNote::whereYear('created_at', date('Y'))->orderBy('id', 'DESC')->get();
+    }
 
     public function getLastDebitNote(){
         return dNote::orderBy('id', 'DESC')->first();

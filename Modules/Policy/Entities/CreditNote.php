@@ -45,4 +45,7 @@ class CreditNote extends Model
     public function getAllCreditNotes(){
         return CreditNote::orderBy('id', 'DESC')->get();
     }
+    public function getThisYearCreditNotes(){
+        return CreditNote::whereYear('created_at', date('Y'))->orderBy('id', 'DESC')->get();
+    }
 }

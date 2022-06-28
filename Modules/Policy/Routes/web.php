@@ -17,22 +17,22 @@ Route::get('/dashboard-statistics', 'PolicyController@dashboardStatistics')->nam
 Route::prefix('policy')->group(function() {
 	#Policy
     Route::get('/', 'PolicyController@index');
-    Route::get('/non-motor', 'PolicyController@nonMotor');
+    Route::get('/non-motor', 'PolicyController@nonMotor')->name('non-motor-policies');
     Route::get('/create', 'PolicyController@create');
     Route::post('/add-new-policy', 'PolicyController@store');
-    Route::get('/motor', 'PolicyController@motor');
+    Route::get('/motor', 'PolicyController@motor')->name('motor-policies');
     Route::get('/create-motor-policy', 'PolicyController@createMotorPolicy');
     Route::get('/view/policy/{slug}', 'PolicyController@viewPolicy');
     Route::post('/initialize-instance', 'PolicyController@initializeInstance');
     Route::post('/get-sub-business-classes', 'PolicyController@getSubBusinessClasses');
 
     #Debit Note
-    Route::get('/debit-notes', 'DebitNoteController@index');
+    Route::get('/debit-notes', 'DebitNoteController@index')->name('debit-notes');
     Route::get('/debit-note/new/{slug}', 'DebitNoteController@create');
     Route::post('/debit-note/new', 'DebitNoteController@storeNewDebitNote');
     Route::get('/debit-note/view/{slug}', 'DebitNoteController@view');
     #Credit Note
-    Route::get('/credit-notes', 'CreditNoteController@index');
+    Route::get('/credit-notes', 'CreditNoteController@index')->name('credit-notes');
     Route::get('/credit-note/new/{slug}', 'CreditNoteController@create');
     Route::post('/credit-note/new', 'CreditNoteController@storeNewCreditNote');
     Route::get('/credit-note/view/{slug}', 'CreditNoteController@view');

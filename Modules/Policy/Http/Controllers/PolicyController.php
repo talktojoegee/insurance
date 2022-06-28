@@ -32,10 +32,10 @@ class PolicyController extends Controller
 
     public function dashboard(){
         return view('policy::dashboard',[
-            'policies'=>$this->policy->getAllPolicies(),
-            'clients'=>$this->client->getAllClients(),
-            'debitNotes'=>$this->debitnote->getDebitNotes(),
-            'creditNotes'=>$this->creditnote->getAllCreditNotes()
+            'policies'=>$this->policy->getThisYearPolicyListings(),
+            'clients'=>$this->client->getThisYearClients(),
+            'debitNotes'=>$this->debitnote->getThisYearDebitNotes(),
+            'creditNotes'=>$this->creditnote->getThisYearCreditNotes()
         ]);
     }
 

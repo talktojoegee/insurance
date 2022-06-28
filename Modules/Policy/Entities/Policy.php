@@ -79,10 +79,25 @@ class Policy extends Model
     public function getAllPolicies(){
         return Policy::orderBy('id', 'DESC')->get();
     }
+    public function getThisYearPolicyListings(){
+        return Policy::whereYear('created_at', date('Y'))->orderBy('id', 'DESC')->get();
+    }
     public function getThisYearPolicies(){
         return Policy::select(
-            DB::raw("count(policy_number) as noPolicies"),
-            DB::raw("date(created_at) as ")
-        )->whereYear('created_at', date('Y'))->orderBy('id', 'DESC')->get();
+            DB::raw("count(policy_number) as counter"),
+            DB::raw("DATE_FORMAT(created_at, '%m-%Y') monthYear"),
+            DB::raw("YEAR(created_at) year, MONTH(created_at) month"),
+            'policy_type',
+            //DB::raw("YEAR(created_at) year, MONTH(created_at) month"))
+            //DB::raw("date(created_at) as ")
+        )->whereYear('created_at', date('Y'))->orderBy('id', 'DESC')
+            ->orderBy('month', 'ASC')
+            ->groupby('year','month', 'policy_type')
+            ->get();
     }
 }
+//select(DB::raw('count(id) as `data`'),
+// DB::raw("DATE_FORMAT(created_at, '%m-%Y') new_date"),
+//  DB::raw('YEAR(created_at) year, MONTH(created_at) month'))
+//->groupby('year','month')
+//->get();

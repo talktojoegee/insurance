@@ -40,4 +40,7 @@ class Client extends Model
     public function getAllClients(){
         return Client::orderBy('id', 'DESC')->get();
     }
+    public function getThisYearClients(){
+        return Client::whereYear('created_at', date('Y'))->orderBy('id', 'DESC')->get();
+    }
 }

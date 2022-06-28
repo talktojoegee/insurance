@@ -11,13 +11,16 @@
 
 
     <div class="row">
+        <div class="col-md-12">
+            <p><strong class="text-danger">Note: </strong> The information shown below is for the current year <code>({{date('Y')}})</code></p>
+        </div>
         <div class="col-md-6 col-xl-3">
             <div class="card user-widget-card bg-c-blue">
                 <div class="card-block">
                     <i class="icofont icofont-presentation-alt  bg-simple-c-blue card1-icon"></i>
                     <h4>{{ number_format($policies->where('policy_type',1)->count() ) }}</h4>
                     <p>Non-Motor Policies</p>
-                    <a href="#!" class="more-info">More Info</a>
+                    <a href="{{route('non-motor-policies')}}" class="more-info">More Info</a>
                 </div>
             </div>
         </div>
@@ -27,7 +30,7 @@
                     <i class="icofont icofont-car-alt-4 bg-simple-c-pink card1-icon"></i>
                     <h4>{{ number_format($policies->where('policy_type',2)->count() ) }}</h4>
                     <p>Motor Policies</p>
-                    <a href="#!" class="more-info">More Info</a>
+                    <a href="{{route('motor-policies')}}" class="more-info">More Info</a>
                 </div>
             </div>
         </div>
@@ -37,7 +40,7 @@
                     <i class="icofont icofont-ui-v-card bg-simple-c-green card1-icon"></i>
                     <h4>{{ number_format($debitNotes->count() ) }}</h4>
                     <p>Debit Notes</p>
-                    <a href="#!" class="more-info">More Info</a>
+                    <a href="{{route('debit-notes')}}" class="more-info">More Info</a>
                 </div>
             </div>
         </div>
@@ -47,7 +50,7 @@
                     <i class="icofont icofont-ui-fire-wall bg-simple-c-yellow card1-icon"></i>
                     <h4>{{ number_format($creditNotes->count() ) }}</h4>
                     <p>Credit Notes</p>
-                    <a href="#!" class="more-info">More Info</a>
+                    <a href="{{route('credit-notes')}}" class="more-info">More Info</a>
                 </div>
             </div>
         </div>
@@ -478,66 +481,124 @@
     <script type="text/javascript" src="\assets\pages\accordion\accordion.js"></script>
     <script src="/assets/js/axios.min.js"></script>
     <script>
+        const motorData = [0,0,0,0,0,0,0,0,0,0,0,0];
+        const nonMotorData = [0,0,0,0,0,0,0,0,0,0,0,0];
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const url = "{{route('dashboard-chart') }}";
         $(document).ready(function(){
-            //const url = "route('dashboard-chart', $tenantId)}}";
             /*Bar chart*/
-            var barChartData = {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                datasets: [{
-                    label: "Non-motor Policies",
-                    backgroundColor: [
-                        'rgba(95, 190, 170, 0.99)',
-                        'rgba(95, 190, 170, 0.99)',
-                        'rgba(95, 190, 170, 0.99)',
-                        'rgba(95, 190, 170, 0.99)',
-                        'rgba(95, 190, 170, 0.99)',
-                        'rgba(95, 190, 170, 0.99)',
-                        'rgba(95, 190, 170, 0.99)'
-                    ],
-                    hoverBackgroundColor: [
-                        'rgba(26, 188, 156, 0.88)',
-                        'rgba(26, 188, 156, 0.88)',
-                        'rgba(26, 188, 156, 0.88)',
-                        'rgba(26, 188, 156, 0.88)',
-                        'rgba(26, 188, 156, 0.88)',
-                        'rgba(26, 188, 156, 0.88)',
-                        'rgba(26, 188, 156, 0.88)'
-                    ],
-                    data: [65, 59, 80, 81, 56, 55, 50,11,63,28,45,67],
-                }, {
-                    label: "Motor Policies",
-                    backgroundColor: [
-                        'rgba(290, 100, 236, 1)',
-                        'rgba(290, 100, 236, 1)',
-                        'rgba(290, 100, 236, 1)',
-                        'rgba(290, 100, 236, 1)',
-                        'rgba(290, 100, 236, 1)',
-                        'rgba(290, 100, 236, 1)',
-                        'rgba(290, 100, 236, 1)'
-                    ],
-                    hoverBackgroundColor: [
-                        'rgba(103, 280, 237, 1)',
-                        'rgba(103, 280, 237, 1)',
-                        'rgba(103, 280, 237, 1)',
-                        'rgba(103, 280, 237, 1)',
-                        'rgba(103, 280, 237, 1)',
-                        'rgba(103, 280, 237, 1)',
-                        'rgba(103, 280, 237, 1)'
-                    ],
-                    //motor policies data
-                    data: [60, 69, 85, 91, 58, 50, 45,90,56,12,78,23],
-                }]
-            };
+            axios.get(url)
+                .then(res=> {
+                    res.data.map((entry) => {
+                        switch (entry.month) {
+                            case 1:
+                                plotGraph(1, entry.policy_type, entry.counter);
+                                break;
+                            case 2:
+                                plotGraph(2, entry.policy_type, entry.counter);
+                                break;
+                            case 3:
+                                plotGraph(3, entry.policy_type, entry.counter);
+                                break;
+                            case 4:
+                                plotGraph(4, entry.policy_type, entry.counter);
+                                break;
+                            case 5:
+                                plotGraph(5, entry.policy_type, entry.counter);
+                                break;
+                            case 6:
+                                plotGraph(6, entry.policy_type, entry.counter);
+                                break;
+                            case 7:
+                                plotGraph(7, entry.policy_type, entry.counter);
+                                break;
+                            case 8:
+                                plotGraph(8, entry.policy_type, entry.counter);
+                                break;
+                            case 9:
+                                plotGraph(9, entry.policy_type, entry.counter);
+                                break;
+                            case 10:
+                                plotGraph(10, entry.policy_type, entry.counter);
+                                break;
+                            case 11:
+                                plotGraph(11, entry.policy_type, entry.counter);
+                                break;
+                            case 12:
+                                plotGraph(12, entry.policy_type, entry.counter);
+                                break;
+                        }
 
-            var bar = document.getElementById("barChart").getContext('2d');
-            var myBarChart = new Chart(bar, {
-                type: 'bar',
-                data: barChartData,
-                options: {
-                    barValueSpacing: 20
-                }
-            });
+                    });
+                    //then
+                    var barChartData = {
+                        labels: months,
+                        datasets: [{
+                            label: "Non-motor Policies",
+                            backgroundColor: [
+                                'rgba(95, 190, 170, 0.99)',
+                                'rgba(95, 190, 170, 0.99)',
+                                'rgba(95, 190, 170, 0.99)',
+                                'rgba(95, 190, 170, 0.99)',
+                                'rgba(95, 190, 170, 0.99)',
+                                'rgba(95, 190, 170, 0.99)',
+                                'rgba(95, 190, 170, 0.99)'
+                            ],
+                            hoverBackgroundColor: [
+                                'rgba(26, 188, 156, 0.88)',
+                                'rgba(26, 188, 156, 0.88)',
+                                'rgba(26, 188, 156, 0.88)',
+                                'rgba(26, 188, 156, 0.88)',
+                                'rgba(26, 188, 156, 0.88)',
+                                'rgba(26, 188, 156, 0.88)',
+                                'rgba(26, 188, 156, 0.88)'
+                            ],
+                            data: nonMotorData,
+                        }, {
+                            label: "Motor Policies",
+                            backgroundColor: [
+                                'rgba(290, 100, 236, 1)',
+                                'rgba(290, 100, 236, 1)',
+                                'rgba(290, 100, 236, 1)',
+                                'rgba(290, 100, 236, 1)',
+                                'rgba(290, 100, 236, 1)',
+                                'rgba(290, 100, 236, 1)',
+                                'rgba(290, 100, 236, 1)'
+                            ],
+                            hoverBackgroundColor: [
+                                'rgba(290, 100, 236, 1)',
+                                'rgba(290, 100, 236, 1)',
+                                'rgba(290, 100, 236, 1)',
+                                'rgba(290, 100, 236, 1)',
+                                'rgba(290, 100, 236, 1)',
+                                'rgba(290, 100, 236, 1)',
+                                'rgba(290, 100, 236, 1)'
+                            ],
+                            //motor policies data
+                            data: motorData,
+                        }]
+                    };
 
+                    var bar = document.getElementById("barChart").getContext('2d');
+                    var myBarChart = new Chart(bar, {
+                        type: 'bar',
+                        data: barChartData,
+                        options: {
+                            barValueSpacing: 20
+                        }
+                    });
+
+                });
         });
+
+        function plotGraph(index,type, value){
+            if(parseInt(type) === 1){
+                nonMotorData[index-1] = value;
+            }else{
+                motorData[index-1] = value;
+            }
+
+
+        }
     </script>
 @endsection
