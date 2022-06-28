@@ -37,10 +37,10 @@ $(document).ready(function(){
 
 
     /*Bar chart*/
-    var data1 = {
-        labels: [0, 1, 2, 3, 4, 5, 6, 7],
+    var barChartData = {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
         datasets: [{
-            label: "My First dataset",
+            label: "Non-motor Policies",
             backgroundColor: [
                 'rgba(95, 190, 170, 0.99)',
                 'rgba(95, 190, 170, 0.99)',
@@ -59,35 +59,45 @@ $(document).ready(function(){
                 'rgba(26, 188, 156, 0.88)',
                 'rgba(26, 188, 156, 0.88)'
             ],
-            data: [65, 59, 80, 81, 56, 55, 50],
+            data: [65, 59, 80, 81, 56, 55, 50,11,63,28,45,67],
         }, {
-            label: "My second dataset",
+            label: "Motor Policies",
             backgroundColor: [
-                'rgba(93, 156, 236, 0.93)',
-                'rgba(93, 156, 236, 0.93)',
-                'rgba(93, 156, 236, 0.93)',
-                'rgba(93, 156, 236, 0.93)',
-                'rgba(93, 156, 236, 0.93)',
-                'rgba(93, 156, 236, 0.93)',
-                'rgba(93, 156, 236, 0.93)'
+                'rgba(290, 100, 236, 1)',
+                'rgba(290, 100, 236, 1)',
+                'rgba(290, 100, 236, 1)',
+                'rgba(290, 100, 236, 1)',
+                'rgba(290, 100, 236, 1)',
+                'rgba(290, 100, 236, 1)',
+                'rgba(290, 100, 236, 1)'
             ],
             hoverBackgroundColor: [
-                'rgba(103, 162, 237, 0.82)',
-                'rgba(103, 162, 237, 0.82)',
-                'rgba(103, 162, 237, 0.82)',
-                'rgba(103, 162, 237, 0.82)',
-                'rgba(103, 162, 237, 0.82)',
-                'rgba(103, 162, 237, 0.82)',
-                'rgba(103, 162, 237, 0.82)'
+                'rgba(103, 280, 237, 1)',
+                'rgba(103, 280, 237, 1)',
+                'rgba(103, 280, 237, 1)',
+                'rgba(103, 280, 237, 1)',
+                'rgba(103, 280, 237, 1)',
+                'rgba(103, 280, 237, 1)',
+                'rgba(103, 280, 237, 1)'
             ],
-            data: [60, 69, 85, 91, 58, 50, 45],
+            //motor policies data
+            data: [60, 69, 85, 91, 58, 50, 45,90,56,12,78,23],
         }]
     };
 
     var bar = document.getElementById("barChart").getContext('2d');
+    var pieHandler = document.getElementById("pieChart").getContext('2d');
     var myBarChart = new Chart(bar, {
         type: 'bar',
-        data: data1,
+        data: barChartData,
+        options: {
+            barValueSpacing: 20
+        }
+    });
+
+    var pieChartInstance = new Chart(pieHandler, {
+        type: 'pie',
+        data: barChartData,
         options: {
             barValueSpacing: 20
         }

@@ -40,4 +40,9 @@ class CreditNote extends Model
     public function getCurrency(){
     	return $this->belongsTo(Currency::class, 'currency');
     }
+
+
+    public function getAllCreditNotes(){
+        return CreditNote::orderBy('id', 'DESC')->get();
+    }
 }

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Validation\ValidationException;
 use Modules\Policy\Entities\Agent;
+use Modules\Policy\Entities\CreditNote;
+use Modules\Policy\Entities\DebitNote;
 use Modules\Policy\Entities\Policy;
 use Modules\Policy\Entities\Client;
 use Modules\Policy\Entities\BusinessClass;
@@ -24,6 +26,22 @@ class PolicyController extends Controller
         $this->middleware('auth');
         $this->policy = new Policy();
         $this->client = new Client();
+        $this->debitnote = new DebitNote();
+        $this->creditnote = new CreditNote();
+    }
+
+    public function dashboard(){
+        return view('policy::dashboard',[
+            'policies'=>$this->policy->getAllPolicies(),
+            'clients'=>$this->client->getAllClients(),
+            'debitNotes'=>$this->debitnote->getDebitNotes(),
+            'creditNotes'=>$this->creditnote->getAllCreditNotes()
+        ]);
+    }
+
+    public function dashboardStatistics(){
+        $report = $this->policy->getThisYearPolicies();
+        return response()->json($report,200);
     }
 
     /**

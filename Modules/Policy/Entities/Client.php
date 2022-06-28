@@ -36,4 +36,8 @@ class Client extends Model
         $client->save();
         return $client;
     }
+
+    public function getAllClients(){
+        return Client::orderBy('id', 'DESC')->get();
+    }
 }

@@ -5,6 +5,7 @@ namespace Modules\Policy\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Modules\Policy\Entities\Client;
 use Modules\Policy\Entities\BusinessClass;
 use Modules\Policy\Entities\SubBusinessClass;
@@ -73,5 +74,15 @@ class Policy extends Model
 
     public function getPolicyByPolicyNo($number){
         return Policy::where('policy_number', $number)->first();
+    }
+
+    public function getAllPolicies(){
+        return Policy::orderBy('id', 'DESC')->get();
+    }
+    public function getThisYearPolicies(){
+        return Policy::select(
+            DB::raw("count(policy_number) as noPolicies"),
+            DB::raw("date(created_at) as ")
+        )->whereYear('created_at', date('Y'))->orderBy('id', 'DESC')->get();
     }
 }

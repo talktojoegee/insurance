@@ -11,6 +11,9 @@
 |
 */
 
+Route::get('/dashboard', 'PolicyController@dashboard')->name('dashboard');
+Route::get('/dashboard-statistics', 'PolicyController@dashboardStatistics')->name('dashboard-chart');
+
 Route::prefix('policy')->group(function() {
 	#Policy
     Route::get('/', 'PolicyController@index');
