@@ -10,6 +10,12 @@
     <link rel="stylesheet" type="text/css" href="\assets\css\toastify.min.css">
     <link rel="stylesheet" type="text/css" href="\bower_components\datatables.net-responsive-bs4\css\responsive.bootstrap4.min.css">
 @endsection
+@section('current-page')
+    Non-motor Policies
+@endsection
+@section('current-page-brief')
+    <p><strong class="text-danger">Note: </strong> There are indicators to specify the  <code>scope</code> of the information presented below.</p>
+@endsection
 @section('main-content')
 
 
@@ -17,12 +23,13 @@
    <div class="col-md-6 col-xl-4">
         <div class="card widget-card-1">
             <div class="card-block-small">
-                <i class="feather icon-pie-chart bg-c-blue card1-icon"></i>
+                <i class=" icofont icofont-growth bg-c-blue card1-icon"></i>
                 <span class="text-c-blue f-w-600">Total</span>
                 <h4>{{number_format($policies->count())}}</h4>
                 <div>
                     <span class="f-left m-t-10 text-muted">
-                        <i class="text-c-blue f-16 feather icon-alert-triangle m-r-10"></i>Non-motor Policies
+                        <i class="text-c-blue f-16 feather icon-alert-triangle m-r-10"></i>
+                        Non-motor Policies <code>(All Time)</code>
                     </span>
                 </div>
             </div>
@@ -31,12 +38,13 @@
     <div class="col-md-6 col-xl-4">
         <div class="card widget-card-1">
             <div class="card-block-small">
-                <i class="feather icon-home bg-c-pink card1-icon"></i>
+                <i class="icofont icofont-shield-alt bg-c-pink card1-icon"></i>
                 <span class="text-c-pink f-w-600">Total</span>
-                <h4>{{number_format($policies->sum('sum_insured'),2)}}</h4>
+                <h4>₦{{number_format($thisYearPolicies->sum('sum_insured'),2)}}</h4>
                 <div>
                     <span class="f-left m-t-10 text-muted">
                         <i class="text-c-pink f-16 feather icon-calendar m-r-10"></i>Sum Insured
+                        <code>({{date('Y')}})</code>
                     </span>
                 </div>
             </div>
@@ -45,12 +53,13 @@
     <div class="col-md-6 col-xl-4">
         <div class="card widget-card-1">
             <div class="card-block-small">
-                <i class="ti-wallet bg-c-green card1-icon"></i>
+                <i class="icofont icofont-king-crown bg-c-green card1-icon"></i>
                 <span class="text-c-green f-w-600">Total</span>
-                <h4>{{number_format($policies->sum('gross_premium'))}}</h4>
+                <h4>₦{{number_format($thisYearPolicies->sum('gross_premium'))}}</h4>
                 <div>
                     <span class="f-left m-t-10 text-muted">
                         <i class="text-c-green f-16 feather icon-tag m-r-10"></i>Gross Premium
+                        <code>({{date('Y')}})</code>
                     </span>
                 </div>
             </div>
@@ -62,7 +71,7 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-block">
-                <h5 class="sub-title">Non-motor Policies</h5>
+                <h5 class="sub-title">Non-motor Policies <code>(All Time)</code></h5>
                 @if(session()->has('success'))
                     <div class="alert alert-success background-success">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">

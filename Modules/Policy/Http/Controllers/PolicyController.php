@@ -51,7 +51,11 @@ class PolicyController extends Controller
     public function index()
     {
         $policies = $this->policy->getPolicyDocumentationByType(1);
-        return view('policy::non-motor', ['policies'=>$policies]);
+        return view('policy::non-motor',
+            [
+                'policies'=>$policies,
+                'thisYearPolicies'=>$this->policy->getThisYearPolicyDocumentationByType(1)
+            ]);
     }
     public function nonMotor()
     {
@@ -117,7 +121,10 @@ class PolicyController extends Controller
     public function motor()
     {
         $policies = $this->policy->getPolicyDocumentationByType(2);
-        return view('policy::motor',['policies'=>$policies]);
+        return view('policy::motor',[
+            'policies'=>$policies,
+            'thisYearPolicies'=>$this->policy->getThisYearPolicyDocumentationByType(2)
+        ]);
     }
     public function store(Request $request)
     {

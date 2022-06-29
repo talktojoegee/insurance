@@ -43,6 +43,10 @@ class Policy extends Model
         return Policy::where('policy_type', $type)->orderBy('id', 'DESC')->get();
     }
 
+    public function getThisYearPolicyDocumentationByType($type){
+        return Policy::whereYear('created_at', date('Y'))->where('policy_type', $type)->orderBy('id', 'DESC')->get();
+    }
+
     public function createPolicyDocumentation(Request $request, $clientId){
         $policy = new Policy;
         $policy->policy_number = $request->policy_number;

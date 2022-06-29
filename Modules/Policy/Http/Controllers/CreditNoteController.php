@@ -18,6 +18,7 @@ class CreditNoteController extends Controller
 {
     public function __construct(){
         $this->middleware('auth');
+        $this->creditnote = new CreditNote();
     }
   /**
      * Display a listing of the resource.
@@ -26,7 +27,11 @@ class CreditNoteController extends Controller
     public function index()
     {
         $list = CreditNote::orderBy('id', 'DESC')->get();
-        return view('policy::credit-note.index', ['list'=>$list]);
+        return view('policy::credit-note.index',
+            [
+                'list'=>$list,
+                'thisYearCreditNotes'=>$this->creditnote->getThisYearCreditNotes()
+            ]);
     }
 
     public function create($slug){

@@ -15,21 +15,20 @@
     All Credit Notes
 @endsection
 @section('current-page-brief')
-    List of all credit notes raised.
+    <p><strong class="text-danger">Note: </strong> There are indicators to specify the  <code>scope</code> of the information presented below.</p>
 @endsection
 @section('main-content')
-
-
 <div class="row">
     <div class="col-md-6 col-xl-3">
         <div class="card widget-card-1">
             <div class="card-block-small">
-                <i class="feather icon-home bg-c-pink card1-icon"></i>
+                <i class="icofont icofont-deal bg-c-pink card1-icon"></i>
                 <span class="text-c-pink f-w-600">Total</span>
-                <h4>{{number_format($list->sum('sum_insured'),2)}}</h4>
+                <h4>₦{{number_format($thisYearCreditNotes->sum('sum_insured'),2)}}</h4>
                 <div>
                     <span class="f-left m-t-10 text-muted">
                         <i class="text-c-pink f-16 feather icon-calendar m-r-10"></i>Sum Insured
+                        <code>({{date('Y')}})</code>
                     </span>
                 </div>
             </div>
@@ -38,12 +37,13 @@
    <div class="col-md-6 col-xl-3">
         <div class="card widget-card-1">
             <div class="card-block-small">
-                <i class="feather icon-pie-chart bg-c-blue card1-icon"></i>
+                <i class="icofont icofont-king-crown bg-c-blue card1-icon"></i>
                 <span class="text-c-blue f-w-600">Total</span>
-                <h4>{{number_format($list->sum('gross_premium'),2)}}</h4>
+                <h4>₦{{number_format($thisYearCreditNotes->sum('gross_premium'),2)}}</h4>
                 <div>
                     <span class="f-left m-t-10 text-muted">
                         <i class="text-c-blue f-16 feather icon-alert-triangle m-r-10"></i>Gross Premium
+                        <code>({{date('Y')}})</code>
                     </span>
                 </div>
             </div>
@@ -53,12 +53,13 @@
     <div class="col-md-6 col-xl-3">
         <div class="card widget-card-1">
             <div class="card-block-small">
-                <i class="ti-shopping-cart bg-c-green card1-icon"></i>
+                <i class="icofont icofont-money-bag bg-c-green card1-icon"></i>
                 <span class="text-c-green f-w-600">Total</span>
-                <h4>{{number_format($list->sum('commission'),2)}}</h4>
+                <h4>₦{{number_format($thisYearCreditNotes->sum('commission'),2)}}</h4>
                 <div>
                     <span class="f-left m-t-10 text-muted">
                         <i class="text-c-green f-16 feather icon-tag m-r-10"></i>Commission
+                        <code>({{date('Y')}})</code>
                     </span>
                 </div>
             </div>
@@ -67,24 +68,25 @@
     <div class="col-md-6 col-xl-3">
         <div class="card widget-card-1">
             <div class="card-block-small">
-                <i class="ti-receipt bg-c-yellow card1-icon"></i>
+                <i class="icofont icofont-bank-alt bg-c-yellow card1-icon"></i>
                 <span class="text-c-yellow f-w-600">Total</span>
-                <h4>{{number_format($list->sum('net_amount'),2)}}</h4>
+                <h4>₦{{number_format($thisYearCreditNotes->sum('net_amount'),2)}}</h4>
                 <div>
                     <span class="f-left m-t-10 text-muted">
                         <i class="text-c-yellow f-16 feather icon-watch m-r-10"></i>Net Amount
+                        <code>({{date('Y')}})</code>
                     </span>
                 </div>
             </div>
         </div>
     </div>
 </div>
-@include('policy::partials._policy-shortcut')
+@include('policy::partials._debit-credit-note-shortcut')
 <div class="row">
     <div class="col-sm-12">
         <div class="card">
             <div class="card-block">
-                <h5 class="sub-title text-primary">All Credit Notes</h5>
+                <h5 class="sub-title text-primary">All Credit Notes <code>(All Time)</code></h5>
                 <p>A total of <label for="" class="badge badge-danger">{{number_format($list->count())}}</label> credit note(s) have been raised since inception. </p>
                 @if(session()->has('success'))
                     <div class="alert alert-success background-success">

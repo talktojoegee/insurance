@@ -28,7 +28,11 @@ class DebitNoteController extends Controller
     public function index()
     {
         $list = $this->debitnote->getDebitNotes();
-        return view('policy::debit-note.index', ['list'=>$list]);
+        return view('policy::debit-note.index',
+            [
+                'list'=>$list,
+                'thisYearDebitNotes'=>$this->debitnote->getThisYearDebitNotes()
+            ]);
     }
 
     public function create($slug){
