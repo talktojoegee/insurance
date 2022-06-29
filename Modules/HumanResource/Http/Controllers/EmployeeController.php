@@ -11,6 +11,7 @@ use Modules\HumanResource\Entities\JobRole;
 use Modules\HumanResource\Entities\MaritalStatus;
 use Modules\HumanResource\Entities\EmploymentType;
 use Modules\HumanResource\Entities\AcademicQualification;
+use Modules\Policy\Entities\State;
 use Spatie\Permission\Models\Role;
 
 use App\Models\User;
@@ -23,6 +24,9 @@ class EmployeeController extends Controller
         $this->user = new User();
         $this->department = new Department();
         $this->jobrole = new JobRole();
+        $this->state = new State();
+        $this->qualification = new AcademicQualification();
+        $this->employementtype = new EmploymentType();
     }
     /**
      * Display a listing of the resource.
@@ -125,12 +129,47 @@ class EmployeeController extends Controller
             [
                 'employee'=>$employee,
                 'departments'=>$this->department->getDepartments(),
-                'jobRoles'=>$this->jobrole->getJobRoles()
+                'jobRoles'=>$this->jobrole->getJobRoles(),
+                'states'=>$this->state->getStates(),
+                'qualifications'=>$this->qualification->getAcademicQualifications(),
+                'employement_types'=>$this->employementtype->getEmploymentTypes()
                 ]);
         }else{
             session()->flash("error", "<strong>Whoops!</strong> No record found.");
             return back();
         }
+    }
+
+    public function editEmployeeProfile(Request $request){
+        $request->validate([
+            'firstName'=>'required',
+            'lastName'=>'required',
+            'state'=>'required',
+            'department'=>'required',
+            'mobileNo'=>'required',
+            'qualification'=>'required',
+            'employmentType'=>'required',
+            'employeeId'=>'required',
+            'jobRole'=>'required',
+            'address'=>'required',
+            'gender'=>'required',
+            'empId'=>'required'
+        ],[
+            'firstName.required'=>'Enter employee first name',
+            'lastName.required'=>'Enter employee surname',
+            'state.required'=>'Select state of origin from the list provided.',
+            'department.required'=>"Choose department for this employee",
+            'mobileNo.required'=>'Enter mobile number',
+            'qualification.required'=>"What's employee's highest qualification?",
+            'employmentType.required'=>'Choose mode of employment',
+            'employeeId.required'=>'Enter employee ID',
+            'jobRole.required'=>'Choose a job role',
+            'address.required'=>'Enter residential address',
+            'gender.required'=>'Choose gender'
+        ]);
+        $this->user->updateEmployeeProfile($request);
+        session()->flash("success", "Employee profile updated!");
+        return back();
     }
 
     /**

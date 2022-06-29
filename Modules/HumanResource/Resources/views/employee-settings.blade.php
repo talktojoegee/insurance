@@ -16,6 +16,12 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-block">
+                    @if (session()->has('success'))
+                        <div class="alert alert-success background-success px-5 py-4 mb-2 bg-theme-12 text-white mb-2 mt-2">
+                            {!! session()->get('success') !!}
+                        </div>
+                    @endif
+
                     {!! $employee->account_status == 1 ? "<span class='badge badge-success'>Active</span>" : "<span class='badge badge-danger'>Deactivated</span>" !!}
                     <div class="row mt-3">
                         <div class="col-md-3 col-lg-3">
@@ -42,7 +48,7 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="general-info">
-                                            <form action="" autocomplete="off" method="post">
+                                            <form action="{{route('edit-employee-profile')}}" autocomplete="off" method="post">
                                                 @csrf
                                                 <div class="row">
                                                     <div class="col-lg-12 col-xl-6">
@@ -53,11 +59,19 @@
                                                                     <th scope="row">First Name</th>
                                                                     <td>
                                                                         <input name="firstName" type="text" value="{{$employee->first_name ?? ''}}" class="form-control">
+                                                                        @error('firstName')
+                                                                        <i class="text-danger">{{$message}}</i>
+                                                                        @enderror
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th scope="row">Surname</th>
-                                                                    <td> <input name="lastName" type="text" value="{{$employee->last_name ?? ''}}" class="form-control"> </td>
+                                                                    <td>
+                                                                        <input name="lastName" type="text" value="{{$employee->last_name ?? ''}}" class="form-control">
+                                                                        @error('lastName')
+                                                                        <i class="text-danger">{{$message}}</i>
+                                                                        @enderror
+                                                                    </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th scope="row">Gender</th>
@@ -67,6 +81,9 @@
                                                                             <option value="1" {{$employee->gender == 1 ? 'selected' : ''}}>Male</option>
                                                                             <option value="2" {{$employee->gender == 2 ? 'selected' : ''}}>Female</option>
                                                                         </select>
+                                                                        @error('gender')
+                                                                        <i class="text-danger">{{$message}}</i>
+                                                                    @enderror
 
                                                                 </tr>
                                                                 <tr>
@@ -77,6 +94,9 @@
                                                                     <th scope="row">Mobile Number</th>
                                                                     <td>
                                                                         <input type="text" name="mobileNo" value="{{$employee->mobile_no ?? ''}}" class="form-control">
+                                                                        @error('mobileNo')
+                                                                        <i class="text-danger">{{$message}}</i>
+                                                                        @enderror
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -97,6 +117,9 @@
                                                                                 <option value="{{$jRole->id}}" {{$jRole->id == $employee->employeeJobRole->id ? 'selected' : ''}}>{{$jRole->job_role ?? '' }}</option>
                                                                             @endforeach
                                                                         </select>
+                                                                        @error('jobRole')
+                                                                        <i class="text-danger">{{$message}}</i>
+                                                                        @enderror
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -104,11 +127,11 @@
                                                                     <td>
                                                                         <textarea name="address" placeholder="Type address here..." style="resize: none;"
                                                                                   class="form-control">{{$employee->address ?? ''}}</textarea>
+                                                                        @error('address')
+                                                                        <i class="text-danger">{{$message}}</i>
+                                                                        @enderror
+                                                                        <input type="hidden" name="empId" value="{{$employee->id}}">
                                                                     </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th scope="row">Access Level</th>
-                                                                    <td>Regular User</td>
                                                                 </tr>
 
                                                                 </tbody>
@@ -123,45 +146,103 @@
 
                                                                 <tr>
                                                                     <th scope="row">State</th>
-                                                                    <td>@xyz</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th scope="row">LGA</th>
-                                                                    <td>demo.skype</td>
+                                                                    <td>
+                                                                        {{$employee->getEmployeeState->state_name ?? ''}}
+                                                                        <select name="state" id="state"
+                                                                                class="form-control">
+                                                                            @foreach($states as $state )
+                                                                                <option value="{{$state->id}}" {{$state->id == $employee->state ? 'selected' : '' }}>{{$state->state_name ?? '' }}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                        @error('state')
+                                                                            <i class="text-danger">{{$message}}</i>
+                                                                        @enderror
+                                                                    </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th scope="row">Department</th>
-                                                                    <td><a href="javascript:void(0);">{{$employee->employeeDepartment->name ?? ''}}</a></td>
+                                                                    <td>
+                                                                        <a href="javascript:void(0);">{{$employee->employeeDepartment->name ?? ''}}</a>
+                                                                        <select name="department" id="department"
+                                                                                class="form-control">
+                                                                            @foreach($departments as $department )
+                                                                                <option value="{{$department->id}}" {{$department->id == $employee->department ? 'selected' : '' }}>{{$department->name ?? '' }}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                        @error('department')
+                                                                        <i class="text-danger">{{$message}}</i>
+                                                                        @enderror
+                                                                    </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th scope="row">Academic Qualification</th>
-                                                                    <td>{{$employee->employeeAcademicQualification->name ?? ''}}</td>
+                                                                    <td>
+                                                                        {{$employee->employeeAcademicQualification->name ?? ''}}
+                                                                        <select name="qualification" id="qualification"
+                                                                                class="form-control">
+                                                                            @foreach($qualifications as $qualification )
+                                                                                <option value="{{$qualification->id}}" {{$qualification->id == $employee->acadmic_qualification ? 'selected' : '' }}>{{$qualification->name ?? '' }}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                        @error('qualification')
+                                                                        <i class="text-danger">{{$message}}</i>
+                                                                        @enderror
+                                                                    </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th scope="row">Employment Type</th>
-                                                                    <td>{{$employee->employeeEmploymentType->name ?? ''}}</td>
+                                                                    <td>
+                                                                        {{$employee->employeeEmploymentType->name ?? ''}}
+                                                                        <select name="employmentType" id="employmentType"
+                                                                                class="form-control">
+                                                                            @foreach($employement_types as $type )
+                                                                                <option value="{{$type->id}}" {{$type->id == $employee->employement_type ? 'selected' : '' }}>{{$type->name ?? '' }}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                        @error('employmentType')
+                                                                        <i class="text-danger">{{$message}}</i>
+                                                                        @enderror
+                                                                    </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th scope="row">Employee ID</th>
-                                                                    <td><a href="javascript:void(0);">{{$employee->employee_id ?? ''}}</a></td>
+                                                                    <td>
+                                                                        <input type="text" value="{{$employee->employee_id ?? ''}}" name="employeeId" placeholder="Employee ID" class="form-control">
+                                                                        @error('employeeId')
+                                                                        <i class="text-danger">{{$message}}</i>
+                                                                        @enderror
+                                                                    </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th scope="row">Blood Group</th>
-                                                                    <td><a href="#!">www.demo.com</a></td>
+                                                                    <td>
+                                                                        <input type="text" value="{{$employee->blood_group ?? ''}}" name="bloodGroup" placeholder="Blood Group" class="form-control">
+                                                                    </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th scope="row">Genotype</th>
-                                                                    <td><a href="#!">www.demo.com</a></td>
+                                                                    <td>
+                                                                        <input type="text" value="{{$employee->genotype ?? ''}}" name="genotype" placeholder="Genotype" class="form-control">
+                                                                    </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th scope="row">Known Ailment</th>
-                                                                    <td>{{$employee->known_ailment ?? ''}}</td>
+                                                                    <td>
+                                                                        <input type="text" value="{{$employee->known_ailment ?? ''}}" name="knownAilment" placeholder="Known Ailment" class="form-control">
+
+                                                                    </td>
                                                                 </tr>
                                                                 </tbody>
                                                             </table>
                                                         </div>
                                                     </div>
                                                     <!-- end of table col-lg-6 -->
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12 d-flex justify-content-center ">
+
+                                                        <button class="btn btn-primary btn-sm" type="submit">Save Changes</button>
+                                                    </div>
                                                 </div>
                                             </form>
                                             <!-- end of row -->

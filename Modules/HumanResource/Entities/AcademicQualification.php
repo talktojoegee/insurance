@@ -12,4 +12,8 @@ class AcademicQualification extends Model
     public function addedBy(){
     	return $this->belongsTo(User::class, 'added_by');
     }
+
+    public function getAcademicQualifications(){
+        return AcademicQualification::orderBy('name', 'ASC')->get();
+    }
 }

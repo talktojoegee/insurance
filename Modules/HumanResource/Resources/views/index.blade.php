@@ -16,6 +16,31 @@
 Company's workforce.
 @endsection
 @section('main-content')
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-block">
+                    <div class="row">
+
+                        <div class="col-sm-6">
+                            <h2 class="d-inline-block text-c-green m-r-10">{{number_format($employees->where('account_status',1)->count())}}</h2>
+                            <div class="d-inline-block">
+                                <p class="m-b-0"><i class="ti-check m-r-10 text-c-green"></i></p>
+                                <p class="text-muted m-b-0"> Active Employees</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <h2 class="d-inline-block text-c-pink m-r-10">{{number_format($employees->where('account_status',2)->count())}}</h2>
+                            <div class="d-inline-block">
+                                <p class="m-b-0"><i class="ti-stamp m-r-10 text-c-pink"></i></p>
+                                <p class="text-muted m-b-0">Deactivated Employees</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 <div class="row">
     <div class="col-xl-12 col-lg-12  filter-bar">
         <nav class="navbar navbar-light bg-faded m-b-30 p-10">

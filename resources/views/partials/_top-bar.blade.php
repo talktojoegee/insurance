@@ -107,12 +107,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="auth-lock-screen.htm">
-                                            <i class="feather icon-lock"></i> Lock Screen
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="auth-normal-sign-in.htm">
+                                        <a href="{{route('logout')}}">
                                             <i class="feather icon-log-out"></i> Logout
                                         </a>
                                     </li>

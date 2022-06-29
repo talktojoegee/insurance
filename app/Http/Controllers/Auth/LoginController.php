@@ -54,7 +54,7 @@ class LoginController extends Controller
 		$user = User::where('email', $request->email)/* ->where('verified', 1) */->first();
 		if(!empty($user)){
 			if(Auth::attempt(['email'=>$request->email, 'password'=>$request->password, 'account_status'=>1], $request->remember)){
-				return redirect('policy');
+				return redirect('dashboard');
 			}else{
 				 session()->flash("error", "<strong>Whoops! </strong> Invalid login credentials or account is no longer active. Contact admin.");
 				 return back();

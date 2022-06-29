@@ -11,19 +11,7 @@
 Profile
 @endsection
 @section('main-content')
-<div class="row">
-    <div class="col-xl-12 col-lg-12  filter-bar">
-        <nav class="navbar navbar-light bg-faded m-b-30 p-10">
-            <div class="nav-item nav-grid">
-                <a href="{{ url()->previous() }}" class="btn btn-secondary btn-mini waves-effect waves-light"><i class="ti-back-left mr-2"></i>Go Back</a>
-                <a href="{{ url('/human-resource') }}" class="btn btn-primary btn-mini waves-effect waves-light"><i class="icofont icofont-users-alt-3 mr-2"></i>Manage Employees</a>
-                <a href="{{ url('/human-resource') }}" class="btn btn-warning btn-mini waves-effect waves-light"><i class="ti-sharethis mr-2"></i>Manage Permissions</a>
-                <a href="{{ url('/human-resource') }}" class="btn btn-danger btn-mini waves-effect waves-light"><i class="ti-stamp mr-2"></i>Deactivate Account</a>
-                <a href="{{ url('/human-resource') }}" class="btn btn-success btn-mini waves-effect waves-light"><i class="ti-check mr-2"></i>Activate Account</a>
-            </div>
-        </nav>
-    </div>
-</div>
+    @include('humanresource::partials._employee-shortcut')
 <div class="row">
     <div class="col-sm-12">
         <div class="card">
