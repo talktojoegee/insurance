@@ -21,7 +21,7 @@
 
 
 
-@include('policy::partials._policy-shortcut')
+@include('policy::partials._claim-shortcut')
 
 <div class="row">
     <div class="col-md-12 col-xl-4">
@@ -80,8 +80,8 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-block">
-                <h5 class="sub-title text-primary">All Credit Notes</h5>
-                <p>A total of <label for="" class="badge badge-danger">{{number_format($claims->count())}}</label> credit note(s) have been raised since inception. </p>
+                <h5 class="sub-title text-primary">All Claims <code>(All Time)</code></h5>
+                <p>A total of <label for="" class="badge badge-danger">{{number_format($claims->count())}}</label> claims were raised from inception. </p>
                 @if(session()->has('success'))
                     <div class="alert alert-success background-success">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">

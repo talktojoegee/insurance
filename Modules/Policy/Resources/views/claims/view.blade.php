@@ -15,7 +15,7 @@ Claim Details
 @endsection
 @section('main-content')
 
-@include('policy::partials._policy-shortcut')
+    @include('policy::partials._claim-shortcut')
 <div class="row">
     <div class="col-lg-8 col-md-8 col-sm-8 offset-md-2" id="printArea">
         <div class="card">
@@ -193,7 +193,7 @@ Claim Details
 <div class="row text-center">
     <div class="col-sm-12 filter-bar invoice-btn-group text-center">
         <div class="btn-group">
-            <button type="button" class="btn btn-danger waves-effect m-b-10 btn-mini waves-light"><i class="icofont icofont-ui-block mr-2"></i> Cancel</button>
+            <button type="button" class="btn btn-secondary waves-effect m-b-10 btn-mini waves-light"><i class="icofont icofont-ui-block mr-2"></i> Cancel</button>
             <div class="dropdown-primary dropdown open">
                 <button class="btn btn-primary btn-mini dropdown-toggle waves-effect waves-light " type="button" id="dropdown-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ti-more-alt  mr-2"></i>More</button>
                 <div class="dropdown-menu" aria-labelledby="dropdown-2" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut" x-placement="top-start" style="position: absolute; transform: translate3d(0px, -172px, 0px); top: 0px; left: 0px; will-change: transform;">
@@ -234,7 +234,7 @@ Claim Details
                 <input type="hidden" id="claim" value="{{$claim->id}}" name="claim">
                 <hr>
                 <div class="btn-group d-flex justify-content-center">
-                    <button class="btn btn-danger btn-mini" data-dismiss="modal"><i class="ti-close mr-2"></i>Cancel</button>
+                    <button class="btn btn-secondary btn-mini" data-dismiss="modal"><i class="ti-close mr-2"></i>Cancel</button>
                     @if ($claim->status == 0)
                         <button class="btn btn-mini btn-primary" id="approveClaimBtn"><i class="ti-check mr-2"></i>Approve</button>
                         <button class="btn btn-mini btn-danger" id="declineClaimBtn"><i class="ti-check mr-2"></i>Decline</button>

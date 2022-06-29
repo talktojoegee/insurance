@@ -2,6 +2,7 @@
 
 namespace Modules\Policy\Entities;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
@@ -42,5 +43,22 @@ class Client extends Model
     }
     public function getThisYearClients(){
         return Client::whereYear('created_at', date('Y'))->orderBy('id', 'DESC')->get();
+    }
+    public function getThisMonthClients(){
+        return Client::whereMonth('created_at', date('m'))->whereYear('created_at', date('Y'))->orderBy('id', 'DESC')->get();
+    }
+
+    public function getThisWeekClients(){
+        return Client::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+            ->orderBy('id', 'DESC')->get();
+    }
+    public function getLastMonthClients(){
+        $month = date('m');
+        if($month - 1 == 0){
+            $month = 12;
+        }else{
+            $month = $month - 1;
+        }
+        return Client::whereMonth('created_at', $month)->whereYear('created_at', date('Y'))->orderBy('id', 'DESC')->get();
     }
 }

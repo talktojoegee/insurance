@@ -18,28 +18,7 @@
     Register a new claim.
 @endsection
 @section('main-content')
-<div class="row">
-    <div class="col-xl-12 col-lg-12  filter-bar">
-        <nav class="navbar navbar-light bg-faded m-b-30 p-10 d-flex justify-content-end">
-            <div class="nav-item nav-grid" style="margin-right: 150px;">
-                <div class="dropdown-primary dropdown open">
-                    <button class="btn btn-primary btn-mini dropdown-toggle waves-effect waves-light " type="button" id="dropdown-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu</button>
-                    <div class="dropdown-menu" aria-labelledby="dropdown-2" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 39px, 0px); top: 0px; left: 0px; will-change: transform;">
-                        <a class="dropdown-item waves-light waves-effect" href="#">Chart of Accounts</a>
-                        <a class="dropdown-item waves-light waves-effect" href="#">Journal Voucher</a>
-                        <a class="dropdown-item waves-light waves-effect" href="#">Trial Balance</a>
-                        <a class="dropdown-item waves-light waves-effect" href="#">Income Statement</a>
-                        <a class="dropdown-item waves-light waves-effect" href="#">Generate Receipt</a>
-                        <a class="dropdown-item waves-light waves-effect" href="#">All Receipts</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item waves-light waves-effect" href="#">All Invoices</a>
-                    </div>
-                </div>
-            </div>
-
-        </nav>
-    </div>
-</div>
+    @include('policy::partials._claim-shortcut')
 
 <div class="card">
     <div class="card-block">

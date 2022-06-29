@@ -10,6 +10,12 @@
     <link rel="stylesheet" type="text/css" href="\assets\css\toastify.min.css">
     <link rel="stylesheet" type="text/css" href="\bower_components\datatables.net-responsive-bs4\css\responsive.bootstrap4.min.css">
 @endsection
+@section('current-page')
+    Clients
+@endsection
+@section('current-page-brief')
+    <p><strong class="text-danger">Note: </strong> There are indicators to specify the  <code>scope</code> of the information presented below.</p>
+@endsection
 @section('main-content')
 
 
@@ -33,7 +39,7 @@
             <div class="card-block-small">
                 <i class="icofont icofont-calendar bg-c-pink card1-icon"></i>
                 <span class="text-c-pink f-w-600">Total</span>
-                <h4>$23,589</h4>
+                <h4>{{number_format($lastMonthClients->count())}}</h4>
                 <div>
                     <span class="f-left m-t-10 text-muted">
                         <i class="text-c-pink f-16 feather icon-calendar m-r-10"></i>Last Month
@@ -47,7 +53,7 @@
             <div class="card-block-small">
                 <i class="icofont icofont-calendar bg-c-green card1-icon"></i>
                 <span class="text-c-green f-w-600">Total</span>
-                <h4>45</h4>
+                <h4>{{number_format($thisMonthClients->count())}}</h4>
                 <div>
                     <span class="f-left m-t-10 text-muted">
                         <i class="text-c-green f-16 feather icon-tag m-r-10"></i>This Month
@@ -61,7 +67,7 @@
             <div class="card-block-small">
                 <i class="icofont icofont-calendar bg-c-yellow card1-icon"></i>
                 <span class="text-c-yellow f-w-600">Total</span>
-                <h4>+562</h4>
+                <h4>{{number_format($thisWeekClients->count())}}</h4>
                 <div>
                     <span class="f-left m-t-10 text-muted">
                         <i class="text-c-yellow f-16 feather icon-watch m-r-10"></i>This Week
@@ -71,12 +77,12 @@
         </div>
     </div>
 </div>
-@include('policy::partials._policy-shortcut')
+@include('policy::partials._client-index')
 <div class="row">
     <div class="col-sm-12">
         <div class="card">
             <div class="card-block">
-                <h5 class="sub-title">Clients</h5>
+                <h5 class="sub-title">Clients <code>(All Time)</code></h5>
                 @if(session()->has('success'))
                     <div class="alert alert-success background-success">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">

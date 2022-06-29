@@ -222,7 +222,13 @@ class PolicyController extends Controller
 
     public function clients(){
         $clients = Client::orderBy('insured_name', 'ASC')->get();
-        return view('policy::clients.index', ['clients'=>$clients]);
+        return view('policy::clients.index',
+            [
+                'clients'=>$clients,
+                'thisMonthClients'=>$this->client->getThisMonthClients(),
+                'lastMonthClients'=>$this->client->getLastMonthClients(),
+                'thisWeekClients'=>$this->client->getThisWeekClients()
+            ]);
     }
     public function getClient($slug){
         $client = Client::where('slug', $slug)->first();

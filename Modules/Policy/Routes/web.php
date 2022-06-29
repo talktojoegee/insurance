@@ -50,8 +50,8 @@ Route::prefix('policy')->group(function() {
     Route::get('/client/view/{slug}', 'PolicyController@getClient');
 
     #Claims
-    Route::get('/claims', 'ClaimController@index');
-    Route::get('/claim/new', 'ClaimController@create');
+    Route::get('/claims', 'ClaimController@index')->name('claims');
+    Route::get('/claim/new', 'ClaimController@create')->name('new-claim');
     Route::post('/claim/get-policies', 'ClaimController@getClientPolicies');
     Route::post('/claim/get-client-policy', 'ClaimController@getClientPolicy');
     Route::post('/claim/register-claim', 'ClaimController@storeClaim');
