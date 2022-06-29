@@ -24,7 +24,8 @@ Route::prefix('human-resource')->group(function() {
     Route::post('/application/edit-role', 'GeneralSettingsController@editApplicationRole');
     Route::post('/application/permission', 'GeneralSettingsController@applicationPermission');
     Route::post('/application/edit-permission', 'GeneralSettingsController@editApplicationPermission');
-    Route::get('/employee/profile/{url}', 'EmployeeController@profile');
+    Route::get('/employee/profile/{url}', 'EmployeeController@profile')->name('employee-profile');
+    Route::get('/employee/settings/{url}', 'EmployeeController@settings')->name('employee-settings');
     Route::get('/manage-roles-and-permissions', 'ManageRolesAndPermissionsController@index');
     Route::get('/assign-permission/{id}', 'ManageRolesAndPermissionsController@showAssignPermissionToRole');
     Route::post('/assign-permissions', 'ManageRolesAndPermissionsController@assignPermissionToRole');

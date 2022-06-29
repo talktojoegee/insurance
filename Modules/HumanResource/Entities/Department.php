@@ -14,4 +14,8 @@ class Department extends Model
     public function addedBy(){
     	return $this->belongsTo(User::class, 'added_by');
     }
+
+    public function getDepartments(){
+        return Department::orderBy('name', 'ASC')->get();
+    }
 }

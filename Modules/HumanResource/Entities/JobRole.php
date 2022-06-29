@@ -17,4 +17,8 @@ class JobRole extends Model
     public function addedBy(){
     	return $this->belongsTo(User::class, 'added_by');
     }
+
+    public function getJobRoles(){
+        return JobRole::orderBy('job_role', 'ASC')->get();
+    }
 }

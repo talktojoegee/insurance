@@ -25,20 +25,32 @@ class User extends Authenticatable
 
     public function employeeDepartment(){
         return $this->belongsTo(Department::class, 'department');
-    }   
-    
+    }
+
     public function employeeJobRole(){
         return $this->belongsTo(JobRole::class, 'job_role');
-    }    
+    }
 
     public function employeeEmploymentType(){
         return $this->belongsTo(EmploymentType::class, 'employment_type');
-    }    
+    }
     public function employeeAcademicQualification(){
         return $this->belongsTo(AcademicQualification::class, 'academic_qualification');
-    }   
+    }
     public function employeeMaritalStatus(){
         return $this->belongsTo(MaritalStatus::class, 'marital_status');
+    }
+
+    public function getAllEmployees(){
+        return User::where('visibility', 1)->orderBy('first_name', 'ASC')->get();
+    }
+
+    public function getAllActiveEmployees(){
+        return User::where('account_status',1)->where('visibility', 1)->orderBy('first_name', 'ASC')->get();
+    }
+
+    public function getEmployeeBySlug($url){
+        return User::where('visibility',1)->where('url', $url)->first();
     }
     /**
      * The attributes that are mass assignable.

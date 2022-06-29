@@ -5,7 +5,7 @@
 @endsection
 
 @section('current-page')
-    Profile
+    {{$employee->first_name ?? ''}} {{$employee->last_name ?? ''}}
 @endsection
 @section('current-page-brief')
 Profile
@@ -15,7 +15,11 @@ Profile
     <div class="col-xl-12 col-lg-12  filter-bar">
         <nav class="navbar navbar-light bg-faded m-b-30 p-10">
             <div class="nav-item nav-grid">
+                <a href="{{ url()->previous() }}" class="btn btn-secondary btn-mini waves-effect waves-light"><i class="ti-back-left mr-2"></i>Go Back</a>
                 <a href="{{ url('/human-resource') }}" class="btn btn-primary btn-mini waves-effect waves-light"><i class="icofont icofont-users-alt-3 mr-2"></i>Manage Employees</a>
+                <a href="{{ url('/human-resource') }}" class="btn btn-warning btn-mini waves-effect waves-light"><i class="ti-sharethis mr-2"></i>Manage Permissions</a>
+                <a href="{{ url('/human-resource') }}" class="btn btn-danger btn-mini waves-effect waves-light"><i class="ti-stamp mr-2"></i>Deactivate Account</a>
+                <a href="{{ url('/human-resource') }}" class="btn btn-success btn-mini waves-effect waves-light"><i class="ti-check mr-2"></i>Activate Account</a>
             </div>
         </nav>
     </div>
@@ -24,22 +28,25 @@ Profile
     <div class="col-sm-12">
         <div class="card">
             <div class="card-block">
-                <h5 class="sub-title text-primary">{{$employee->first_name ?? ''}}'s Profile</h5>
-                <div class="row">
+                {!! $employee->account_status == 1 ? "<span class='badge badge-success'>Active</span>" : "<span class='badge badge-danger'>Deactivated</span>" !!}
+                <div class="row mt-3">
                     <div class="col-md-3 col-lg-3">
-
-                        <ul class="list-group list-contacts">
-                            <li class="list-group-item">
-                                <img class="img-radius img-40" src="\assets\images\avatar-4.jpg" alt="contact-user">
-                            </li>
-                            <li class="list-group-item"><a href="#">{{$employee->first_name ?? ''}} {{$employee->last_name ?? ''}}</a></li>
-                            <li class="list-group-item"><a href="#">{{$employee->employeeJobRole->job_role ?? ''}}</a></li>
-                            <li class="list-group-item"><a href="#">{{ $employee->employeeDepartment->name ?? '' }}</a></li>
-                        </ul>
-                        <div class="btn-group mt-3 " role="group" >
-                            <button type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Terminate {{$employee->first_name."'s" ?? ''}} Employment" class="btn btn-danger btn-mini waves-effect waves-light"><i class="ti-close"></i>Terminate</button>
-                            <button type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit Profile" class="btn btn-warning btn-mini waves-effect waves-light"><i class="ti-pencil"></i>Edit</button>
-                            <button type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Query {{$employee->first_name ?? ''}}" class="btn btn-secondary btn-mini waves-effect waves-light"><i class="ti-alert"></i>Query</button>
+                        <div class="card rounded-card user-card">
+                            <div class="card-block">
+                                <div class="img-hover">
+                                    <img class="img-fluid img-radius" src="\assets\images\user-card\img-round1.jpg" alt="round-img">
+                                </div>
+                                <div class="user-content">
+                                    <h4 class="">{{$employee->first_name ?? ''}} {{$employee->last_name ?? ''}}</h4>
+                                    <p class="m-b-0 text-muted">{{$employee->employeeJobRole->job_role ?? ''}}</p>
+                                    <p class="m-b-0 text-info">{{ $employee->employeeDepartment->name ?? '' }}</p>
+                                </div>
+                            </div>
+                            @if(Auth::user()->id == $employee->id)
+                                <div class="form-group">
+                                    <button class="btn btn-primary btn-sm">Change Profile Picture</button>
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-9 col-lg-9">

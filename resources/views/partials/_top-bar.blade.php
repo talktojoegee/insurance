@@ -6,7 +6,7 @@
                         <i class="icofont icofont-navigation-menu"></i>
                     </a>
                     <a href="index-1.htm">
-                        <img class="img-fluid" src="..\files\assets\images\logo.png" alt="{{ config('app.name') }}">
+                        <img class="img-fluid" src="\assets\images\logo.png" alt="{{ config('app.name') }}">
                     </a>
                     <a class="mobile-options">
                         <i class="feather icon-more-horizontal"></i>
@@ -92,12 +92,12 @@
                                 </div>
                                 <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
                                     <li>
-                                        <a href="#!">
+                                        <a href="{{route('employee-settings', Auth::user()->url)}}">
                                             <i class="feather icon-settings"></i> Settings
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="user-profile.htm">
+                                        <a href="{{route('employee-profile', Auth::user()->url)}}">
                                             <i class="feather icon-user"></i> Profile
                                         </a>
                                     </li>

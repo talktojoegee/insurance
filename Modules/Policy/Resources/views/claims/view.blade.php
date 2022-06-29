@@ -193,7 +193,7 @@ Claim Details
 <div class="row text-center">
     <div class="col-sm-12 filter-bar invoice-btn-group text-center">
         <div class="btn-group">
-            <button type="button" class="btn btn-secondary waves-effect m-b-10 btn-mini waves-light"><i class="icofont icofont-ui-block mr-2"></i> Cancel</button>
+            <a href="{{url()->previous()}}" class="btn btn-secondary waves-effect m-b-10 btn-mini waves-light"><i class="icofont icofont-ui-block mr-2"></i> Cancel</a>
             <div class="dropdown-primary dropdown open">
                 <button class="btn btn-primary btn-mini dropdown-toggle waves-effect waves-light " type="button" id="dropdown-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ti-more-alt  mr-2"></i>More</button>
                 <div class="dropdown-menu" aria-labelledby="dropdown-2" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut" x-placement="top-start" style="position: absolute; transform: translate3d(0px, -172px, 0px); top: 0px; left: 0px; will-change: transform;">
@@ -209,7 +209,6 @@ Claim Details
                         <a class="dropdown-item waves-light waves-effect claim-action" href="javascript:void(0);" data-target="#claimActionModal" data-action="approve" data-toggle="modal">Approve Claim</a>
 
                     @endif
-                    <a class="dropdown-item waves-light waves-effect" href="#">Edit Claim</a>
                 </div>
             </div>
             <a href="javascript:void(0);" id="printClaim" class="btn btn-success btn-print-invoice m-b-10 btn-mini waves-effect waves-light m-r-20"><i class="ti-printer mr-2"></i>Print</a>

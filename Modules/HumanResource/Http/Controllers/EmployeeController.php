@@ -20,6 +20,9 @@ class EmployeeController extends Controller
 {
     public function __construct(){
         $this->middleware('auth');
+        $this->user = new User();
+        $this->department = new Department();
+        $this->jobrole = new JobRole();
     }
     /**
      * Display a listing of the resource.
@@ -27,7 +30,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employees = User::where('account_status',1)->where('visibility', 1)->orderBy('first_name', 'ASC')->get();
+        $employees = $this->user->getAllEmployees();
         return view('humanresource::index',['employees'=>$employees]);
     }
 
@@ -112,6 +115,20 @@ class EmployeeController extends Controller
         return view('humanresource::profile', ['employee'=>$employee]);
         }else{
             session()->flash("error", "<strong>Ooops!</strong> No record found.");
+            return back();
+        }
+    }
+    public function settings($url){
+        $employee = $this->user->getEmployeeBySlug($url);
+        if(!empty($employee)){
+        return view('humanresource::employee-settings',
+            [
+                'employee'=>$employee,
+                'departments'=>$this->department->getDepartments(),
+                'jobRoles'=>$this->jobrole->getJobRoles()
+                ]);
+        }else{
+            session()->flash("error", "<strong>Whoops!</strong> No record found.");
             return back();
         }
     }
