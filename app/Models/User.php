@@ -82,6 +82,12 @@ class User extends Authenticatable
         $user->employment_type = $request->employmentType;
         $user->save();
     }
+
+    public function updateAccountStatus(Request $request){
+        $user = User::find($request->employeeId);
+        $user->account_status = $request->status;
+        $user->save();
+    }
     /**
      * The attributes that are mass assignable.
      *

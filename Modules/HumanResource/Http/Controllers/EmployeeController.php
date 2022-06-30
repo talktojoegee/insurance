@@ -172,6 +172,16 @@ class EmployeeController extends Controller
         return back();
     }
 
+    public function updateEmployeeAccountStatus(Request $request){
+        $request->validate([
+            'status'=>'required',
+            'employeeId'=>'required'
+        ]);
+        $this->user->updateAccountStatus($request);
+        session()->flash("success", "Account status updated.");
+        return back();
+    }
+
     /**
      * Store a newly created resource in storage.
      * @param Request $request
