@@ -14,7 +14,7 @@
     <div class="col-xl-12 col-lg-12  filter-bar">
         <nav class="navbar navbar-light bg-faded m-b-30 p-10">
             <div class="nav-item nav-grid">
-                <a href="{{ url('/human-resource/add-new-employee') }}" class="btn btn-primary btn-mini waves-effect waves-light"><i class="ti-plus mr-2"></i>Add New Employee</a>
+                <a href="{{ route('create-chart-of-account') }}" class="btn btn-primary btn-mini waves-effect waves-light"><i class="ti-plus mr-2"></i>Add New Chart of Account</a>
             </div>
         </nav>
     </div>
@@ -24,111 +24,137 @@
     <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="card">
             <div class="card-header mb-4">
-                <h5 class="card-header-text text-uppercase">Chart of Accounts</h5>
-                <button class="btn btn-mini btn-primary float-right" type="button" data-toggle="modal" data-target="#addNewAccountModal"><i class="ti-plus mr-2"></i>Add New Account</button>
-            </div>
-                <div class="card-block accordion-block">
-                    <div class="col-xs-12 col-sm-12 mb-4">
-                    <table id="complex-header" class="table table-striped table-bordered nowrap dataTable" id="chartOfAccountsTable" role="grid" aria-describedby="complex-header_info" style="width: 100%; margin:0px auto;">
-                        <thead>
-                        <tr role="row">
-                            <th class="sorting_asc text-left" tabindex="0" style="width: 50px;">S/No.</th>
-                            <th class="sorting_asc text-left" tabindex="0" style="width: 50px;">ACCOUNT CODE</th>
-                            <th class="sorting_asc text-left" tabindex="0" style="width: 150px;">ACCOUNT NAME</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @php
-                            $a = 1;
-                        @endphp
-                        <tr role="row" class="odd">
-                            <td class="sorting_1" colspan="3"><strong style="font-size:16px; text-transform:uppercase;">Assets</strong></td>
-                        </tr>
-                        @foreach($charts as $report)
-                            @switch($report->account_type)
-                                @case(1)
-                                @if ($report->glcode != 1)
-                                    <tr role="row" class="odd">
-                                        <td class="text-left">{{$a++}}</td>
-                                        <td class="sorting_1 text-left">{{$report->glcode ?? ''}}</td>
-                                        <td class="text-left">{{$report->account_name ?? ''}}</td>
-                                    </tr>
-                                @endif
-                                @break
+                <h5 class="card-header-text text-uppercase">Chart of Accounts</h5></div>
+            <div class="card-block accordion-block">
+                <div class="col-xs-12 col-sm-12 mb-4 ">
+                    @if(count($charts) > 0)
+                        <table id="complex-header" class="table table-striped table-bordered nowrap dataTable" id="chartOfAccountsTable" role="grid" aria-describedby="complex-header_info" style="width: 100%; margin:0px auto;">
+                            <thead>
+                            <tr role="row">
+                                <th class="sorting_asc text-left" tabindex="0" style="width: 50px;">S/No.</th>
+                                <th class="sorting_asc text-left" tabindex="0" style="width: 50px;">ACCOUNT CODE</th>
+                                <th class="sorting_asc text-left" tabindex="0" style="width: 150px;">ACCOUNT NAME</th>
+                                <th class="sorting_asc text-left" tabindex="0" >PARENT</th>
+                                <th class="sorting_asc text-left" tabindex="0" >TYPE</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @php
+                                $a = 1;
+                            @endphp
+                            <tr role="row" class="odd">
+                                <td class="sorting_1" colspan="5"><strong style="font-size:16px; text-transform:uppercase;">Assets</strong></td>
+                            </tr>
+                            @foreach($charts as $report)
+                                @switch($report->account_type)
+                                    @case(1)
+                                    @if ($report->glcode != 1)
+                                        <tr role="row" class="odd {{ $report->type == 0 ? 'bg-secondary text-white' : '' }}">
+                                            <td class="text-left">{{$a++}}</td>
+                                            <td class="sorting_1 text-left">{{$report->glcode ?? ''}}</td>
+                                            <td class="text-left">{{$report->account_name ?? ''}}</td>
+                                            <td class="text-left">{{$report->parent_account ?? ''}} - {{$report->getParentAccountById($report->coa_id)->account_name ?? '' }}</td>
+                                            <td class="text-left">{{$report->type == 0 ? 'General' : 'Detail'}}</td>
+                                        </tr>
+                                    @endif
+                                    @break
+                                @endswitch
+                            @endforeach
+
+                            <tr role="row" class="odd">
+                                <td class="sorting_1"  colspan="5">
+                                    <strong style="font-size:16px; text-transform:uppercase;">Liability</strong>
+                                </td>
+                            </tr>
+                            @foreach($charts as $report)
+                                @switch($report->account_type)
+                                    @case(2)
+                                    @if ($report->glcode != 2)
+                                        <tr role="row" class="odd {{ $report->type == 0 ? 'bg-secondary text-white' : '' }}">
+                                            <td class="text-left">{{$a++}}</td>
+                                            <td class="sorting_1 text-left">{{$report->glcode ?? ''}}</td>
+                                            <td class="text-left">{{$report->account_name ?? ''}}</td>
+                                            <td class="text-left">{{$report->parent_account ?? ''}} - {{$report->getParentAccountById($report->coa_id)->account_name ?? '' }}</td>
+                                            <td class="text-left">{{$report->type == 0 ? 'General' : 'Detail'}}</td>
+                                        </tr>
+
+                                    @endif
+                                    @break
+                                @endswitch
+                            @endforeach
+                            <tr role="row" class="odd">
+                                <td class="sorting_1"  colspan="5"><strong style="font-size:16px; text-transform:uppercase;">Equity</strong></td>
+                            </tr>
+                            @foreach($charts as $report)
+                                @switch($report->account_type)
+                                    @case(3)
+                                    @if ($report->glcode != 3)
+                                        <tr role="row" class="odd {{ $report->type == 0 ? 'bg-secondary text-white' : '' }}">
+                                            <td class="text-left">{{$a++}}</td>
+                                            <td class="sorting_1 text-left">{{$report->glcode ?? ''}}</td>
+                                            <td class="text-left">{{$report->account_name ?? ''}}</td>
+                                            <td class="text-left">{{$report->parent_account ?? ''}} - {{$report->getParentAccountById($report->coa_id)->account_name ?? '' }}</td>
+                                            <td class="text-left">{{$report->type == 0 ? 'General' : 'Detail'}}</td>
+                                        </tr>
+
+                                    @endif
+                                    @break
+                                @endswitch
+                            @endforeach
+                            <tr role="row" class="odd">
+                                <td class="sorting_1"  colspan="5"><strong style="font-size:16px; text-transform:uppercase;">Revenue</strong></td>
+                            </tr>
+                            @foreach($charts as $report)
+                                @switch($report->account_type)
+                                    @case(4)
+                                    @if ($report->glcode != 4)
+                                        <tr role="row" class="odd {{ $report->type == 0 ? 'bg-secondary text-white' : '' }}">
+                                            <td class="text-left">{{$a++}}</td>
+                                            <td class="sorting_1 text-left">{{$report->glcode ?? ''}}</td>
+                                            <td class="text-left">{{$report->account_name ?? ''}}</td>
+                                            <td class="text-left">{{$report->parent_account ?? ''}} - {{$report->getParentAccountById($report->coa_id)->account_name ?? '' }}</td>
+                                            <td class="text-left">{{$report->type == 0 ? 'General' : 'Detail'}}</td>
+                                        </tr>
+
+                                    @endif
+                                    @break
+                                @endswitch
+                            @endforeach
+                            <tr role="row" class="odd">
+                                <td class="sorting_1"  colspan="5"><strong style="font-size:16px; text-transform:uppercase;">Expenses</strong></td>
+                            </tr>
+                            @foreach($charts as $report)
+                                @switch($report->account_type)
+                                    @case(5)
+                                    @if ($report->glcode != 5)
+                                        <tr role="row" class="odd {{ $report->type == 0 ? 'bg-secondary text-white' : '' }}">
+                                            <td class="text-left">{{$a++}}</td>
+                                            <td class="sorting_1 text-left">{{$report->glcode ?? ''}}</td>
+                                            <td class="text-left">{{$report->account_name ?? ''}}</td>
+                                            <td class="text-left">{{$report->parent_account ?? ''}} - {{$report->getParentAccountById($report->coa_id)->account_name ?? '' }}</td>
+                                            <td class="text-left">{{$report->type == 0 ? 'General' : 'Detail'}}</td>
+                                        </tr>
+
+                            @endif
+                            @break
                             @endswitch
-                        @endforeach
+                            @endforeach
+                        </table>
+                    @else
+                        <div class="row">
+                            <div class="col-md-12 d-flex justify-content-center">
+                                <a href="{{route('create-major-transaction-accounts')}}" class="btn btn-primary">Create The Default 5 Accounts</a> <br>
+                            </div>
+                            <div class="col-md-12 d-flex justify-content-center">
+                                <p>
+                                    <strong>Note: </strong>
+                                    This covers Assets, Liability, Equity, Revenue & Expenses.
+                                </p>
+                            </div>
 
-                        <tr role="row" class="odd">
-                            <td class="sorting_1"  colspan="3">
-                                <strong style="font-size:16px; text-transform:uppercase;">Liability</strong>
-                            </td>
-                        </tr>
-                        @foreach($charts as $report)
-                            @switch($report->account_type)
-                                @case(2)
-                                @if ($report->glcode != 2)
-                                    <tr role="row" class="odd">
-                                        <td class="text-left">{{$a++}}</td>
-                                        <td class="sorting_1 text-left">{{$report->glcode ?? ''}}</td>
-                                        <td class="text-left">{{$report->account_name ?? ''}}</td>
-                                    </tr>
+                        </div>
 
-                                @endif
-                                @break
-                            @endswitch
-                        @endforeach
-                        <tr role="row" class="odd">
-                            <td class="sorting_1"  colspan="3"><strong style="font-size:16px; text-transform:uppercase;">Equity</strong></td>
-                        </tr>
-                        @foreach($charts as $report)
-                            @switch($report->account_type)
-                                @case(3)
-                                @if ($report->glcode != 3)
-                                    <tr role="row" class="odd">
-                                        <td class="text-left">{{$a++}}</td>
-                                        <td class="sorting_1 text-left">{{$report->glcode ?? ''}}</td>
-                                        <td class="text-left">{{$report->account_name ?? ''}}</td>
-                                    </tr>
-
-                                @endif
-                                @break
-                            @endswitch
-                        @endforeach
-                        <tr role="row" class="odd">
-                            <td class="sorting_1"  colspan="3"><strong style="font-size:16px; text-transform:uppercase;">Revenue</strong></td>
-                        </tr>
-                        @foreach($charts as $report)
-                            @switch($report->account_type)
-                                @case(4)
-                                @if ($report->glcode != 4)
-                                    <tr role="row" class="odd">
-                                        <td class="text-left">{{$a++}}</td>
-                                        <td class="sorting_1 text-left">{{$report->glcode ?? ''}}</td>
-                                        <td class="text-left">{{$report->account_name ?? ''}}</td>
-                                    </tr>
-
-                                @endif
-                        @break
-                        @endswitch
-                        @endforeach
-                        <tr role="row" class="odd">
-                            <td class="sorting_1"  colspan="3"><strong style="font-size:16px; text-transform:uppercase;">Expenses</strong></td>
-                        </tr>
-                        @foreach($charts as $report)
-                            @switch($report->account_type)
-                                @case(5)
-                                @if ($report->glcode != 5)
-                                <tr role="row" class="odd">
-                                    <td class="text-left">{{$a++}}</td>
-                                    <td class="sorting_1 text-left">{{$report->glcode ?? ''}}</td>
-                                    <td class="text-left">{{$report->account_name ?? ''}}</td>
-                                </tr>
-
-                                @endif
-                        @break
-                        @endswitch
-                        @endforeach
-                    </table>
+                    @endif
                 </div>
             </div>
         </div>
@@ -137,86 +163,7 @@
 @endsection
 
 @section('dialog-section')
-<div class="modal fade" id="addNewAccountModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog " role="document">
-        <div class="modal-content">
-            <div class="modal-header bg-primary">
-                <h6 class="modal-title text-uppercase">Add New Account</h6>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span class="text-white" aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p><strong class="text-danger">Note:</strong> All fields marked with <sup class="text-danger">*</sup> is required.</p>
-                <form action="">
-                    <div class="form-group">
-                        <label for="">GL Code <sup class="text-danger">*</sup></label>
-                        <input type="number" placeholder="GL Code" id="gl_code" class="form-control">
-                        <div  class="text-white background-danger mt-2 p-2" id="gl_code_error">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="">Account Name <sup class="text-danger">*</sup></label>
-                        <input type="text" placeholder="Account Name" id="account_name" class="form-control">
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="">Account Type <sup class="text-danger">*</sup></label>
-                                <select name="account_type" id="account_type" class="form-control ">
-                                    <option disabled selected>Select account type</option>
-                                    <option value="1">Asset</option>
-                                    <option value="2">Liability</option>
-                                    <option value="3">Equity</option>
-                                    <option value="4">Revenue</option>
-                                    <option value="5">Expense</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="">Type <sup class="text-danger">*</sup></label>
-                                <select name="type" id="type" class="form-control">
-                                    <option selected disabled>Select type</option>
-                                    <option value="1">General</option>
-                                    <option value="2">Detail</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="">Bank <sup class="text-danger">*</sup></label>
-                                <select name="type" id="bank" class="form-control">
-                                    <option disabled selected>--Select--</option>
-                                    <option value="1">Yes</option>
-                                    <option value="0">No</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div  class="text-white background-danger mt-2 p-2" id="account_type_error">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="">Parent Account<sup class="text-danger">*</sup></label>
-                        <div id="parentAccountWrapper"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="">Note</label>
-                        <textarea name="note" id="note" style="resize: none;" class="form-control" placeholder="Type narration here..."></textarea>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer d-flex justify-content-center">
-                <button type="button" class="btn btn-danger waves-effect btn-mini" data-dismiss="modal"> <i class="ti-close mr-2"></i>Close</button>
-                <button type="button" class="btn btn-primary waves-effect btn-mini waves-light" id="addNewAccountBtn"> <i class="ti-check mr-2"></i>Submit</button>
-            </div>
-        </div>
-    </div>
-</div>
+
 @endsection
 
 @section('extra-scripts')
