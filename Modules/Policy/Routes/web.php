@@ -57,4 +57,6 @@ Route::prefix('policy')->group(function() {
     Route::post('/claim/register-claim', 'ClaimController@storeClaim');
     Route::get('/claim/view/{slug}', 'ClaimController@viewClaim');
     Route::post('/claim/update-claim', 'ClaimController@updateClaimStatus');
+
+    Route::get('/report/naicom', 'ReportController@showNaicomReport')->name('show-naicom-report');
 });
