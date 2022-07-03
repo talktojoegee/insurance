@@ -25,13 +25,15 @@ Profit/Loss
                             <td><img src="/assets/images/logo.png" class="m-b-10" width="82" height="52" alt=""></td>
                         </tr>
                         <tr>
-                            <td>Connexxion Telecom</td>
+                            <td>{{config('app.name')}}</td>
                         </tr>
                         <tr>
-                            <td>2A Iller Crescent Maitama, Abuja</td>
+                            <td>Nigeria Address Avenue</td>
                         </tr>
                         <tr>
-                            <td><a href="..\..\..\cdn-cgi\l\email-protection.htm#99fdfcf4f6d9fef4f8f0f5b7faf6f4" target="_top"><span class="__cf_email__" data-cfemail="690d0c0406290e04080005470a0604">[email&nbsp;protected]</span></a>
+                            <td><a href="javascript:void(0);" target="_top">
+                                    email@address.com
+                                </a>
                             </td>
                         </tr>
                         <tr>
@@ -52,7 +54,7 @@ Profit/Loss
                 <h6 class="m-0"><strong class="label label-info">From:</strong> {{date('d F, Y', strtotime($from))}} <strong class="label label-danger">To:</strong> {{date('d F, Y', strtotime($to))}}</h6>
             </div>
             <div class="col-md-4 col-sm-6">
-                <h6>Balance Sheet</h6>
+                <h6>Profit/Loss</h6>
             </div>
             <div class="col-md-4 col-sm-6">
                 <h6 class="m-b-20">Date & Time</h6>

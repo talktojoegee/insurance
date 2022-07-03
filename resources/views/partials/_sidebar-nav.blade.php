@@ -189,30 +189,6 @@
 
                     </ul>
                 </li>
-                <li class="pcoded-hasmenu">
-                    <a href="javascript:void(0)">
-                        <span class="pcoded-micon"><i class="icofont icofont-people"></i></span>
-                        <span class="pcoded-mtext">Vendors</span>
-                    </a>
-                    <ul class="pcoded-submenu">
-                        <li class="">
-                            <a href="#">
-                                <span class="pcoded-mtext">All Vendors</span>
-                            </a>
-                        </li>
-                        <li class=" ">
-                            <a href="#">
-                                <span class="pcoded-mtext">Bills</span>
-                            </a>
-                        </li>
-                        <li class="">
-                            <a href="#">
-                                <span class="pcoded-mtext">Payment</span>
-                            </a>
-                        </li>
-
-                    </ul>
-                </li>
                 <div class="pcoded-navigatio-lavel">Reports</div>
                 <li class="pcoded-hasmenu">
                     <a href="javascript:void(0)">
@@ -221,18 +197,38 @@
                     </a>
                     <ul class="pcoded-submenu">
                         <li class="">
-                            <a href="#">
-                                <span class="pcoded-mtext">NAICOM Report</span>
+                            <a href="{{route('show-naicom-report')}}">
+                                <span class="pcoded-mtext">NAICOM</span>
                             </a>
                         </li>
                         <li class=" ">
-                            <a href="#">
-                                <span class="pcoded-mtext">Data</span>
+                            <a href="javascript:void(0);" onclick="alert('Currently disabled. Contact Admin');">
+                                <span class="pcoded-mtext">Motor</span>
                             </a>
                         </li>
                         <li class="">
-                            <a href="#">
-                                <span class="pcoded-mtext">Chart Widget</span>
+                            <a href="javascript:void(0);" onclick="alert('Currently disabled. Contact Admin');">
+                                <span class="pcoded-mtext">Non-Motor</span>
+                            </a>
+                        </li>
+                        <li class="">
+                            <a href="javascript:void(0);" onclick="alert('Currently disabled. Contact Admin');">
+                                <span class="pcoded-mtext">Debit Note</span>
+                            </a>
+                        </li>
+                        <li class="">
+                            <a href="javascript:void(0);" onclick="alert('Currently disabled. Contact Admin');">
+                                <span class="pcoded-mtext">Credit Note</span>
+                            </a>
+                        </li>
+                        <li class="">
+                            <a href="javascript:void(0);" onclick="alert('Currently disabled. Contact Admin');">
+                                <span class="pcoded-mtext">Claims</span>
+                            </a>
+                        </li>
+                        <li class="">
+                            <a href="javascript:void(0);" onclick="alert('Currently disabled. Contact Admin');">
+                                <span class="pcoded-mtext">Clients</span>
                             </a>
                         </li>
 

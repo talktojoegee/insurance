@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Accounting\Entities\Coa;
 use Modules\Accounting\Entities\Currency;
+use Modules\Accounting\Entities\JournalVoucher;
 use Modules\Accounting\Entities\Receipt;
 use Modules\Accounting\Entities\Invoice;
 use Modules\Accounting\Entities\GeneralLedger;
@@ -21,6 +22,8 @@ class AccountingController extends Controller
 
     public function __construct(){
         $this->middleware('auth');
+        $this->journalvoucher = new JournalVoucher();
+        $this->generalledger = new GeneralLedger();
     }
     /**
      * Display a listing of the resource.
@@ -33,17 +36,23 @@ class AccountingController extends Controller
     }
 
     public function getParentAccount(Request $request){
-         $request->validate($request,[
-            'account_type'=>'required'
+         $request->validate([
+            'account_type'=>'required',
+             'type'=>'required'
         ]);
-        $accounts = Coa::select('account_name', 'id', 'type', 'glcode')
-            ->where('type',1)
+        $accounts = Coa::select('account_name', 'coa_id', 'type', 'glcode')
+            ->where('type',$request->type)
             ->where('account_type',$request->account_type)
             ->get();
         return view('accounting::partials._accounts', ['accounts'=>$accounts]);
     }
+
+    public function showCreateChartOfAccount(){
+        return view('accounting::create-account');
+    }
+
     public function saveAccount(Request $request){
-         $request->validate($request,[
+         $request->validate([
             "glcode"=>"required|unique:coa,glcode",
             "account_type"=>"required",
             "type"=>"required",
@@ -51,7 +60,9 @@ class AccountingController extends Controller
             "parent_account"=>"required"
             ]);
         $coa = DB::table('coas')->insert($request->all());
-        return response()->json(['message'=>'Success! New account registered.'], 200);
+        session()->flash("success", "New account created!");
+        return back();
+        //return response()->json(['message'=>'Success! New account registered.'], 200);
     }
     public function journalVoucher()
     {
@@ -59,8 +70,9 @@ class AccountingController extends Controller
                         ->join('journal_vouchers as j', 'j.glcode', '=', 'c.glcode')
                         ->join('users as u', 'u.id', '=', 'j.entry_by')
                         ->select('c.*', 'j.*', 'u.first_name', 'u.last_name')
-                        ->where('j.trash',0)
-                        ->where('j.posted',0)
+                        //->where('j.trash',0)
+                        //->where('j.posted',0)
+                        ->orderBy('j.id', 'DESC')
                         ->get();
         return view('accounting::jv', ['entries'=>$entries]);
     }
@@ -68,6 +80,74 @@ class AccountingController extends Controller
     {
         $accounts = Coa::all();
         return view('accounting::jv-new', ['accounts'=>$accounts]);
+    }
+
+    public function postJournalVoucher(Request $request){
+        $request->validate([
+            'issue_date'=>'required',
+            'entry_no'=>'required',
+            'account'=>'required|array',
+            'account.*'=>'required'
+        ]);
+        $cr_total = 0;
+        $dr_total = 0;
+
+        for($i = 0; $i<count($request->debit_amount); $i++){
+            $cr_total += $request->credit_amount[$i];
+            $dr_total += $request->debit_amount[$i];
+        }
+        if(count($request->account) != count($request->debit_amount)){
+            session()->flash("error", "<strong>Whoops!</strong> Something went wrong. Try again.");
+            return back();
+        }
+
+        if($cr_total == $dr_total){
+            $this->journalvoucher->setNewJournalVoucher($request);
+            session()->flash("success", "<strong>Success!</strong> New journal entry save.");
+            return back();
+        }else{
+            session()->flash("error", "<strong>Ooops!</strong> The value of DR must be same with CR. Try again.");
+            return back();
+        }
+    }
+
+    public function viewJournalEntry($ref_no){
+        $entry = $this->journalvoucher->getJournalByRefNo($ref_no);
+        if(!empty($entry)){
+            return view('accounting::journal-details',['entries'=>$entry]);
+        }else{
+            session()->flash("error", "<strong>Whoops!</strong> Record not found. Try again later");
+            return back();
+        }
+    }
+
+    public function processJournalEntry(Request $request){
+        $request->validate([
+            'operation'=>'required',
+            'journalId'=>'required|array',
+            'journalId.*'=>'required',
+            /*'glCode'=>'required|array',
+            'glCode.*'=>'required',
+            'drAmount'=>'required|array',
+            'drAmount.*'=>'required',
+            'crAmount'=>'required|array',
+            'crAmount.*'=>'required'*/
+        ],[
+            'operation.required'=>"What kind of operation do you intend to carry out?"
+        ]);
+        foreach($request->journalId as $id){
+            $this->journalvoucher->processJournal($id, $request);
+            if($request->operation == 1){
+                $journal = $this->journalvoucher->getJournalVoucherById($id);
+                //Post to ledger #$glCode, $postedBy, $narration, $drAmount, $crAmount, $refNo, $bank, $ob
+                $this->generalledger->publishGeneralLedger($journal->glcode, $journal->entry_by, $journal->narration,
+                    $journal->dr_amount, $journal->cr_amount, $journal->ref_no, $journal->bank, $journal->ob);
+            }
+
+        }
+
+        session()->flash("success", "<strong>Great!</strong> Journal voucher was processed successfully.");
+        return back();
     }
 
 
@@ -208,7 +288,7 @@ class AccountingController extends Controller
                 ->orderBy('c.account_type', 'ASC')
                 ->groupBy('c.account_name')
                 ->get();
-            return view('backend.accounting.reports.trial-balance', [
+            return view('accounting::report.trial-balance', [
                 'reports'=>$reports,
                 'bfDr'=>$bfDr,
                 'bfCr'=>$bfCr,

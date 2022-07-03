@@ -13,134 +13,136 @@
     New  Journal Voucher
 @endsection
 @section('main-content')
-<div class="row">
-    <div class="col-xl-12 col-lg-12  filter-bar">
-        <nav class="navbar navbar-light bg-faded m-b-30 p-10">
-            <div class="nav-item nav-grid">
-                <a href="{{ url('/human-resource/add-new-employee') }}" class="btn btn-primary btn-mini waves-effect waves-light"><i class="ti-plus mr-2"></i>Add New Employee</a>
-            </div>
-        </nav>
-    </div>
-</div>
+
 
 <div class="row ">
     <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="card">
             <div class="card-header mb-4">
                 <h5 class="card-header-text text-uppercase">New Journal Voucher</h5>
-                <button class="btn btn-mini btn-primary float-right" type="button" data-toggle="modal" data-target="#addNewAccountModal"><i class="ti-plus mr-2"></i>Add New Account</button>
+                <a class="btn btn-mini btn-primary float-right" href="{{route('manage-journal-voucher')}}" ><i class="ti-plus mr-2"></i>Manage Journal Voucher</a>
             </div>
-            <form action="" method="post">
-                @csrf
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="row">
-                            <div class="col-md-6 col-sm-6 col-lg-6">
-                                <div class="form-group">
-                                    <label for="">Date</label>
-                                    <input type="date" placeholder="Date" class="form-control" name="issue_date">
-                                    @error('issue_date')
-                                    <i class="text-danger mt-2">{{$message}}</i>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-sm-6 col-lg-6">
-                                <div class="form-group">
-                                    <label for="">Entry #</label>
-                                    <input type="text"  name="entry_no" value="JV{{rand(10,100)}}" readonly placeholder="Entry #" class="form-control">
-                                    @error('entry_no')
-                                    <i class="text-danger mt-2">{{$message}}</i>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="table-responsive">
-                            <table class="table  invoice-detail-table">
-                                <thead>
-                                <tr class="thead-default">
-                                    <th>Account</th>
-                                    <th>Debit</th>
-                                    <th>Credit</th>
-                                    <th>Narration</th>
-                                    <th>Name</th>
-                                </tr>
-                                </thead>
-                                <tbody id="products">
-                                        <tr class="item">
-                                        <td>
-                                            <div class="form-group">
-                                                <select name="account[]" class="text-white  account js-example-basic-single select-account form-control">
-                                                    <option disabled selected>Select account</option>
-                                                    @foreach($accounts as $account)
-                                                            <option value="{{$account->glcode}}">{{$account->account_name ?? ''}} - {{$account->glcode ?? ''}}</option>
-                                                    @endforeach
-                                                </select>
-                                                @error('account')
-                                                    <i class="text-danger mt-2">{{$message}}</i>
-                                                @enderror
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="form-group">
-                                                <input type="number" step="0.01" placeholder="Debit Amount" class="form-control debit-amount" value="0"  name="debit_amount[]">
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="form-group">
-                                                <input type="number" step="0.01" placeholder="Credit Amount" class="form-control credit-amount" value="0"  name="credit_amount[]">
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <input type="text" name="narration[]" class="form-control" placeholder="Narration">
-                                        </td>
-                                        <td>
-                                            <input type="text" name="name[]" class="form-control" placeholder="Name">
-                                        </td>
-                                    </tr>
+           <div class="card-block">
+               @if (session()->has('success'))
+                   <div class="alert alert-success background-success">
+                       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                           <i class="icofont icofont-close-line-circled text-white"></i>
+                       </button>
+                       {!! session()->get('success') !!}
+                   </div>
+               @endif
+               <form action="{{route('post-journal-entry')}}" method="post">
+                   @csrf
+                   <div class="row">
+                       <div class="col-md-6">
+                           <div class="row">
+                               <div class="col-md-6 col-sm-6 col-lg-6">
+                                   <div class="form-group">
+                                       <label for="">Date</label>
+                                       <input type="date" placeholder="Date" class="form-control" name="issue_date">
+                                       @error('issue_date')
+                                       <i class="text-danger mt-2">{{$message}}</i>
+                                       @enderror
+                                   </div>
+                               </div>
+                               <div class="col-md-6 col-sm-6 col-lg-6">
+                                   <div class="form-group">
+                                       <label for="">Entry #</label>
+                                       <input type="text"  name="entry_no" value="JV{{rand(10,100)}}" readonly placeholder="Entry #" class="form-control">
+                                       @error('entry_no')
+                                       <i class="text-danger mt-2">{{$message}}</i>
+                                       @enderror
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="row">
+                       <div class="col-sm-12">
+                           <div class="table-responsive">
+                               <table class="table  invoice-detail-table">
+                                   <thead>
+                                   <tr class="thead-default">
+                                       <th>Account</th>
+                                       <th>Debit</th>
+                                       <th>Credit</th>
+                                       <th>Narration</th>
+                                       <th>Name</th>
+                                   </tr>
+                                   </thead>
+                                   <tbody id="products">
+                                   <tr class="item">
+                                       <td>
+                                           <div class="form-group">
+                                               <select name="account[]" class="text-white  account js-example-basic-single select-account form-control">
+                                                   <option disabled selected>Select account</option>
+                                                   @foreach($accounts as $account)
+                                                       <option value="{{$account->glcode}}">{{$account->account_name ?? ''}} - {{$account->glcode ?? ''}}</option>
+                                                   @endforeach
+                                               </select>
+                                               @error('account')
+                                               <i class="text-danger mt-2">{{$message}}</i>
+                                               @enderror
+                                           </div>
+                                       </td>
+                                       <td>
+                                           <div class="form-group">
+                                               <input type="number" step="0.01" placeholder="Debit Amount" class="form-control debit-amount" value="0"  name="debit_amount[]">
+                                           </div>
+                                       </td>
+                                       <td>
+                                           <div class="form-group">
+                                               <input type="number" step="0.01" placeholder="Credit Amount" class="form-control credit-amount" value="0"  name="credit_amount[]">
+                                           </div>
+                                       </td>
+                                       <td>
+                                           <input type="text" name="narration[]" class="form-control" placeholder="Narration">
+                                       </td>
+                                       <td>
+                                           <input type="text" name="name[]" class="form-control" placeholder="Name">
+                                       </td>
+                                   </tr>
 
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-md-12 col-sm-12 col-lg-12">
-                        <button class="btn btn-mini btn-primary add-line"> <i class="ti-plus mr-2"></i> Add Line</button>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-md-12 col-sm-12 col-lg-12">
-                        <table class="table  invoice-detail-table">
-                            <tr>
-                                <td colspan="3" class="text-right"><strong style="font-size:14px; text-transform:uppercase; text-align: right;">Total:</strong></td>
-                                <td class="text-right drTotal">0.00
+                                   </tbody>
+                               </table>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="row mb-3">
+                       <div class="col-md-12 col-sm-12 col-lg-12">
+                           <button class="btn btn-mini btn-primary add-line"> <i class="ti-plus mr-2"></i> Add Line</button>
+                       </div>
+                   </div>
+                   <div class="row mb-3">
+                       <div class="col-md-12 col-sm-12 col-lg-12">
+                           <table class="table  invoice-detail-table">
+                               <tr>
+                                   <td colspan="3" class="text-right"><strong style="font-size:14px; text-transform:uppercase; text-align: right;">Total:</strong></td>
+                                   <td class="text-right drTotal">0.00
 
-                                </td>
-                                <td class="text-center crTotal"> 00
+                                   </td>
+                                   <td class="text-center crTotal"> 00
 
-                                </td>
-                                <td class="text-center"></td>
-                                <td class="text-center"></td>
-                                <td class="text-center"></td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="btn-group d-flex justify-content-center">
-                            <input type="hidden" id="drTotalHidden">
-                            <input type="hidden" id="crTotalHidden">
-                            <a href="" class="btn btn-mini btn-danger"><i class="ti-close mr-2"></i>Cancel</a>
-                            <button type="submit" class="btn btn-primary save-entry btn-mini"><i class="ti-check mr-2"> Save</i></button>
-                        </div>
-                    </div>
-                </div>
-            </form>
+                                   </td>
+                                   <td class="text-center"></td>
+                                   <td class="text-center"></td>
+                                   <td class="text-center"></td>
+                               </tr>
+                           </table>
+                       </div>
+                   </div>
+                   <div class="row">
+                       <div class="col-sm-12">
+                           <div class="btn-group d-flex justify-content-center">
+                               <input type="hidden" id="drTotalHidden">
+                               <input type="hidden" id="crTotalHidden">
+                               <a href="" class="btn btn-mini btn-danger"><i class="ti-close mr-2"></i>Cancel</a>
+                               <button type="submit" class="btn btn-primary save-entry btn-mini"><i class="ti-check mr-2"> Save</i></button>
+                           </div>
+                       </div>
+                   </div>
+               </form>
+           </div>
         </div>
     </div>
 </div>
@@ -174,6 +176,7 @@
             $(".select-account").select2({
                 placeholder: "Select account"
             });
+            $(".select-account").select2({ width: '100%' });
             $(".select-account").last().next().next().remove();
         });
 
