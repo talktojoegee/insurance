@@ -36,7 +36,7 @@ const app = new Vue({
     		currency:'',
     		exchange_rate:365,
     		premium_rate:'',
-    		gross_premium:'',
+    		gross_premium:0,
             //vehicle
             vehicle:[{
                 cover_type:1,
@@ -53,7 +53,7 @@ const app = new Vue({
         business_classes:{},
         sub_business_classes:{},
 
-    	sum_insured:100000,
+    	sum_insured:1000,
     	exchange_rate:365,
     	currency:'Naira',
     	premium_rate:5,
@@ -173,11 +173,21 @@ const app = new Vue({
                 this.sub_business_classes = response.data.sub_business_classes;
             });
         },
+        calculateGrossPremium(){
+            let sumInsured = this.policy.sum_insured;
+            let premiumRate = this.policy.premium_rate;
+            sumInsured === 0 ? 100 : sumInsured;
+            premiumRate === 0 ? 1 : premiumRate;
+            const grossPremium = sumInsured*(premiumRate/100);
+            this.policy.gross_premium = grossPremium.toFixed(2);
+            //console.log("Log value: "+grossPremium);
+        }
 
     },
     computed:{
-    	grossPremium:function(){
-    		var gp = null;
+        handleGrossPremiumChange:function(){
+            //console.log('Out here');
+    		/*var gp = null;
     		if(this.currency == "Naira"){
     			gp = ((this.premium_rate/100)*this.sum_insured);
     			this.policy.gross_premium = gp;
@@ -186,8 +196,13 @@ const app = new Vue({
     			gp = ((this.premium_rate/100)*(this.sum_insured));
     			this.policy.gross_premium = gp;
     			return gp;
-    		}
+    		}*/
+            this.calculateGrossPremium();
     	},
+        handleSumInsuredChange(){
+          //this.handleGrossPremiumChange();
+            this.calculateGrossPremium();
+        },
 
     	inNaira:function(){
     		return naira = this.sum_insured * this.exchange_rate;

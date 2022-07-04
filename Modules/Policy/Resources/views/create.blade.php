@@ -149,7 +149,7 @@
                         <div class="col-md-6 col-lg-6 col-xl-6 col-sm-6">
                            <div class="form-group">
                                 <label>Sum Insured</label>
-                                <input class="form-control" type="number" step="0.01" v-model="policy.sum_insured" placeholder="Sum Insured" name="sum_insured">
+                                <input class="form-control" @blur="calculateGrossPremium" type="number" step="0.01" v-model="policy.sum_insured" placeholder="Sum Insured" name="sum_insured">
                                 <small class="form-text text-danger" v-if="errs.sum_insured">@{{errs.sum_insured[0]}}</small>
                             </div>
                         </div>
@@ -176,14 +176,14 @@
                         <div class="col-md-6 col-lg-6 col-xl-6 col-sm-6">
                            <div class="form-group">
                                 <label>Premium Rate</label>
-                                <input type="number" step="0.01" class="form-control" v-model="premium_rate" placeholder="Premium Rate">
+                                <input type="number" @blur="calculateGrossPremium" step="0.01" class="form-control" v-model="premium_rate" placeholder="Premium Rate">
 							<small class="form-text text-danger" v-if="errs.premium_rate">@{{errs.premium_rate[0]}}</small>
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-6 col-xl-6 col-sm-6">
                            <div class="form-group">
                                 <label>Gross Premium</label>
-                                <input type="number" step="0.01" class="form-control" :value="grossPremium" readonly placeholder="Gross Premium">
+                                <input type="number" step="0.01" class="form-control" v-model="policy.gross_premium" readonly placeholder="Gross Premium">
 							<small class="form-text text-success" v-if="currency == 'Dollar'">₦@{{(grossPremium*exchange_rate).toLocaleString()}}</small>
                             </div>
                         </div>

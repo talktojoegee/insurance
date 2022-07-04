@@ -42,11 +42,12 @@ class CreditNoteController extends Controller
             $credit = CreditNote::orderBy('id', 'DESC')->first();
             $currencies = Currency::orderBy('name', 'ASC')->get();
             if(!empty($credit)){
-                $creditCode =$credit->Credit_code + 1;
+                $creditCode =$credit->credit_code + 1;
             }else{
                 $creditCode = 100000;
             }
-            return view('policy::credit-note.create', ['debit'=>$debit, 'creditCode'=>$creditCode,'currencies'=>$currencies]);
+            return view('policy::credit-note.create',
+                ['debit'=>$debit, 'creditCode'=>$creditCode,'currencies'=>$currencies]);
         }else{
             session()->flash("error", "<strong>Ooops!</strong> Record not found.");
             return back();
@@ -73,8 +74,19 @@ class CreditNoteController extends Controller
             'policy_number'=>'required',
             'business_type'=>'required',
             'option'=>'required',
-            'currency'=>'required'
+            'currency'=>'required',
+            'vatChecked'=>'required'
     	]);
+
+        $commission = ($request->commission_rate/100) * $request->gross_premium;
+        $netAmount = $request->gross_premium + $commission;
+        $vat = ($request->vat/100) * $commission;
+        //return dd($request->vatChecked);
+        /*
+        if($request->vatChecked == 1){
+            $vat = ($request->vat/100) * $commission;
+            $netAmount = $commission + $request->gross_premium + $vat;
+        }*/
 
     	$current_date = Carbon::createFromDate($request->start_date);
         $trans_id = strtoupper(substr(md5(time()), 0,10));
@@ -95,9 +107,11 @@ class CreditNoteController extends Controller
     	$credit->sum_insured = $request->sum_insured;
     	$credit->premium_rate = $request->premium_rate;
     	$credit->commission_rate = $request->commission_rate;
-    	//$debit->vat = $request->vat;
-    	$credit->net_amount = $request->net_amount;
-    	$credit->commission = $request->commission;
+    	$credit->vat = $request->vatChecked == 1 ? $vat : 0; //vat value;
+    	$credit->vat_rate = $request->vat;
+    	$credit->net_amount = $request->vatChecked == 1 ? ($commission + $request->gross_premium) + $vat : $request->gross_premium + $commission; //$netAmount; //$request->net_amount;
+
+        $credit->commission = $commission; //$request->commission;
     	$credit->gross_premium = $request->gross_premium;
     	$credit->exchange_rate = $request->exchange_rate;
     	$credit->currency = $request->currency;

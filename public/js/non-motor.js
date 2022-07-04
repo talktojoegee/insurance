@@ -49654,6 +49654,14 @@ var app = new Vue({
     }
   },
   methods: {
+    calculateGrossPremium: function calculateGrossPremium() {
+      var sumInsured = this.policy.sum_insured;
+      var premiumRate = this.policy.premium_rate;
+      sumInsured === 0 ? 100 : sumInsured;
+      premiumRate === 0 ? 1 : premiumRate;
+      var grossPremium = sumInsured * (premiumRate / 100);
+      this.policy.gross_premium = grossPremium.toFixed(2); //console.log("Log value: "+grossPremium);
+    },
     initializeInstance: function initializeInstance() {
       var _this = this;
 
@@ -49732,7 +49740,7 @@ var app = new Vue({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\insu\resources\js\non-motor.js */"./resources/js/non-motor.js");
+module.exports = __webpack_require__(/*! /Applications/Apps/insurance/resources/js/non-motor.js */"./resources/js/non-motor.js");
 
 
 /***/ })

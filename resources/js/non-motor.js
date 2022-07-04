@@ -75,6 +75,15 @@ const app = new Vue({
     	},
     },
     methods:{
+        calculateGrossPremium(){
+            let sumInsured = this.policy.sum_insured;
+            let premiumRate = this.policy.premium_rate;
+            sumInsured === 0 ? 100 : sumInsured;
+            premiumRate === 0 ? 1 : premiumRate;
+            const grossPremium = sumInsured*(premiumRate/100);
+            this.policy.gross_premium = grossPremium.toFixed(2);
+            //console.log("Log value: "+grossPremium);
+        },
     	initializeInstance(){
     		axios.post('/policy/initialize-instance')
     		.then(response=>{

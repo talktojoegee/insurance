@@ -57,6 +57,10 @@ class DebitNote extends Model
 
     public function createDebitNote(Request $request, $agency_id){
 
+        $commission = ($request->commission_rate/100) * $request->gross_premium;
+        $netAmount = $request->gross_premium + $commission;
+        $vat = ($request->vat/100) * $commission;
+
         $current_date = Carbon::createFromDate($request->start_date);
         $cover_days = $current_date->diffInDays($request->end_date);
         $trans_id = strtoupper(substr(md5(time()), 0,10));
@@ -76,9 +80,15 @@ class DebitNote extends Model
         $debit->premium_rate = $request->premium_rate;
         $debit->commission_rate = $request->commission_rate;
         $debit->agency_id = $agency_id;
+
+        $debit->vat = $request->vatChecked == 1 ? $vat : 0; //vat value;
+        $debit->vat_rate = $request->vat;
+        $debit->net_amount = $request->vatChecked == 1 ? ($commission + $request->gross_premium) + $vat : $request->gross_premium + $commission;
+
+
         //$debit->vat = $request->vat;
-        $debit->net_amount = $request->net_amount;
-        $debit->commission = $request->commission;
+        //$debit->net_amount = $request->net_amount;
+        $debit->commission = $commission;
         $debit->gross_premium = $request->gross_premium;
         $debit->exchange_rate = $request->exchange_rate;
         $debit->currency = $request->currency;

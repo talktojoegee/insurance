@@ -76,7 +76,8 @@ class DebitNoteController extends Controller
             'option'=>'required',
             'currency'=>'required',
             'class'=>'required',
-            'sub_class'=>'required'
+            'sub_class'=>'required',
+            'vatChecked'=>'required'
     	],[
             'business_type.required'=>'Select business type',
             'option.required'=>'Select option',

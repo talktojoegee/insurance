@@ -276,6 +276,8 @@
                                     <i class="text-danger mt-2">{{ $message }}</i>
                                 @enderror
                             </div>
+                            <input name="vatValue" id="vatValue" type="hidden" >
+                            <input name="vatChecked" id="vatChecked" type="hidden" value="0">
                         </div>
                         <div class="col-md-6 col-lg-6 col-xl-6 col-sm-6">
                            <div class="checkbox-fade fade-in-primary mt-4">
@@ -311,6 +313,28 @@
 <script type="text/javascript">
     $(document).ready(function(){
 
+        $(document).on('blur', '#commission_rate', function(e){
+            e.preventDefault();
+            var commission = parseFloat($(this).val()/100) * parseFloat($('#gross_premium').val());
+            $('#commission').val(commission);
+            $('#net_amount').val(parseFloat($('#gross_premium').val()) + commission);
+        });
+        //(this.debit.gross_premium - (this.vat/100 * this.debit.commission) - this.debit.commission);
+        $(document).on('change', '#vat', function(e){
+            let commission = parseFloat($('#commission_rate').val()/100) * parseFloat($('#gross_premium').val());
+            if($(this).is(':checked')){
+                let vat = ( parseFloat( $(this).val()  ) /100) * commission;
+                $('#vatValue').val(vat);
+                $('#vatChecked').val(1);
+                parseFloat($('#net_amount').val(parseFloat($('#gross_premium').val()) + (vat + commission))).toFixed(2);
+            }else{
+                $('#vatChecked').val(0);
+                parseFloat($('#net_amount').val(parseFloat($('#gross_premium').val()) + commission)).toFixed(2);
+            }
+        });
+    });
+   /* $(document).ready(function(){
+
          $(document).on('change', '#commission_rate', function(e){
             e.preventDefault();
             var commission = parseFloat($(this).val()/100) * parseFloat($('#gross_premium').val());
@@ -331,6 +355,6 @@
                  $('#net_amount').val( sum - vat );
             }
         });
-    });
+    });*/
 </script>
 @endsection
