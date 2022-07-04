@@ -284,10 +284,12 @@
                                     <option value="3">Cheque</option>
                                     <option value="4">To be advised</option>
                                 </select>
-                                @error('currency')
+                                @error('payment_mode')
                                     <i class="text-danger mt-2">{{ $message }}</i>
                                 @enderror
                             </div>
+                            <input name="vatValue" id="vatValue" type="hidden" >
+                            <input name="vatChecked" id="vatChecked" type="hidden" value="0">
                         </div>
                         <div class="col-md-6 col-lg-6 col-xl-6 col-sm-6">
                            <div class="checkbox-fade fade-in-primary mt-4">
@@ -306,7 +308,7 @@
                         <div class="col-md-12 col-lg-12 col-sm-12 d-flex justify-content-center">
                             <div class="btn-group">
                                 <a class="btn btn-danger btn-mini" href=""><i class="ti-close mr-2"></i> Cancel</a>
-                                <button type="submit" class="btn btn-primary btn-mini"><i class="ti-check mr-2"></i> Submit</a>
+                                <button type="submit" class="btn btn-primary btn-mini"><i class="ti-check mr-2"></i> Submit</button>
                             </div>
                         </div>
                     </div>
@@ -323,19 +325,23 @@
 <script type="text/javascript">
     $(document).ready(function(){
 
-         $(document).on('change', '#commission_rate', function(e){
+         $(document).on('blur', '#commission_rate', function(e){
             e.preventDefault();
             var commission = parseFloat($(this).val()/100) * parseFloat($('#gross_premium').val());
             $('#commission').val(commission);
-            $('#net_amount').val(parseFloat($('#gross_premium').val()) - commission);
+            $('#net_amount').val(parseFloat($('#gross_premium').val()) + commission);
         });
         //(this.debit.gross_premium - (this.vat/100 * this.debit.commission) - this.debit.commission);
         $(document).on('change', '#vat', function(e){
-            var commission = parseFloat($('#commission_rate').val()/100) * parseFloat($('#gross_premium').val());
+            let commission = parseFloat($('#commission_rate').val()/100) * parseFloat($('#gross_premium').val());
             if($(this).is(':checked')){
-                $('#net_amount').val(parseFloat($('#gross_premium').val()) + (parseFloat($(this).val())/100 * parseFloat(commission) ) - commission);
+                let vat = ( parseFloat( $(this).val()  ) /100) * commission;
+                $('#vatValue').val(vat);
+               $('#vatChecked').val(1);
+                parseFloat($('#net_amount').val(parseFloat($('#gross_premium').val()) + (vat + commission))).toFixed(2);
             }else{
-                 $('#net_amount').val(parseFloat($('#gross_premium').val()) - commission);
+                $('#vatChecked').val(0);
+                parseFloat($('#net_amount').val(parseFloat($('#gross_premium').val()) + commission)).toFixed(2);
             }
         });
     });
