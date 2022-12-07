@@ -597,8 +597,6 @@
             }else{
                 motorData[index-1] = value;
             }
-
-
         }
     </script>
 @endsection
