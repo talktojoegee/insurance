@@ -1,13 +1,13 @@
 <div class="mobile-menu md:hidden">
     <div class="mobile-menu-bar">
         <a href="" class="flex mr-auto">
-            <img alt="Midone Tailwind HTML Admin Template" class="w-6" src="dist/images/logo.svg">
+            <img alt="#" class="w-6" src="/dist/images/logo.svg">
         </a>
         <a href="javascript:;" id="mobile-menu-toggler"> <i data-feather="bar-chart-2" class="w-8 h-8 text-white transform -rotate-90"></i> </a>
     </div>
     <ul class="border-t border-theme-24 py-5 hidden">
         <li>
-            <a href="index.html" class="menu menu--active">
+            <a href="#" class="menu menu--active">
                 <div class="menu__icon"> <i data-feather="home"></i> </div>
                 <div class="menu__title"> Dashboard </div>
             </a>
@@ -19,19 +19,19 @@
             </a>
             <ul class="">
                 <li>
-                    <a href="index.html" class="menu">
+                    <a href="#" class="menu">
                         <div class="menu__icon"> <i data-feather="activity"></i> </div>
                         <div class="menu__title"> Side Menu </div>
                     </a>
                 </li>
                 <li>
-                    <a href="simple-menu-light-dashboard.html" class="menu">
+                    <a href="#" class="menu">
                         <div class="menu__icon"> <i data-feather="activity"></i> </div>
                         <div class="menu__title"> Simple Menu </div>
                     </a>
                 </li>
                 <li>
-                    <a href="top-menu-light-dashboard.html" class="menu">
+                    <a href="#" class="menu">
                         <div class="menu__icon"> <i data-feather="activity"></i> </div>
                         <div class="menu__title"> Top Menu </div>
                     </a>
@@ -39,31 +39,31 @@
             </ul>
         </li>
         <li>
-            <a href="side-menu-light-inbox.html" class="menu">
+            <a href="#" class="menu">
                 <div class="menu__icon"> <i data-feather="inbox"></i> </div>
                 <div class="menu__title"> Inbox </div>
             </a>
         </li>
         <li>
-            <a href="side-menu-light-file-manager.html" class="menu">
+            <a href="#" class="menu">
                 <div class="menu__icon"> <i data-feather="hard-drive"></i> </div>
                 <div class="menu__title"> File Manager </div>
             </a>
         </li>
         <li>
-            <a href="side-menu-light-point-of-sale.html" class="menu">
+            <a href="#" class="menu">
                 <div class="menu__icon"> <i data-feather="credit-card"></i> </div>
                 <div class="menu__title"> Point of Sale </div>
             </a>
         </li>
         <li>
-            <a href="side-menu-light-chat.html" class="menu">
+            <a href="#" class="menu">
                 <div class="menu__icon"> <i data-feather="message-square"></i> </div>
                 <div class="menu__title"> Chat </div>
             </a>
         </li>
         <li>
-            <a href="side-menu-light-post.html" class="menu">
+            <a href="#" class="menu">
                 <div class="menu__icon"> <i data-feather="file-text"></i> </div>
                 <div class="menu__title"> Post </div>
             </a>
@@ -76,13 +76,13 @@
             </a>
             <ul class="">
                 <li>
-                    <a href="side-menu-light-crud-data-list.html" class="menu">
+                    <a href="#" class="menu">
                         <div class="menu__icon"> <i data-feather="activity"></i> </div>
                         <div class="menu__title"> Data List </div>
                     </a>
                 </li>
                 <li>
-                    <a href="side-menu-light-crud-form.html" class="menu">
+                    <a href="#" class="menu">
                         <div class="menu__icon"> <i data-feather="activity"></i> </div>
                         <div class="menu__title"> Form </div>
                     </a>
@@ -96,19 +96,19 @@
             </a>
             <ul class="">
                 <li>
-                    <a href="side-menu-light-users-layout-1.html" class="menu">
+                    <a href="#" class="menu">
                         <div class="menu__icon"> <i data-feather="activity"></i> </div>
                         <div class="menu__title"> Layout 1 </div>
                     </a>
                 </li>
                 <li>
-                    <a href="side-menu-light-users-layout-2.html" class="menu">
+                    <a href="#" class="menu">
                         <div class="menu__icon"> <i data-feather="activity"></i> </div>
                         <div class="menu__title"> Layout 2 </div>
                     </a>
                 </li>
                 <li>
-                    <a href="side-menu-light-users-layout-3.html" class="menu">
+                    <a href="#" class="menu">
                         <div class="menu__icon"> <i data-feather="activity"></i> </div>
                         <div class="menu__title"> Layout 3 </div>
                     </a>
@@ -122,19 +122,19 @@
             </a>
             <ul class="">
                 <li>
-                    <a href="side-menu-light-profile-overview-1.html" class="menu">
+                    <a href="#" class="menu">
                         <div class="menu__icon"> <i data-feather="activity"></i> </div>
                         <div class="menu__title"> Overview 1 </div>
                     </a>
                 </li>
                 <li>
-                    <a href="side-menu-light-profile-overview-2.html" class="menu">
+                    <a href="#" class="menu">
                         <div class="menu__icon"> <i data-feather="activity"></i> </div>
                         <div class="menu__title"> Overview 2 </div>
                     </a>
                 </li>
                 <li>
-                    <a href="side-menu-light-profile-overview-3.html" class="menu">
+                    <a href="#" class="menu">
                         <div class="menu__icon"> <i data-feather="activity"></i> </div>
                         <div class="menu__title"> Overview 3 </div>
                     </a>
@@ -154,19 +154,19 @@
                     </a>
                     <ul class="">
                         <li>
-                            <a href="side-menu-light-wizard-layout-1.html" class="menu">
+                            <a href="#" class="menu">
                                 <div class="menu__icon"> <i data-feather="zap"></i> </div>
                                 <div class="menu__title">Layout 1</div>
                             </a>
                         </li>
                         <li>
-                            <a href="side-menu-light-wizard-layout-2.html" class="menu">
+                            <a href="#" class="menu">
                                 <div class="menu__icon"> <i data-feather="zap"></i> </div>
                                 <div class="menu__title">Layout 2</div>
                             </a>
                         </li>
                         <li>
-                            <a href="side-menu-light-wizard-layout-3.html" class="menu">
+                            <a href="#" class="menu">
                                 <div class="menu__icon"> <i data-feather="zap"></i> </div>
                                 <div class="menu__title">Layout 3</div>
                             </a>
@@ -180,19 +180,19 @@
                     </a>
                     <ul class="">
                         <li>
-                            <a href="side-menu-light-blog-layout-1.html" class="menu">
+                            <a href="#" class="menu">
                                 <div class="menu__icon"> <i data-feather="zap"></i> </div>
                                 <div class="menu__title">Layout 1</div>
                             </a>
                         </li>
                         <li>
-                            <a href="side-menu-light-blog-layout-2.html" class="menu">
+                            <a href="#" class="menu">
                                 <div class="menu__icon"> <i data-feather="zap"></i> </div>
                                 <div class="menu__title">Layout 2</div>
                             </a>
                         </li>
                         <li>
-                            <a href="side-menu-light-blog-layout-3.html" class="menu">
+                            <a href="#" class="menu">
                                 <div class="menu__icon"> <i data-feather="zap"></i> </div>
                                 <div class="menu__title">Layout 3</div>
                             </a>
@@ -206,13 +206,13 @@
                     </a>
                     <ul class="">
                         <li>
-                            <a href="side-menu-light-pricing-layout-1.html" class="menu">
+                            <a href="#" class="menu">
                                 <div class="menu__icon"> <i data-feather="zap"></i> </div>
                                 <div class="menu__title">Layout 1</div>
                             </a>
                         </li>
                         <li>
-                            <a href="side-menu-light-pricing-layout-2.html" class="menu">
+                            <a href="#" class="menu">
                                 <div class="menu__icon"> <i data-feather="zap"></i> </div>
                                 <div class="menu__title">Layout 2</div>
                             </a>

@@ -10,6 +10,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
+use Modules\CompanySettings\Entities\SettingsGeneral;
 use Modules\HumanResource\Entities\Department;
 use Modules\HumanResource\Entities\JobRole;
 use Modules\HumanResource\Entities\EmploymentType;
@@ -126,4 +127,5 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
 }

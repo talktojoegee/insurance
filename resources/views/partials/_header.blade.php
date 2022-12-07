@@ -31,6 +31,6 @@
     <!-- Style.css -->
     <link rel="stylesheet" type="text/css" href="\assets\css\style.css">
     <link rel="stylesheet" type="text/css" href="\assets\css\jquery.mCustomScrollbar.css">
-    <link rel="stylesheet" href="assets\scss\partials\menu\_pcmenu.htm">
+    <link rel="stylesheet" href="\assets\scss\partials\menu\_pcmenu.htm">
     @yield('extra-styles')
 </head>

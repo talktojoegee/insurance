@@ -6,7 +6,7 @@
                         <i class="icofont icofont-navigation-menu"></i>
                     </a>
                     <a href="index-1.htm">
-                        <img class="img-fluid" src="\assets\images\logo.png" alt="{{ config('app.name') }}">
+                        <img class="img-fluid" style="width: 154px; height: 44px;" src="/assets/attachments/assets/logo/{{\Modules\CompanySettings\Entities\SettingsGeneral::getCompanyGeneralSettings()->company_logo ?? 'logo.jpg'}}" alt="{{ config('app.name') }}">
                     </a>
                     <a class="mobile-options">
                         <i class="feather icon-more-horizontal"></i>
