@@ -6,7 +6,9 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\HumanResource\Emails\NewEmployeeMail;
+use Modules\HumanResource\Entities\BloodGroup;
 use Modules\HumanResource\Entities\Department;
+use Modules\HumanResource\Entities\Genotype;
 use Modules\HumanResource\Entities\JobRole;
 use Modules\HumanResource\Entities\MaritalStatus;
 use Modules\HumanResource\Entities\EmploymentType;
@@ -27,6 +29,8 @@ class EmployeeController extends Controller
         $this->state = new State();
         $this->qualification = new AcademicQualification();
         $this->employementtype = new EmploymentType();
+        $this->bloodgroup = new BloodGroup();
+        $this->genotype = new Genotype();
     }
     /**
      * Display a listing of the resource.
@@ -58,7 +62,9 @@ class EmployeeController extends Controller
             'qualifications'=>$qualifications,
             'departments'=>$departments,
             'marital_status'=>$marital_status,
-            'access'=>$access
+            'access'=>$access,
+            'states'=>$this->state->getStates(),
+            'blood_groups'=>$this->bloodgroup->getBloodGroups()
         ]);
     }
 
@@ -76,40 +82,41 @@ class EmployeeController extends Controller
             'residential_address'=>'required',
             'department'=>'required',
             'job_role'=>'required',
-            'employee_id'=>'required'
+            'employee_id'=>'required',
+            'academic_qualification'=>'required',
+            'employment_type'=>'required',
+            'hire_date'=>'required|date',
+            'application_access_level'=>'required',
+            'application_access_level'=>'required',
+        ],[
+            'first_name.required'=>"Enter first name",
+            'last_name.required'=>"Enter last name",
+            'email_address.required'=>"Enter a valid email address",
+            'mobile_no.required'=>"Mobile number is required",
+            'gender.required'=>"What's the gender?",
+            'marital_status.required'=>"Choose the marital status that best defines the employee",
+            'state_of_origin.required'=>"This person is of what state origin? Choose from the options provided.",
+            'lga.required'=>"Help us with the associated Local Government Area",
+            'residential_address.required'=>"Where does this person reside?",
+            'department.required'=>"It's fitting to assign this employee to a department",
+            'job_role.required'=>"What's the employee's job role?",
+            'employee_id.required'=>"Let's have the employee ID",
+            'academic_qualification.required'=>"Select academic qualification",
+            'employment_type.required'=>"Choose employment type",
+            'hire_date.required'=>"When was this employee hired?",
+            'hire_date.date'=>"Enter a valid date format",
+            'application_access_level.required'=>"Grant access level",
         ]);
-        $password = strtoupper(substr(sha1(time()), 32,40));
-        $user = new User;
-        $user->first_name = $request->first_name;
-        $user->last_name = $request->last_name;
-        $user->other_names = $request->other_names;
-        $user->email = $request->email_address;
-        //$user->official_email = $request->official_email;
-        $user->mobile_no = $request->mobile_no;
-        $user->gender = $request->gender;
-        $user->marital_status = $request->marital_status;
-        $user->state = $request->state_of_origin;
-        $user->lga = $request->lga;
-        $user->address = $request->residential_address;
-        $user->birth_date = $request->birth_date;
-        $user->known_ailment = $request->known_ailment;
-        $user->blood_group = $request->blood_group;
-        $user->genotype = $request->genotype;
-        $user->department = $request->department;
-        $user->job_role = $request->job_role;
-        $user->url = substr(sha1(time()), 11,40);
-        //$user->grade = $request->grade;
-        $user->academic_qualification = $request->academic_qualification;
-        $user->employee_id = $request->employee_id;
-        $user->employment_type = $request->employment_type;
-        $user->hire_date = $request->hire_date;
-        $user->role = $request->application_access_level;
-        $user->password = bcrypt($password);
-        $user->save();
-        \Mail::to($user)->send(new NewEmployeeMail($user, $password));
-        session()->flash("success", "<strong>Success!</strong> New employee registered. Login credentials sent via mail.");
+        try{
+            $password = strtoupper(substr(sha1(time()), 32,40));
+            $user = $this->user->addEmployee($request, $password);
+            \Mail::to($user)->send(new NewEmployeeMail($user, $password));
+            session()->flash("success", "<strong>Success!</strong> Action successful. Login credentials were sent via registered email.");
+            return redirect('/human-resource');
+        }catch (\Exception $exception){
+            return dd($exception);
+        }
 
-        return redirect('/human-resource');
 
     }
 

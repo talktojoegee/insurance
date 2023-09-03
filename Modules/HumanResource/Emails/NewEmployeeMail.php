@@ -30,7 +30,7 @@ class NewEmployeeMail extends Mailable
     public function build()
     {
         return $this->from('info@connexxiongroup.com', config('app.name'))
-                ->subject('Welcome on Board!')
+                ->subject(config('app.name').' - '."We're glad to have you!")
                 ->markdown('humanresource::mails.employee.new-employee');
     }
 }

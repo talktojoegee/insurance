@@ -112,15 +112,16 @@ Add New Employee
                                 <label>State of Origin</label>
                                 <select class="form-control" value="{{ old('state_of_origin') }}" name="state_of_origin" id="state_of_origin">
                                     <option selected disabled >Select state</option>
-                                    <option value="1">Male</option>
-                                    <option value="2">Female</option>
+                                    @foreach($states as $state)
+                                    <option value="{{$state->id}}"> {{$state->state_name ?? '' }}</option>
+                                    @endforeach
                                 </select>
                                 @error('state_of_origin')
                                     <i class="text-danger mt-2">{{ $message }}</i>
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-md-3 col-lg-3 col-xl-3 col-sm-6">
+                        <div class="col-md-3 col-lg-3 col-xl-3 col-sm-6" id="lgaWrapper">
                             <div class="form-group">
                                 <label>LGA</label>
                                 <select class="form-control" value="{{ old('lga') }}" name="lga" id="lga">
@@ -138,24 +139,11 @@ Add New Employee
                                 <label>Blood Group</label>
                                 <select class="form-control" value="{{ old('blood_group') }}" name="blood_group" id="blood_group">
                                     <option selected disabled >Select blood group</option>
-                                    <option value="1">Male</option>
-                                    <option value="2">Female</option>
-                                </select>
-                                @error('blood_group')
-                                    <i class="text-danger mt-2">{{ $message }}</i>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-lg-3 col-xl-3 col-sm-4">
-                            <div class="form-group">
-                                <label>Genotype</label>
-                                <select class="form-control"  value="{{ old('genotype') }}" name="genotype" id="genotype">
-                                    <option selected disabled >Select Genotype</option>
-                                    @foreach($marital_status as $status)
-                                        <option value="{{$status->id}}">{{$status->name ?? ''}}</option>
+                                    @foreach($blood_groups as $group)
+                                    <option value="{{$group->id}}">{{$group->name ?? ''}}</option>
                                     @endforeach
                                 </select>
-                                @error('genotype')
+                                @error('blood_group')
                                     <i class="text-danger mt-2">{{ $message }}</i>
                                 @enderror
                             </div>

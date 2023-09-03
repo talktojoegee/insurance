@@ -89,6 +89,37 @@ class User extends Authenticatable
         $user->account_status = $request->status;
         $user->save();
     }
+
+    public function addEmployee(Request $request, $password){
+        $user = new User;
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
+        $user->other_names = $request->other_names;
+        $user->email = $request->email_address;
+        //$user->official_email = $request->official_email;
+        $user->mobile_no = $request->mobile_no;
+        $user->gender = $request->gender;
+        $user->marital_status = $request->marital_status;
+        $user->state = $request->state_of_origin;
+        $user->lga = $request->lga;
+        $user->address = $request->residential_address;
+        $user->birth_date = $request->birth_date;
+        $user->known_ailment = $request->known_ailment;
+        $user->blood_group = $request->blood_group;
+        $user->genotype = $request->genotype ?? 1; //not in use
+        $user->department = $request->department;
+        $user->job_role = $request->job_role;
+        $user->url = substr(sha1(time()), 11,40);
+        //$user->grade = $request->grade;
+        $user->academic_qualification = $request->academic_qualification;
+        $user->employee_id = $request->employee_id;
+        $user->employment_type = $request->employment_type;
+        $user->hire_date = $request->hire_date;
+        $user->role = $request->application_access_level;
+        $user->password = bcrypt($password);
+        $user->save();
+        return $user;
+    }
     /**
      * The attributes that are mass assignable.
      *
