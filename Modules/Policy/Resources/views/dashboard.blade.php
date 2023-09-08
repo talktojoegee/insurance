@@ -92,7 +92,7 @@
                                         <td class="text-success">{{ !is_null($policy->start_date) ? date('d F, Y', strtotime($policy->start_date)) : '' }}</td>
                                         <td class="text-danger">{{ !is_null($policy->end_date) ? date('d F, Y', strtotime($policy->end_date)) : '' }}</td>
                                         <td>
-                                            <a href="{{ url('/policy/view/policy/'.$policy->slug) }}" class="btn btn-mini btn-primary">Learn more</a>
+                                            <a href="{{ url('/policy/view/policy/'.$policy->slug) }}" class="btn btn-mini btn-primary">View detail</a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -236,7 +236,7 @@
                                                 @endif
                                                 <td>
                                                     <div class="btn-group">
-                                                        <a class="text-primary" href="/policy/debit-note/view/{{$lst->slug}}" class="btn btn-primary btn-mini" > Learn more
+                                                        <a class="text-primary" href="/policy/debit-note/view/{{$lst->slug}}" class="btn btn-primary btn-mini" > View details
 
                                                         </a>
                                                     </div>
@@ -377,7 +377,7 @@
                                                 @endif
                                                 <td>
                                                     <div class="btn-group">
-                                                        <a class="text-primary" href="/policy/credit-note/view/{{$lst->slug}}" > Learn more
+                                                        <a class="text-primary" href="/policy/credit-note/view/{{$lst->slug}}" > View details
 
                                                         </a>
                                                     </div>
@@ -451,7 +451,7 @@
                                     <td>{{$client->mobile_no ?? ''}}</td>
                                     <td>{{$client->address ?? ''}}</td>
                                     <td>
-                                        <a class="btn btn-primary btn-mini" href="/policy/client/view/{{$client->slug}}">Learn more</a>
+                                        <a class="btn btn-primary btn-mini" href="/policy/client/view/{{$client->slug}}">View details</a>
                                     </td>
                                 </tr>
                             @endforeach

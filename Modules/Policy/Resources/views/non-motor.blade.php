@@ -116,7 +116,7 @@
                            @foreach($policies as $policy)
                                 <tr>
                                     <td>{{ $serial++ }}</td>
-                                    <td>{{$policy->getBusinessClass->abbr}}/{{date('m',strtotime($policy->created_at))}}/{{date('y', strtotime($policy->created_at))}}/{{$policy->policy_number}}</td>
+                                    <td>{{$policy->getBusinessClass->abbr ?? ''}}/{{date('m',strtotime($policy->created_at))}}/{{date('y', strtotime($policy->created_at))}}/{{$policy->policy_number}}</td>
                                     <td> <a href="{{ url('/policy/client/view/'.$policy->getClient->slug) }}"> {{ $policy->getClient->insured_name ?? '' }}</a></td>
                                     <td>{{ $policy->insurance_policy_number ?? '' }}</td>
                                     <td>{{ $policy->getClient->email ?? '' }}</td>
@@ -130,7 +130,7 @@
                                     <td>{{ $policy->getBusinessClass->class_name ?? '' }}</td>
                                     <td>{{ $policy->getSubBusinessClass->class_name ?? '' }}</td>
                                     <td>
-                                        <a href="{{ url('/policy/view/policy/'.$policy->slug) }}" class="btn btn-mini btn-primary">Learn more</a>
+                                        <a href="{{ url('/policy/view/policy/'.$policy->slug) }}" class="btn btn-mini btn-primary">View details</a>
                                     </td>
                                 </tr>
                            @endforeach

@@ -279,7 +279,7 @@ class PolicyController extends Controller
         if($agent){
             return response()->json(['message'=>'Success! New agent registered.'], 200);
         }else{
-            return response()->json(['error'=>'Ooops! Could not register agent. Try again.'], 400);
+            return response()->json(['error'=>'Whoops! Could not register agent. Try again.'], 400);
         }
     }
 
@@ -295,7 +295,7 @@ class PolicyController extends Controller
                 return response()->json(['error'=>'Ooops! Could not save changes. Try again.'], 400);
             }
         }else{
-            return response()->json(['error'=>'Ooops! No such record found.'], 400);
+            return response()->json(['error'=>'Whoops! No such record found.'], 400);
         }
     }
 
@@ -319,7 +319,7 @@ class PolicyController extends Controller
         if($business){
             return response()->json(['message'=>'Success! New business class registered.'], 200);
         }else{
-            return response()->json(['error'=>'Ooops! Could not register business class. Try again.'], 400);
+            return response()->json(['error'=>'Whoops! Could not register business class. Try again.'], 400);
         }
     }
 
@@ -343,7 +343,7 @@ class PolicyController extends Controller
         if($business){
             return response()->json(['message'=>'Success! Changes saved.'], 200);
         }else{
-            return response()->json(['error'=>'Ooops! Could not save changes. Try again.'], 400);
+            return response()->json(['error'=>'Whoops! Could not save changes. Try again.'], 400);
         }
     }
     public function createSubBusinessClass(Request $request)
@@ -367,7 +367,7 @@ class PolicyController extends Controller
         if($business){
             return response()->json(['message'=>'Success! New sub-business class registered.'], 200);
         }else{
-            return response()->json(['error'=>'Ooops! Could not register sub-business class. Try again.'], 400);
+            return response()->json(['error'=>'Whoops! Could not register sub-business class. Try again.'], 400);
         }
     }
     public function editSubBusinessClass(Request $request)

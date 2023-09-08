@@ -31,20 +31,22 @@
                 <table class="table table-responsive invoice-table table-borderless">
                     <tbody>
                         <tr>
-                            <td><img src="\assets\images\logo-blue.png" class="m-b-10" alt=""></td>
-                        </tr>
-                        <tr>
-                            <td>Compney Name</td>
-                        </tr>
-                        <tr>
-                            <td>123 6th St. Melbourne, FL 32904 West Chicago, IL 60185</td>
-                        </tr>
-                        <tr>
-                            <td><a href="#" target="_top"><span class="__cf_email__" >email@mail.com</span></a>
+                            <td>
+                                <img height="94" width="150" src="/assets/attachments/assets/logo/{{\Modules\CompanySettings\Entities\SettingsGeneral::getCompanyGeneralSettings()->company_logo ?? 'logo.jpg'}}" class="m-b-10" alt="">
                             </td>
                         </tr>
                         <tr>
-                            <td>+234 919-91-91-919</td>
+                            <td>{{\Modules\CompanySettings\Entities\SettingsGeneral::getCompanyGeneralSettings()->company_name ?? '' }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{\Modules\CompanySettings\Entities\SettingsGeneral::getCompanyGeneralSettings()->office_address ?? '' }}</td>
+                        </tr>
+                        <tr>
+                            <td><a href="#" target="_top"><span class="__cf_email__" >{{\Modules\CompanySettings\Entities\SettingsGeneral::getCompanyGeneralSettings()->official_email ?? '' }}</span></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{\Modules\CompanySettings\Entities\SettingsGeneral::getCompanyGeneralSettings()->office_phone_1 ?? '' }}, {{\Modules\CompanySettings\Entities\SettingsGeneral::getCompanyGeneralSettings()->office_phone_2 ?? '' }}</td>
                         </tr>
                     </tbody>
                 </table>

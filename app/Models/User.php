@@ -6,17 +6,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
 use Modules\CompanySettings\Entities\SettingsGeneral;
+use Modules\HumanResource\Entities\BloodGroup;
 use Modules\HumanResource\Entities\Department;
 use Modules\HumanResource\Entities\JobRole;
 use Modules\HumanResource\Entities\EmploymentType;
 use Modules\HumanResource\Entities\AcademicQualification;
 use Modules\HumanResource\Entities\MaritalStatus;
 use Modules\Policy\Entities\State;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
@@ -26,6 +29,7 @@ class User extends Authenticatable
     use HasTeams;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use HasRoles;
 
     public function employeeDepartment(){
         return $this->belongsTo(Department::class, 'department');
@@ -46,7 +50,7 @@ class User extends Authenticatable
     }
 
     public function getAllEmployees(){
-        return User::where('visibility', 1)->orderBy('first_name', 'ASC')->get();
+        return User::where('visibility', 1)->orderBy('id', 'DESC')->get();
     }
 
     public function getAllActiveEmployees(){
@@ -61,8 +65,16 @@ class User extends Authenticatable
         return $this->belongsTo(State::class, 'state');
     }
 
+    public function getBloodGroup(){
+        return $this->belongsTo(BloodGroup::class, 'blood_group');
+    }
+
     public function getEmployeeLocalGovernment(){
-        return $this->belongsTo(State::class, 'state');
+        return $this->belongsTo(LocalGovernment::class, 'lga');
+    }
+
+    public function getUserById($id){
+        return User::find( $id);
     }
 
     public function updateEmployeeProfile(Request $request){
@@ -101,7 +113,7 @@ class User extends Authenticatable
         $user->gender = $request->gender;
         $user->marital_status = $request->marital_status;
         $user->state = $request->state_of_origin;
-        $user->lga = $request->lga;
+        $user->lga = $request->lga ?? '';
         $user->address = $request->residential_address;
         $user->birth_date = $request->birth_date;
         $user->known_ailment = $request->known_ailment;
@@ -119,6 +131,22 @@ class User extends Authenticatable
         $user->password = bcrypt($password);
         $user->save();
         return $user;
+    }
+
+    public function uploadProfilePicture($avatarHandler){
+        $filename = $avatarHandler->store('avatars', 'public');
+        $avatar = User::find(Auth::user()->id);
+        if($avatar->image != 'avatars/avatar.png'){
+            $this->deleteFile($avatar->avatar); //delete file first
+        }
+        $avatar->avatar = $filename;
+        $avatar->save();
+    }
+
+    public function deleteFile($file){
+        if(\File::exists(public_path('storage/'.$file))){
+            \File::delete(public_path('storage/'.$file));
+        }
     }
     /**
      * The attributes that are mass assignable.

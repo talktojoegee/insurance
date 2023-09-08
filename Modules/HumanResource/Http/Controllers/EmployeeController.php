@@ -2,9 +2,11 @@
 
 namespace Modules\HumanResource\Http\Controllers;
 
+use App\Models\ActivityLog;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Hash;
 use Modules\HumanResource\Emails\NewEmployeeMail;
 use Modules\HumanResource\Entities\BloodGroup;
 use Modules\HumanResource\Entities\Department;
@@ -18,6 +20,7 @@ use Spatie\Permission\Models\Role;
 
 use App\Models\User;
 use Auth;
+use Spatie\Permission\Models\Role as SRole;
 
 class EmployeeController extends Controller
 {
@@ -87,7 +90,7 @@ class EmployeeController extends Controller
             'employment_type'=>'required',
             'hire_date'=>'required|date',
             'application_access_level'=>'required',
-            'application_access_level'=>'required',
+            //'application_access_level'=>'required',
         ],[
             'first_name.required'=>"Enter first name",
             'last_name.required'=>"Enter last name",
@@ -110,7 +113,13 @@ class EmployeeController extends Controller
         try{
             $password = strtoupper(substr(sha1(time()), 32,40));
             $user = $this->user->addEmployee($request, $password);
+            $role = SRole::findById($request->application_access_level, 'web');
+            if(!empty($role) && !empty($user)){
+                $user->syncRoles([$role->name]);
+            }
             \Mail::to($user)->send(new NewEmployeeMail($user, $password));
+            $user = \Illuminate\Support\Facades\Auth::user();
+            ActivityLog::addLog($user->id, 'New employee registration', "{$user->first_name} added a new employee($request->first_name $request->last_name - $request->employee_id) to the system.");
             session()->flash("success", "<strong>Success!</strong> Action successful. Login credentials were sent via registered email.");
             return redirect('/human-resource');
         }catch (\Exception $exception){
@@ -125,7 +134,7 @@ class EmployeeController extends Controller
         if(!empty($employee)){
         return view('humanresource::profile', ['employee'=>$employee]);
         }else{
-            session()->flash("error", "<strong>Ooops!</strong> No record found.");
+            session()->flash("error", "<strong>Whoops!</strong> No record found.");
             return back();
         }
     }
@@ -189,6 +198,43 @@ class EmployeeController extends Controller
         return back();
     }
 
+    public function changeProfilePicture(Request $request)
+    {
+        $request->validate([
+            'profilePicture'=>'required'
+        ],[
+            'profilePicture'=>'Choose an image of yours to upload as profile picture'
+        ]);
+
+        if(isset($request->profilePicture)){
+            $this->user->uploadProfilePicture($request->profilePicture);
+        }
+
+        session()->flash("success", "Action successful!");
+        return back();
+    }
+
+    public function changePassword(Request $request){
+        $request->validate([
+            "currentPassword"=>"required",
+            "password"=>"required|confirmed|min:6",
+        ],[
+            "currentPassword.required"=>"Enter your current password",
+            "password.required"=>"Choose a new password",
+            "password.confirmed"=>"Your re-type password does not match chosen password.",
+        ]);
+        $user = $this->user->getUserById(\Illuminate\Support\Facades\Auth::user()->id);
+        if (Hash::check($request->currentPassword, $user->password)) {
+            $user->password = bcrypt($request->password);
+            $user->save();
+            session()->flash("success", "Your password was successfully changed.");
+            return redirect()->route('login');
+        }else{
+            session()->flash("error", "Current password does not match our record. Try again.");
+            return back();
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      * @param Request $request
@@ -209,15 +255,8 @@ class EmployeeController extends Controller
         return view('humanresource::show');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function edit($id)
-    {
-        return view('humanresource::edit');
-    }
+
+
 
     /**
      * Update the specified resource in storage.

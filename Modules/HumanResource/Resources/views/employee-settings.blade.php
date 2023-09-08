@@ -23,304 +23,322 @@
                     @endif
 
                     {!! $employee->account_status == 1 ? "<span class='badge badge-success'>Active</span>" : "<span class='badge badge-danger'>Deactivated</span>" !!}
-                    <div class="row mt-3">
-                        <div class="col-md-3 col-lg-3">
-                            <div class="card rounded-card user-card">
-                                <div class="card-block">
-                                    <div class="img-hover">
-                                        <img class="img-fluid img-radius" src="\assets\images\user-card\img-round1.jpg" alt="round-img">
-                                    </div>
-                                    <div class="user-content">
-                                        <h4 class="">{{$employee->first_name ?? ''}} {{$employee->last_name ?? ''}}</h4>
-                                        <p class="m-b-0 text-muted">{{$employee->employeeJobRole->job_role ?? ''}}</p>
-                                        <p class="m-b-0 text-info">{{ $employee->employeeDepartment->name ?? '' }}</p>
-                                    </div>
-                                </div>
-                                @if(Auth::user()->id == $employee->id)
-                                    <div class="form-group">
-                                        <button class="btn btn-primary btn-sm">Change Profile Picture</button>
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="col-md-9 col-lg-9">
-                            <div class="view-info">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="general-info">
-                                            <form action="{{route('edit-employee-profile')}}" autocomplete="off" method="post">
-                                                @csrf
-                                                <div class="row">
-                                                    <div class="col-lg-12 col-xl-6">
-                                                        <div class="table-responsive">
-                                                            <table class="table m-0">
-                                                                <tbody>
-                                                                <tr>
-                                                                    <th scope="row">First Name</th>
-                                                                    <td>
-                                                                        <input name="firstName" type="text" value="{{$employee->first_name ?? ''}}" class="form-control">
-                                                                        @error('firstName')
-                                                                        <i class="text-danger">{{$message}}</i>
-                                                                        @enderror
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th scope="row">Surname</th>
-                                                                    <td>
-                                                                        <input name="lastName" type="text" value="{{$employee->last_name ?? ''}}" class="form-control">
-                                                                        @error('lastName')
-                                                                        <i class="text-danger">{{$message}}</i>
-                                                                        @enderror
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th scope="row">Gender</th>
-                                                                    <td>
-                                                                        <select name="gender" id="gender"
-                                                                                class="form-control">
-                                                                            <option value="1" {{$employee->gender == 1 ? 'selected' : ''}}>Male</option>
-                                                                            <option value="2" {{$employee->gender == 2 ? 'selected' : ''}}>Female</option>
-                                                                        </select>
-                                                                        @error('gender')
-                                                                        <i class="text-danger">{{$message}}</i>
-                                                                    @enderror
 
-                                                                </tr>
-                                                                <tr>
-                                                                    <th scope="row">Email</th>
-                                                                    <td><a href="mailto:{{$employee->email ?? ''}}"><span class="">{{$employee->email ?? ''}}</span></a></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th scope="row">Mobile Number</th>
-                                                                    <td>
-                                                                        <input type="text" name="mobileNo" value="{{$employee->mobile_no ?? ''}}" class="form-control">
-                                                                        @error('mobileNo')
-                                                                        <i class="text-danger">{{$message}}</i>
-                                                                        @enderror
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th scope="row">Hire Date</th>
-                                                                    <td>{{date('d M, Y', strtotime($employee->hire_date))}}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th scope="row">Marital Status</th>
-                                                                    <td>{{$employee->employeeMaritalStatus->name ?? ''}}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th scope="row">Job Role</th>
-                                                                    <td>
-                                                                        <span>{{$employee->employeeJobRole->job_role ?? ''}}</span>
-                                                                        <select name="jobRole" id="jobRole"
-                                                                                class="form-control">
-                                                                            @foreach($jobRoles as $jRole)
-                                                                                <option value="{{$jRole->id}}" {{$jRole->id == $employee->employeeJobRole->id ? 'selected' : ''}}>{{$jRole->job_role ?? '' }}</option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                        @error('jobRole')
-                                                                        <i class="text-danger">{{$message}}</i>
-                                                                        @enderror
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th scope="row">Address</th>
-                                                                    <td>
-                                                                        <textarea name="address" placeholder="Type address here..." style="resize: none;"
-                                                                                  class="form-control">{{$employee->address ?? ''}}</textarea>
-                                                                        @error('address')
-                                                                        <i class="text-danger">{{$message}}</i>
-                                                                        @enderror
-                                                                        <input type="hidden" name="empId" value="{{$employee->id}}">
-                                                                    </td>
-                                                                </tr>
-
-                                                                </tbody>
-                                                            </table>
+                        <div class="col-xl-12 col-md-12 col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <ul class="nav nav-tabs md-tabs" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" data-toggle="tab" href="#home3" role="tab">Profile</a>
+                                            <div class="slide"></div>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#profile3" role="tab">Change Password</a>
+                                            <div class="slide"></div>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content card-block">
+                                        <div class="tab-pane active" id="home3" role="tabpanel">
+                                            <div class="row mt-3">
+                                                <div class="col-md-3 col-lg-3">
+                                                    <div class="card rounded-card user-card">
+                                                        <div class="card-block">
+                                                            <div class="img-hover">
+                                                                @if($employee->avatar == 'avatar.png' && $employee->gender == 1)
+                                                                    <img class="img-fluid img-radius" src="\assets\images\male.jpeg" alt="round-img">
+                                                                @elseif($employee->avatar == 'avatar.png' && $employee->gender == 2)
+                                                                    <img class="img-fluid img-radius" src="\assets\images\female.jpeg" alt="round-img">
+                                                                @else
+                                                                    <img class="img-fluid img-radius" src="{{url('storage/'.$employee->avatar)}}" alt="round-img">
+                                                                @endif
+                                                            </div>
+                                                            <div class="user-content">
+                                                                <h4 class="">{{$employee->first_name ?? ''}} {{$employee->last_name ?? ''}}</h4>
+                                                                <p class="m-b-0 text-muted">{{$employee->employeeJobRole->job_role ?? ''}}</p>
+                                                                <p class="m-b-0 text-info">{{ $employee->employeeDepartment->name ?? '' }}</p>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <!-- end of table col-lg-6 -->
-                                                    <div class="col-lg-12 col-xl-6">
-                                                        <div class="table-responsive">
-                                                            <table class="table">
-                                                                <tbody>
-
-                                                                <tr>
-                                                                    <th scope="row">State</th>
-                                                                    <td>
-                                                                        {{$employee->getEmployeeState->state_name ?? ''}}
-                                                                        <select name="state" id="state"
-                                                                                class="form-control">
-                                                                            @foreach($states as $state )
-                                                                                <option value="{{$state->id}}" {{$state->id == $employee->state ? 'selected' : '' }}>{{$state->state_name ?? '' }}</option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                        @error('state')
-                                                                            <i class="text-danger">{{$message}}</i>
-                                                                        @enderror
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th scope="row">Department</th>
-                                                                    <td>
-                                                                        <a href="javascript:void(0);">{{$employee->employeeDepartment->name ?? ''}}</a>
-                                                                        <select name="department" id="department"
-                                                                                class="form-control">
-                                                                            @foreach($departments as $department )
-                                                                                <option value="{{$department->id}}" {{$department->id == $employee->department ? 'selected' : '' }}>{{$department->name ?? '' }}</option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                        @error('department')
-                                                                        <i class="text-danger">{{$message}}</i>
-                                                                        @enderror
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th scope="row">Academic Qualification</th>
-                                                                    <td>
-                                                                        {{$employee->employeeAcademicQualification->name ?? ''}}
-                                                                        <select name="qualification" id="qualification"
-                                                                                class="form-control">
-                                                                            @foreach($qualifications as $qualification )
-                                                                                <option value="{{$qualification->id}}" {{$qualification->id == $employee->acadmic_qualification ? 'selected' : '' }}>{{$qualification->name ?? '' }}</option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                        @error('qualification')
-                                                                        <i class="text-danger">{{$message}}</i>
-                                                                        @enderror
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th scope="row">Employment Type</th>
-                                                                    <td>
-                                                                        {{$employee->employeeEmploymentType->name ?? ''}}
-                                                                        <select name="employmentType" id="employmentType"
-                                                                                class="form-control">
-                                                                            @foreach($employement_types as $type )
-                                                                                <option value="{{$type->id}}" {{$type->id == $employee->employement_type ? 'selected' : '' }}>{{$type->name ?? '' }}</option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                        @error('employmentType')
-                                                                        <i class="text-danger">{{$message}}</i>
-                                                                        @enderror
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th scope="row">Employee ID</th>
-                                                                    <td>
-                                                                        <input type="text" value="{{$employee->employee_id ?? ''}}" name="employeeId" placeholder="Employee ID" class="form-control">
-                                                                        @error('employeeId')
-                                                                        <i class="text-danger">{{$message}}</i>
-                                                                        @enderror
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th scope="row">Blood Group</th>
-                                                                    <td>
-                                                                        <input type="text" value="{{$employee->blood_group ?? ''}}" name="bloodGroup" placeholder="Blood Group" class="form-control">
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th scope="row">Genotype</th>
-                                                                    <td>
-                                                                        <input type="text" value="{{$employee->genotype ?? ''}}" name="genotype" placeholder="Genotype" class="form-control">
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th scope="row">Known Ailment</th>
-                                                                    <td>
-                                                                        <input type="text" value="{{$employee->known_ailment ?? ''}}" name="knownAilment" placeholder="Known Ailment" class="form-control">
-
-                                                                    </td>
-                                                                </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                    <!-- end of table col-lg-6 -->
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-12 d-flex justify-content-center ">
-
-                                                        <button class="btn btn-primary btn-sm" type="submit">Save Changes</button>
+                                                        @if(Auth::user()->id == $employee->id)
+                                                            <form action="{{ route('change-profile-picture') }}" enctype="multipart/form-data" method="post">
+                                                                @csrf
+                                                                <div class="form-group">
+                                                                    <input type="file" name="profilePicture" class="form-control-file">
+                                                                    <button type="submit" class="btn btn-primary btn-sm">Change Profile Picture</button>
+                                                                </div>
+                                                                @error('profilePicture') <i class="'text-danger">{{$message}}</i> @enderror
+                                                            </form>
+                                                        @endif
                                                     </div>
                                                 </div>
-                                            </form>
-                                            <!-- end of row -->
+                                                <div class="col-md-9 col-lg-9">
+                                                    <div class="view-info">
+                                                        <div class="row">
+                                                            <div class="col-lg-12">
+                                                                <div class="general-info">
+                                                                    <form action="#" autocomplete="off" method="post">
+                                                                        @csrf
+                                                                        <div class="row">
+                                                                            <div class="col-lg-12 col-xl-12">
+                                                                                <div class="table-responsive">
+                                                                                    <table class="table m-0">
+                                                                                        <tbody>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <div class="form-group">
+                                                                                                    <label
+                                                                                                        for="">First Name</label>
+                                                                                                    <input name="firstName" readonly type="text" value="{{$employee->first_name ?? ''}}" class="form-control">
+                                                                                                    @error('firstName')
+                                                                                                    <i class="text-danger">{{$message}}</i>
+                                                                                                    @enderror
+                                                                                                </div>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <div class="form-group">
+                                                                                                    <label
+                                                                                                        for="">Surname</label>
+                                                                                                    <input name="lastName" readonly type="text" value="{{$employee->last_name ?? ''}}" class="form-control">
+                                                                                                    @error('lastName')
+                                                                                                    <i class="text-danger">{{$message}}</i>
+                                                                                                    @enderror
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <div class="form-group">
+                                                                                                    <label
+                                                                                                        for="">Email Address</label>
+                                                                                                    <input type="text" name="mobileNo" value="{{$employee->email ?? ''}}" readonly class="form-control">
+                                                                                                </div>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <div class="form-group">
+                                                                                                    <label
+                                                                                                        for="">Mobile No.</label>
+                                                                                                    <input type="text" name="mobileNo" value="{{$employee->mobile_no ?? ''}}" class="form-control">
+                                                                                                    @error('mobileNo')
+                                                                                                    <i class="text-danger">{{$message}}</i>
+                                                                                                    @enderror
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <div class="form-group">
+                                                                                                    <label
+                                                                                                        for="">Gender</label>
+                                                                                                    <select name="gender" id="gender"
+                                                                                                            class="form-control" disabled>
+                                                                                                        <option value="1" {{$employee->gender == 1 ? 'selected' : ''}}>Male</option>
+                                                                                                        <option value="2" {{$employee->gender == 2 ? 'selected' : ''}}>Female</option>
+                                                                                                    </select>
+                                                                                                    @error('gender')
+                                                                                                    <i class="text-danger">{{$message}}</i>
+                                                                                                    @enderror
+                                                                                                </div>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <div class="form-group">
+                                                                                                    <label
+                                                                                                        for="">Hire Date</label>
+                                                                                                    <input type="text" value="{{date('d M, Y', strtotime($employee->hire_date))}}"
+                                                                                                           class="form-control" readonly>
+                                                                                                </div>
+                                                                                            </td>
+
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <div class="form-group">
+                                                                                                    <label
+                                                                                                        for="">Marital Status</label>
+                                                                                                    <input type="text" value="{{$employee->employeeMaritalStatus->name ?? ''}}"
+                                                                                                           class="form-control" readonly>
+                                                                                                </div>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                               <div class="form-group">
+                                                                                                   <label
+                                                                                                       for="">Job Role</label>
+                                                                                                   <select name="jobRole" id="jobRole"
+                                                                                                           class="form-control" disabled>
+                                                                                                       @foreach($jobRoles as $jRole)
+                                                                                                           <option value="{{$jRole->id}}" {{$jRole->id == $employee->employeeJobRole->id ? 'selected' : ''}}>{{$jRole->job_role ?? '' }}</option>
+                                                                                                       @endforeach
+                                                                                                   </select>
+                                                                                                   @error('jobRole')
+                                                                                                   <i class="text-danger">{{$message}}</i>
+                                                                                                   @enderror
+                                                                                               </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <div class="form-group">
+                                                                                                    <label
+                                                                                                        for="">Address</label>
+                                                                                                    <textarea readonly name="address" placeholder="Type address here..." style="resize: none;"
+                                                                                                              class="form-control">{{$employee->address ?? ''}}</textarea>
+                                                                                                    @error('address')
+                                                                                                    <i class="text-danger">{{$message}}</i>
+                                                                                                    @enderror
+                                                                                                    <input type="hidden" name="empId" value="{{$employee->id}}">
+                                                                                                </div>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <div class="form-group">
+                                                                                                    <label
+                                                                                                        for="">State</label>
+                                                                                                    <select name="state" id="state"
+                                                                                                            class="form-control" disabled>
+                                                                                                        @foreach($states as $state )
+                                                                                                            <option value="{{$state->id}}" {{$state->id == $employee->getEmployeeState->id ? 'selected' : '' }}>{{$state->state_name ?? '' }}</option>
+                                                                                                        @endforeach
+                                                                                                    </select>
+                                                                                                    @error('state')
+                                                                                                    <i class="text-danger">{{$message}}</i>
+                                                                                                    @enderror
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <div class="form-group">
+                                                                                                    <label
+                                                                                                        for="">Department</label>
+                                                                                                    <select name="department" id="department"
+                                                                                                            class="form-control" disabled>
+                                                                                                        @foreach($departments as $department )
+                                                                                                            <option value="{{$department->id}}" {{$department->id == $employee->employeeDepartment->id ? 'selected' : '' }}>{{$department->name ?? '' }}</option>
+                                                                                                        @endforeach
+                                                                                                    </select>
+                                                                                                    @error('department')
+                                                                                                    <i class="text-danger">{{$message}}</i>
+                                                                                                    @enderror
+                                                                                                </div>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <div class="form-group">
+                                                                                                    <label
+                                                                                                        for="">Academic Qualification</label>
+                                                                                                    <select name="qualification" id="qualification"
+                                                                                                            class="form-control" disabled>
+                                                                                                        @foreach($qualifications as $qualification )
+                                                                                                            <option value="{{$qualification->id}}" {{$qualification->id == $employee->employeeAcademicQualification->id ? 'selected' : '' }}>{{$qualification->name ?? '' }}</option>
+                                                                                                        @endforeach
+                                                                                                    </select>
+                                                                                                    @error('qualification')
+                                                                                                    <i class="text-danger">{{$message}}</i>
+                                                                                                    @enderror
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <div class="form-group">
+                                                                                                    <label
+                                                                                                        for="">Employment Type</label>
+                                                                                                    <select name="employmentType" id="employmentType"
+                                                                                                            class="form-control" disabled>
+                                                                                                        @foreach($employement_types as $type )
+                                                                                                            <option value="{{$type->id}}" {{$type->id == $employee->employeeEmploymentType->id ? 'selected' : '' }}>{{$type->name ?? '' }}</option>
+                                                                                                        @endforeach
+                                                                                                    </select>
+                                                                                                    @error('employmentType')
+                                                                                                    <i class="text-danger">{{$message}}</i>
+                                                                                                    @enderror
+                                                                                                </div>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <div class="form-group">
+                                                                                                    <label
+                                                                                                        for="">Employee ID</label>
+                                                                                                    <input type="text" readonly value="{{$employee->employee_id ?? ''}}" name="employeeId" placeholder="Employee ID" class="form-control">
+                                                                                                    @error('employeeId')
+                                                                                                    <i class="text-danger">{{$message}}</i>
+                                                                                                    @enderror
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <div class="form-group">
+                                                                                                    <label
+                                                                                                        for="">Blood Group</label>
+                                                                                                    <input readonly type="text" value="{{$employee->getBloodGroup->name ?? ''}}" name="bloodGroup" placeholder="Blood Group" class="form-control">
+                                                                                                </div>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <div class="form-group">
+                                                                                                    <label
+                                                                                                        for="">Known Ailment</label>
+                                                                                                    <input readonly type="text" value="{{$employee->known_ailment ?? ''}}" name="knownAilment" placeholder="Known Ailment" class="form-control">
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col-md-12 d-flex justify-content-center ">
+                                                                                <button class="btn btn-primary btn-sm" type="submit" disabled>Save Changes</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <!-- end of general info -->
+                                        <div class="tab-pane" id="profile3" role="tabpanel">
+                                            <div class="row mt-3">
+                                               <div class="col-md-6 offset-md-3 col-lg-6 offset-lg-3">
+                                                   <div class="container pb-5">
+                                                       <form action="{{route('change-password')}}" method="post" enctype="multipart/form-data">
+                                                           @csrf
+                                                           <div class="form-group">
+                                                               <label for="">Current Password <span class="text-danger">*</span></label>
+                                                               <input type="password"  name="currentPassword" placeholder="Current Password"  class="form-control">
+                                                               @error('currentPassword') <i class="text-danger">{{$message}}</i>@enderror
+                                                           </div>
+                                                           <div class="form-group mt-3">
+                                                               <label for="">New Password <span class="text-danger">*</span></label>
+                                                               <input type="password" name="password" placeholder="New Password" class="form-control">
+                                                               @error('password') <i class="text-danger">{{$message}}</i>@enderror
+                                                           </div>
+                                                           <div class="form-group mt-3">
+                                                               <label for="">Re-type Password <span class="text-danger">*</span></label>
+                                                               <input type="password" name="password_confirmation" placeholder="Re-type Password" class="form-control">
+                                                               @error('password_confirmation') <i class="text-danger">{{$message}}</i>@enderror
+                                                           </div>
+                                                           <div class="form-group mt-3 d-flex justify-content-center">
+                                                               <button type="submit" class="btn btn-primary">Change Password <i class="bx bx-lock-alt"></i> </button>
+                                                           </div>
+                                                       </form>
+                                                   </div>
+                                               </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <!-- end of col-lg-12 -->
+
+
                                 </div>
-                                <!-- end of row -->
                             </div>
                         </div>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="modal fade" id="deactivateAccountModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header bg-danger">
-                    <h5 class="modal-title">Deactivate Account</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true" class="text-white">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{route('update-employee-account-status')}}" method="post">
-                        @csrf
-                        <div class="form-group">
-                            <input  type="hidden" value="{{$employee->id}}" placeholder="Enter Mobile No." name="employeeId" class="form-control">
-                            <input type="hidden" name="status" value="2">
-                        </div>
-                        <div class="form-group">
-                            <p>Are you sure you want to <code>Deactivate</code> {{$employee->first_name ?? '' }}'s account?</p>
-                        </div>
-                        <div class="form-group d-flex justify-content-center">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-sm  btn-default waves-effect " data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-sm btn-primary waves-effect waves-light ">Submit</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="activateAccountModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header bg-success">
-                    <h5 class="modal-title">Activate Account</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true" class="text-white">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{route('update-employee-account-status')}}" method="post">
-                        @csrf
-                        <div class="form-group">
-                            <input  type="hidden" value="{{$employee->id}}" placeholder="Enter Mobile No." name="employeeId" class="form-control">
-                            <input type="hidden" name="status" value="1">
-                        </div>
-                        <div class="form-group">
-                            <p>Are you sure you want to <code>Activate</code> {{$employee->first_name ?? '' }}'s account?</p>
-                        </div>
-                        <div class="form-group d-flex justify-content-center">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-sm  btn-default waves-effect " data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-sm btn-primary waves-effect waves-light ">Submit</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    @include('humanresource::partials._deactivate-account-modal')
+    @include('humanresource::partials._activate-account-modal')
+    @include('humanresource::partials._permission-modal')
 @endsection
 
 @section('extra-script')

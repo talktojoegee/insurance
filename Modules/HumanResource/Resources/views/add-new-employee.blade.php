@@ -122,17 +122,7 @@ Add New Employee
                             </div>
                         </div>
                         <div class="col-md-3 col-lg-3 col-xl-3 col-sm-6" id="lgaWrapper">
-                            <div class="form-group">
-                                <label>LGA</label>
-                                <select class="form-control" value="{{ old('lga') }}" name="lga" id="lga">
-                                    <option selected disabled >Select LGA</option>
-                                    <option value="1">Male</option>
-                                    <option value="2">Female</option>
-                                </select>
-                                @error('lga')
-                                    <i class="text-danger mt-2">{{ $message }}</i>
-                                @enderror
-                            </div>
+
                         </div>
                         <div class="col-md-3 col-lg-3 col-xl-3 col-sm-4">
                             <div class="form-group">
@@ -274,7 +264,7 @@ Add New Employee
                         <div class="col-md-12 col-lg-12 col-sm-12 d-flex justify-content-center">
                             <div class="btn-group">
                                 <a class="btn btn-danger btn-mini" href=""><i class="ti-close mr-2"></i> Cancel</a>
-                                <button type="submit" class="btn btn-primary btn-mini"><i class="ti-check mr-2"></i> Submit</a>
+                                <button type="submit" class="btn btn-primary btn-mini"><i class="ti-check mr-2"></i> Submit</button>
                             </div>
                         </div>
                     </div>
@@ -285,6 +275,17 @@ Add New Employee
 </div>
 @endsection
 
-@section('extra-script')
-
+@section('extra-scripts')
+    <script src="/assets/js/axios.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#state_of_origin').on('change', function(e){
+                e.preventDefault();
+                axios.post('/load-local-governments', {state:$(this).val()})
+                    .then(response=>{
+                        $('#lgaWrapper').html(response.data);
+                    });
+            });
+        });
+    </script>
 @endsection

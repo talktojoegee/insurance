@@ -312,49 +312,25 @@
 <script src="/assets/js/axios.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
-
+        let commission = 0;
+        let gross_premium = $('#gross_premium').val()
         $(document).on('blur', '#commission_rate', function(e){
             e.preventDefault();
-            var commission = parseFloat($(this).val()/100) * parseFloat($('#gross_premium').val());
-            $('#commission').val(commission);
-            $('#net_amount').val(parseFloat($('#gross_premium').val()) + commission);
+            commission = parseFloat($(this).val()) /100 * parseFloat($('#gross_premium').val());
+            $('#commission').val(commission.toFixed(2));
+            $('#net_amount').val(   (parseFloat(gross_premium) + commission).toFixed(2)   );
         });
-        //(this.debit.gross_premium - (this.vat/100 * this.debit.commission) - this.debit.commission);
         $(document).on('change', '#vat', function(e){
-            let commission = parseFloat($('#commission_rate').val()/100) * parseFloat($('#gross_premium').val());
             if($(this).is(':checked')){
-                let vat = ( parseFloat( $(this).val()  ) /100) * commission;
-                $('#vatValue').val(vat);
+                let vat =  parseFloat( $(this).val()  ) /100 * commission;
+                $('#vatValue').val(vat.toFixed(2));
                 $('#vatChecked').val(1);
-                parseFloat($('#net_amount').val(parseFloat($('#gross_premium').val()) + (vat + commission))).toFixed(2);
+                $('#net_amount').val(   (parseFloat(gross_premium) + commission + vat ).toFixed(2)   );
             }else{
                 $('#vatChecked').val(0);
-                parseFloat($('#net_amount').val(parseFloat($('#gross_premium').val()) + commission)).toFixed(2);
+                $('#net_amount').val(   (parseFloat(gross_premium) + commission  ).toFixed(2)   );
             }
         });
     });
-   /* $(document).ready(function(){
-
-         $(document).on('change', '#commission_rate', function(e){
-            e.preventDefault();
-            var commission = parseFloat($(this).val()/100) * parseFloat($('#gross_premium').val());
-            $('#commission').val(commission);
-            $('#net_amount').val(parseFloat($('#gross_premium').val()) + commission);
-        });
-        $(document).on('change', '#vat', function(e){
-            var commission = parseFloat($('#commission_rate').val()/100) * parseFloat($('#gross_premium').val());
-            if($(this).is(':checked')){
-                let val = parseFloat($('#gross_premium').val());
-                let vat = parseFloat($(this).val())/100 * parseFloat(commission);
-                $('#net_amount').val( val + commission + vat  );
-
-            }else{
-                let val = parseFloat($('#gross_premium').val());
-                let vat = parseFloat($(this).val())/100 * parseFloat(commission);
-                let sum = (val + commission);
-                 $('#net_amount').val( sum - vat );
-            }
-        });
-    });*/
 </script>
 @endsection

@@ -10,7 +10,7 @@
             if($('#sub_business_class_name').val() == '' || $('#class').val() == ''){
                 Toastify({
                   text: "All fields are required.",
-                  duration: 3000, 
+                  duration: 3000,
                   close: true,
                   gravity: "top",
                   position: 'right',
@@ -28,7 +28,7 @@
                 .then(response=>{
                     Toastify({
                       text: response.data.message,
-                      duration: 3000, 
+                      duration: 3000,
                       close: true,
                       gravity: "top",
                       position: 'right',
@@ -40,12 +40,13 @@
                     $('#new-sub-business-class-modal').hide();
                     $('.modal-backdrop fade show').hide();
                     $('#sub_business_class_name').val('');
+                    location.reload();
                     //$('#businessClassTable').load(location.href + " #businessClassTable");
                 })
                 .catch(err=>{
                     Toastify({
                       text: err.response.data.msg,
-                      duration: 3000, 
+                      duration: 3000,
                       close: true,
                       gravity: "top",
                       position: 'right',
@@ -74,7 +75,7 @@
             if($('#sub_business_class_name').val() == ''){
                 Toastify({
                   text: "All fields is required.",
-                  duration: 3000, 
+                  duration: 3000,
                   close: true,
                   gravity: "top",
                   position: 'right',
@@ -93,7 +94,7 @@
                 .then(response=>{
                     Toastify({
                       text: response.data.message,
-                      duration: 3000, 
+                      duration: 3000,
                       close: true,
                       gravity: "top",
                       position: 'right',
@@ -110,7 +111,7 @@
                 .catch(err=>{
                     Toastify({
                       text: err.response.data.msg,
-                      duration: 3000, 
+                      duration: 3000,
                       close: true,
                       gravity: "top",
                       position: 'right',

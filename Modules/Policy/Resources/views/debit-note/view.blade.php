@@ -23,7 +23,7 @@
                 <table class="table table-responsive invoice-table table-borderless">
                     <tbody>
                     <tr>
-                        <td><img src="/assets/attachments/assets/logo/{{$settings->company_logo ?? 'logo.jpg'}}" height="75" width="105" class="m-b-10" alt="{{config('app.name')}}"></td>
+                        <td><img src="/assets/attachments/assets/logo/{{$settings->company_logo ?? 'logo.jpg'}}" height="94" width="150" class="m-b-10" alt="{{config('app.name')}}"></td>
                     </tr>
                     <tr>
                         <td>{{$settings->office_address ?? ''}}</td>
@@ -90,12 +90,12 @@
                                                     <td>{{$debit->getCurrency->symbol ?? ''}}{{number_format($debit->gross_premium,2)}}</td>
                                                 </tr>
                                                 <tr class="commission">
-                                                    <th scope="row">Commission</th>
-                                                    <td>{{$debit->getCurrency->symbol ?? ''}}{{number_format($debit->commission,2)}}</td>
-                                                </tr>
-                                                <tr class="commission">
                                                     <th scope="row">Commission Rate</th>
                                                     <td>{{$debit->commission_rate.'%' ?? '-'}}</td>
+                                                </tr>
+                                                <tr class="commission">
+                                                    <th scope="row">Commission</th>
+                                                    <td>{{$debit->getCurrency->symbol ?? ''}}{{number_format($debit->commission,2)}}</td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">Exchange Rate</th>

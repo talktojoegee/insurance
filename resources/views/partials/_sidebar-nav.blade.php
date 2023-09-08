@@ -108,22 +108,27 @@
             <li class="pcoded-hasmenu">
                 <a href="javascript:void(0)">
                     <span class="pcoded-micon"><i class="icofont icofont-brainstorming"></i></span>
-                    <span class="pcoded-mtext">Operations</span>
+                    <span class="pcoded-mtext">Human Resource</span>
                 </a>
                 <ul class="pcoded-submenu">
-                    <li class=" ">
-                        <a href="{{ url('/human-resource') }}">
-                            <span class="pcoded-mtext">All Employees</span>
-                        </a>
-                    </li>
                     <li class=" ">
                         <a href="{{ url('/human-resource/add-new-employee') }}">
                             <span class="pcoded-mtext">Add New Employee</span>
                         </a>
                     </li>
                     <li class=" ">
-                        <a href="{{url('/human-resource/manage-roles-and-permissions')}}">
-                            <span class="pcoded-mtext">Manage Permissions</span>
+                        <a href="{{ url('/human-resource') }}">
+                            <span class="pcoded-mtext">All Employees</span>
+                        </a>
+                    </li>
+                    <li class=" ">
+                        <a href="{{url('/human-resource/manage-roles')}}">
+                            <span class="pcoded-mtext">Roles</span>
+                        </a>
+                    </li>
+                    <li class=" ">
+                        <a href="{{url('/human-resource/manage-roles')}}">
+                            <span class="pcoded-mtext">Permissions</span>
                         </a>
                     </li>
                     <li class=" ">

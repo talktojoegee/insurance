@@ -9,7 +9,7 @@
             <div class="block xl:grid grid-cols-2 gap-4">
                 <div class="hidden xl:flex flex-col min-h-screen">
                     <a href="" class="-intro-x flex items-center pt-5">
-                        <img alt="Insurance Software" class="w-6" src="dist/images/logo.svg">
+                        <img alt="Insurance Software" class="w-6" src="/assets/images/logo.png">
                         <span class="text-white text-lg ml-3"> {{substr(config('app.name'),0,2)}}<span class="font-medium">{{substr(config('app.name'),2)}}</span> </span>
                     </a>
                     <div class="my-auto">
@@ -34,6 +34,9 @@
                                 @if (session()->has('error'))
                                 <div class="rounded-md px-5 py-4 mb-2 bg-theme-12 text-white">{!! session()->get('error') !!}</div>
                                 @endif
+                                @if (session()->has('success'))
+                                    <div class="rounded-md px-5 py-4 mb-2 bg-theme-12 text-white">{!! session()->get('success') !!}</div>
+                                @endif
                                 <div class="intro-x mt-8">
                                     <input type="text" name="email" autocomplete="off" class="intro-x login__input input input--lg border border-gray-300 block" placeholder="Email address">
                                     @error('email')
@@ -46,7 +49,7 @@
                                         <input type="checkbox" class="input border mr-2" name="remember" id="remember-me">
                                         <label class="cursor-pointer select-none" for="remember-me">Remember me</label>
                                     </div>
-                                    <a href="">Forgot Password?</a>
+<!--                                    <a href="">Forgot Password?</a>-->
                                 </div>
                                 <div class="intro-x mt-5 xl:mt-8 text-center xl:text-left">
                                     <button class="button button--lg w-full xl:w-32 text-white bg-theme-1 xl:mr-3 align-top" type="submit">Login</button>

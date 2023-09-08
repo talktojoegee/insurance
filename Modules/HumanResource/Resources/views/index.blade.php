@@ -101,7 +101,7 @@ Company's workforce.
                             {!! $employee->account_status == 1 ? "<span class='badge badge-success'>Active</span>" : "<span class='badge badge-danger'>Deactivated</span>" !!}
                         </td>
                         <td>
-                            <a href="{{url('/human-resource/employee/profile/'.$employee->url)}} " class="btn btn-mini btn-primary">Learn more</a>
+                            <a href="{{url('/human-resource/employee/profile/'.$employee->url)}} " class="btn btn-mini btn-primary">View details</a>
                         </td>
                     </tr>
                 @endforeach
