@@ -68,7 +68,7 @@
                 </a>
                 <ul class="pcoded-submenu">
                     <li class="">
-                        <a href="{{ url('/policy/claim/new') }}">
+                        <a href="{{ url('/policy/add-client') }}">
                             <span class="pcoded-micon"><i class="ti-users"></i></span>
                             <span class="pcoded-mtext">Add New Client</span>
                         </a>

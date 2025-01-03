@@ -47,6 +47,8 @@ Route::prefix('policy')->group(function() {
     Route::post('/sub-business-class/edit', 'PolicyController@editSubBusinessClass');
     #Client
     Route::get('/clients', 'PolicyController@clients');
+    Route::get('/add-client', 'PolicyController@showAddClientForm');
+    Route::post('/add-client', 'PolicyController@storeClient');
     Route::get('/client/view/{slug}', 'PolicyController@getClient');
 
     #Claims

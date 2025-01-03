@@ -230,6 +230,34 @@ class PolicyController extends Controller
                 'thisWeekClients'=>$this->client->getThisWeekClients()
             ]);
     }
+    public function showAddClientForm(){
+        //$clients = Client::orderBy('insured_name', 'ASC')->get();
+        return view('policy::clients.add-client');
+    }
+
+    public function storeClient(Request $request){
+        $request->validate([
+            'name'=>'required',
+            'email'=>'required|email',
+            'mobile_no'=>'required',
+            'address'=>'required',
+        ]);
+        Client::create([
+            'insured_name'=>$request->name,
+            'email'=>$request->email,
+            'mobile_no'=>$request->mobile_no,
+            'address'=>$request->address,
+            'password'=>bcrypt('password123'),
+            'slug'=>substr(sha1(time()),29,40),
+
+        ]);
+
+        session()->flash("success", "New client added");
+        return redirect('/policy/clients');
+
+    }
+
+
     public function getClient($slug){
         $client = Client::where('slug', $slug)->first();
         if(!empty($client)){

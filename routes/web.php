@@ -27,3 +27,7 @@ Auth::routes();
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 Route::post('/load-local-governments', [App\Http\Controllers\ShareResourceController::class, 'loadLocalGovernments']);
+
+Route::get('/storage-link', function(){
+    \Illuminate\Support\Facades\Artisan::call('storage:link');
+});

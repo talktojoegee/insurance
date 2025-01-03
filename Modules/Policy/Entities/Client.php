@@ -8,7 +8,14 @@ use Illuminate\Http\Request;
 
 class Client extends Model
 {
-    protected $fillable = [];
+    protected $fillable = [
+        'insured_name',
+        'email',
+        'mobile_no',
+        'address',
+        'password',
+        'slug'
+    ];
 
     public function getClientPolicies(){
         return $this->hasMany(Policy::class, 'client_id');

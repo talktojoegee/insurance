@@ -119,7 +119,7 @@
                                                         @foreach ($client->getClientPolicies as $policy)
                                                             <tr>
                                                                 <td>{{$serial++}}</td>
-                                                                <td>{{$policy->getBusinessClass->abbr}}/{{date('m',strtotime($policy->created_at))}}/{{date('y', strtotime($policy->created_at))}}/{{$policy->policy_number}}</td>
+                                                                <td>{{$policy->getBusinessClass->abbr ?? '-'}}/{{date('m',strtotime($policy->created_at))}}/{{date('y', strtotime($policy->created_at))}}/{{$policy->policy_number}}</td>
                                                                 <td>{{ $policy->insurance_policy_number ?? '' }}</td>
                                                                 <td>{{$policy->getCurrency->symbol ?? ''}}{{ number_format($policy->sum_insured/$policy->exchange_rate,2) }}</td>
                                                                 <td>{{ !is_null($policy->end_date) ? date('d F, Y', strtotime($policy->end_date)) : '' }}</td>
